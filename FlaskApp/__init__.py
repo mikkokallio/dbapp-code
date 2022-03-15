@@ -9,7 +9,7 @@ def index():
 @app.route("/beer")
 def beer():
     words = ["bisse", "kalija", "ölppä"]
-    return render_template("index.html", message="Tervetuloa!", items=words)
+    return render_template("beer.html", message="Tervetuloa!", items=words)
 
 @app.route("/test")
 def test():
