@@ -14,6 +14,19 @@ def form():
 def result():
     return render_template("result.html", name=request.form["name"])
 
+@app.route("/order")
+def order():
+    return render_template("order.html")
+
+@app.route("/ordered", methods=["POST"])
+def result():
+    pizza = request.form["pizza"]
+    extras = request.form.getlist("extra")
+    message = request.form["message"]
+    return render_template("ordered.html", pizza=pizza,
+                                           extras=extras,
+                                           message=message)
+
 @app.route("/beer")
 def beer():
     words = ["bisse", "kalija", "ölppä"]
