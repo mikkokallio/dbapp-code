@@ -1,4 +1,3 @@
-os
 azure-functions
 Flask
 flask-sqlalchemy
