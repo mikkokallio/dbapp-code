@@ -1,0 +1,7 @@
+Käyttäjien määrä: {{ count }}
+<hr>
+{% for user in users %}
+{{ user.name }}
+<hr>
+{% endfor %}
+<a href="/new">Lähetä viesti</a>
