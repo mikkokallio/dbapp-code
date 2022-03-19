@@ -1,2 +1,4 @@
 azure-functions
 Flask
+flask-sqlalchemy
+psycopg2
