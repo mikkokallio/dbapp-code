@@ -9,21 +9,22 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def list_users():
-    result = db.session.execute("SELECT name FROM users")
+    result = db.session.execute("SELECT name, created_at FROM users")
     users = result.fetchall()
     return render_template("users.html", count=len(users), users=users) 
 
-#@app.route("/new")
-#def new():
-#    return render_template("new.html")
+@app.route("/new_user")
+def new_user():
+    return render_template("new_user.html")
 
-#@app.route("/send", methods=["POST"])
-#def send():
-#    content = request.form["content"]
-#    sql = "INSERT INTO messages (content) VALUES (:content)"
-#    db.session.execute(sql, {"content":content})
-#    db.session.commit()
-#    return redirect("/")
+@app.route("/add_user", methods=["POST"])
+def add_user():
+    content = request.form["content"]
+    sql = "INSERT INTO users (name, age, gender, role, password, created_at) VALUES ('Jorma', 25, 'male', 'admin', 'password123', NOW());"
+    #sql = "INSERT INTO messages (content) VALUES (:content)"
+    db.session.execute(sql, {"content":content})
+    db.session.commit()
+    return redirect("/")
 
 
 

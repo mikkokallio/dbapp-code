@@ -1,7 +1,7 @@
 Käyttäjien määrä: {{ count }}
 <hr>
 {% for user in users %}
-{{ user.name }}
+{{ user.name }} Luotu: {{ user.created_at.strftime("%Y-%m-%d %H:%M:%S") }}
 <hr>
 {% endfor %}
 <a href="/new">Lähetä viesti</a>
