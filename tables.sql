@@ -1,18 +1,19 @@
-DROP TABLE users;
-DROP TABLE places;
-DROP TABLE meetups;
-DROP TABLE signups;
-DROP TABLE comments;
-DROP TABLE notifications;
+DROP TABLE users CASCADE;
+DROP TABLE places CASCADE;
+DROP TABLE meetups CASCADE;
+DROP TABLE signups CASCADE;
+DROP TABLE comments CASCADE;
+DROP TABLE notifications CASCADE;
 
 CREATE TYPE GENDER AS ENUM ('male', 'female', 'other');
 CREATE TYPE ROLE as ENUM ('user', 'admin');
 
 CREATE TABLE users (
    id SERIAL PRIMARY KEY,
-   name TEXT NOT NULL,
+   username TEXT NOT NULL,
    age INT NOT NULL,
    gender GENDER NOT NULL,
+   description TEXT,
    role ROLE NOT NULL,
    password TEXT NOT NULL,
    created_at TIMESTAMP
@@ -22,6 +23,7 @@ CREATE TABLE places (
    id SERIAL PRIMARY KEY,
    name TEXT NOT NULL,
    location POINT NOT NULL,
+   description TEXT,
    created_at TIMESTAMP
 );
 
@@ -59,4 +61,4 @@ CREATE TABLE notifications (
 );
 
 
-INSERT INTO users (name, age, gender, role, password, created_at) VALUES ('Jorma', 25, 'male', 'admin', 'password123', NOW());
+INSERT INTO users (username, age, gender, role, password, created_at) VALUES ('Jorma', 25, 'male', 'admin', 'password123', NOW());

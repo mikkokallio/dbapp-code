@@ -2,3 +2,5 @@ azure-functions
 Flask
 flask-sqlalchemy
 psycopg2-binary
+secrets
+werkzeug
