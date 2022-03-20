@@ -68,6 +68,15 @@ def add_user():
         return redirect("/new_user")
 
 
+@app.route("/user/<int:id>")
+def user(id):
+    sql = "SELECT username, age, gender FROM users WHERE id=:id"
+    result = db.session.execute(sql, {"id": id})
+    user = result.fetchone()
+    print(user)
+    return render_template("user.html", id=id, user=user)
+
+
 @app.route("/form")
 def form():
     return render_template("form.html")
@@ -91,25 +100,6 @@ def ordered():
     return render_template("ordered.html", pizza=pizza,
                            extras=extras,
                            message=message)
-
-
-@app.route("/beer")
-def beer():
-    words = ["bisse", "kalija", "ölppä"]
-    return render_template("beers.html", message="Tervetuloa!", items=words)
-
-
-@app.route("/test")
-def test():
-    content = ""
-    for i in range(100):
-        content += str(i + 1) + " "
-    return content
-
-
-@app.route("/page/<int:id>")
-def page(id):
-    return "Tämä on sivu " + str(id)
 
 
 @app.route("/hello/<name>", methods=['GET'])

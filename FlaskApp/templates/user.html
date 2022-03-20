@@ -1,0 +1,9 @@
+<p>Id {{ id }}</p>
+<p>Name {{ user[0] }}</p>
+<p>Age {{ user[1] }}</p>
+<p>Gender {{ user[2] }}</p>
+<p>You are {{ session }}</p>
+{% if session.username == user[0] %}
+{% else %}
+<p>Nope!</p>
+{% endif %}
