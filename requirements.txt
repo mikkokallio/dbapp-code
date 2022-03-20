@@ -4,3 +4,4 @@ flask-sqlalchemy
 psycopg2-binary
 secrets
 werkzeug
+OpenSSL

@@ -36,7 +36,7 @@ def login():
         if check_password_hash(hash_value, password):
             session["username"] = username
         else:
-            pass # TODO: invalid password
+            pass  # TODO: invalid password
     return redirect("/")
 
 
@@ -61,6 +61,7 @@ def add_user():
     db.session.execute(sql, {"username": username, "password": hash_value})
     db.session.commit()
     return redirect("/")
+
 
 @app.route("/form")
 def form():
