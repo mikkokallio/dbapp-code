@@ -2,6 +2,6 @@ azure-functions
 Flask
 flask-sqlalchemy
 psycopg2-binary
+pyopenssl
 secrets
 werkzeug
-OpenSSL
