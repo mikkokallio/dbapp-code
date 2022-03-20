@@ -1,8 +1,14 @@
-<form action="/send" method="POST">
+<form action="/add_user" method="POST">
     New user: <br>
-    <textarea name="username" rows="3" cols="40"></textarea>
-    <br>
-    <textarea name="password" rows="3" cols="40"></textarea>
+    <p>Username:<br>
+        <input type="text" name="username">
+    </p>
+    <p>Password:<br>
+        <input type="password" name="password">
+    </p>
+    <p>Confirm password:<br>
+        <input type="password" name="password2">
+    </p>
     <br>
     <input type="submit" value="Create">
 </form>

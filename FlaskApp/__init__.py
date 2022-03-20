@@ -4,6 +4,7 @@ from flask import redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 
+print(getenv("SQL_URI"))
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("SQL_URI")
 app.secret_key = getenv("SECRET_KEY")
@@ -55,12 +56,16 @@ def new_user():
 def add_user():
     username = request.form["username"]
     password = request.form["password"]
-    hash_value = generate_password_hash(password)
-    sql = "INSERT INTO users (name, age, gender, role, password, created_at) VALUES (:username, 0, 'male'', 'admin', :password, NOW());"
-    #sql = "INSERT INTO messages (content) VALUES (:content)"
-    db.session.execute(sql, {"username": username, "password": hash_value})
-    db.session.commit()
-    return redirect("/")
+    password2 = request.form["password2"]
+    if password == password2:
+        hash_value = generate_password_hash(password)
+        sql = "INSERT INTO users (username, age, gender, role, password, created_at) VALUES (:username, 0, 'male', 'admin', :password, NOW());"
+        #sql = "INSERT INTO messages (content) VALUES (:content)"
+        db.session.execute(sql, {"username": username, "password": hash_value})
+        db.session.commit()
+        return redirect("/")
+    else:
+        return redirect("/new_user")
 
 
 @app.route("/form")
