@@ -56,13 +56,13 @@ def add_user():
     username = request.form["username"]
     password = request.form["password"]
     hash_value = generate_password_hash(password)
-    sql = "INSERT INTO users (name, age, gender, role, password, created_at) VALUES ('Jorma', 25, 'male', 'admin', 'password123', NOW());"
+    sql = "INSERT INTO users (name, age, gender, role, password, created_at) VALUES (:username, 0, 'male'', 'admin', :password, NOW());"
     #sql = "INSERT INTO messages (content) VALUES (:content)"
-    db.session.execute(sql, {"content": content})
+    db.session.execute(sql, {"username": username, "password": password})
     db.session.commit()
     return redirect("/")
 
-#sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
+sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
 #db.session.execute(sql, {"username":username, "password":hash_value})
 # db.session.commit()
 
