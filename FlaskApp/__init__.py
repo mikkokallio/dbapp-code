@@ -58,19 +58,9 @@ def add_user():
     hash_value = generate_password_hash(password)
     sql = "INSERT INTO users (name, age, gender, role, password, created_at) VALUES (:username, 0, 'male'', 'admin', :password, NOW());"
     #sql = "INSERT INTO messages (content) VALUES (:content)"
-    db.session.execute(sql, {"username": username, "password": password})
+    db.session.execute(sql, {"username": username, "password": hash_value})
     db.session.commit()
     return redirect("/")
-
-sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
-#db.session.execute(sql, {"username":username, "password":hash_value})
-# db.session.commit()
-
-
-# @app.route("/")
-# def index():
-#    return render_template("index.html")
-
 
 @app.route("/form")
 def form():
