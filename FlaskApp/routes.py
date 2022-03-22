@@ -9,13 +9,6 @@ def index():
     return render_template("index.html")
 
 
-# @app.route("/")
-# def list_users():
-#    result = db.session.execute("SELECT name, created_at FROM users")
-#    users = result.fetchall()
-#    return render_template("users.html", count=len(users), users=users)
-
-
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
@@ -61,6 +54,12 @@ def add_user():
 def user(id):
     user = actions.get_user_by_id(id)
     return render_template("user.html", id=id, user=user)
+
+
+@app.route("/users")
+def list_users():
+    users = actions.get_all_users()
+    return render_template("users.html", count=len(users), users=users)
 
 
 @app.route("/form")

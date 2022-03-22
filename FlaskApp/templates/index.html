@@ -1,5 +1,7 @@
 {% if session.username %}
 <p>Signed in as {{ session.username }}</p>
+<a href="/user/1">View my profile</a>
+<a href="/users">View users</a>
 <a href="/logout">Log out</a>
 {% else %}
 <form action="/login" method="POST">

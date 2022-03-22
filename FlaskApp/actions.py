@@ -13,6 +13,11 @@ def get_user_by_id(id):
     return result.fetchone()
 
 
+def get_all_users():
+    result = db.session.execute("SELECT username, created_at FROM users")
+    return result.fetchall()
+
+
 def add_user(username, hash_value):
     sql = "INSERT INTO users (username, age, gender, role, password, created_at) VALUES (:username, 0, 'male', 'admin', :password, NOW());"
     #sql = "INSERT INTO messages (content) VALUES (:content)"
