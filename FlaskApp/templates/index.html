@@ -4,6 +4,9 @@
 <a href="/users">View users</a>
 <a href="/logout">Log out</a>
 {% else %}
+{% if message %}
+<p>NOTE: {{ message }}</p>
+{% endif %}
 <form action="/login" method="POST">
 <p>Username:<br>
 <input type="text" name="username"></p>
