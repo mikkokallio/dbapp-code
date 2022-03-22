@@ -10,7 +10,7 @@ CREATE TYPE ROLE as ENUM ('user', 'admin');
 
 CREATE TABLE users (
    id SERIAL PRIMARY KEY,
-   username TEXT NOT NULL,
+   username TEXT UNIQUE,
    age INT NOT NULL,
    gender GENDER NOT NULL,
    description TEXT,
