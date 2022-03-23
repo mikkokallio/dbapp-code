@@ -1,9 +1,5 @@
-from app import app
-import sys
-import os
+from modules.app import app
 
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
 
 if __name__ == "__main__":
     app.run()

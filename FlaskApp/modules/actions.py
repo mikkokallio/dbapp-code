@@ -1,4 +1,4 @@
-from db import db
+from .db import db
 
 
 def get_user_by_name(username):

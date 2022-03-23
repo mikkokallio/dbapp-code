@@ -1,5 +1,5 @@
-from app import app
-import actions
+from .app import app
+from . import actions
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
