@@ -8,7 +8,7 @@ A user can create an account and log in to the app. Once logged in, a user can c
 
 ## Testing the app
 
-The app runs at https://functions-dbapp.azurewebsites.net/
+The app runs at TBA
 
 ## Architecture
 
