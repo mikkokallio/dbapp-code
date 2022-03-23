@@ -1,5 +1,5 @@
 import azure.functions as func
-from FlaskApp import app
+from FlaskApp.app import app
 
 
 def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:
