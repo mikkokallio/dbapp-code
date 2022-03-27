@@ -41,14 +41,17 @@ def add_user():
     username = request.form["username"]
     password = request.form["password"]
     password2 = request.form["password2"]
+
+    if password != password2:
+        return render_template("new_user.html", message=f"Passwords don't match")
     if not actions.validate_password(password):
         return render_template("new_user.html", message=f"Password must be at least 6 characters long")
-    if password == password2:
-        hash_value = generate_password_hash(password)
-        actions.add_user(username, hash_value)
+
+    hash_value = generate_password_hash(password)
+    if actions.add_user(username, hash_value):
         return render_template("index.html", message=f"User {username} created")
     else:
-        return render_template("new_user.html", message=f"Passwords don't match")
+        return render_template("new_user.html", message=f"Can't create user")
 
 
 @app.route("/user/<int:id>")
