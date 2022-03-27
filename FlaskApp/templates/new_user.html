@@ -1,3 +1,7 @@
+{% if message %}
+<p>NOTE: {{ message }}</p>
+{% endif %}
+
 <form action="/add_user" method="POST">
     New user: <br>
     <p>Username:<br>
