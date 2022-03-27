@@ -10,7 +10,10 @@
   <script>
     function showSpinner() {
       document.getElementById('button').setAttribute("class", "button is-primary is-loading");
-    }
+    };
+    function closeMessage() {
+      document.getElementById('message').setAttribute("style", "display:none");
+    };
   </script>
 </head>
 
@@ -33,9 +36,10 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container block">
       {% if message %}
-      <div class="block">
+      <div id="message" class="notification is-warning">
+        <button type="submit" class="delete" onclick="closeMessage()"></button>
         <i class="fa-solid fa-triangle-exclamation fa-fade"></i> {{ message }}</p>
       </div>
       {% endif %}
