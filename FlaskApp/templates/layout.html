@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MeetApp</title>
+  <script src="https://kit.fontawesome.com/bddfa0468b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+  <section class="section">
+    <div class="container fa-2x block">
+      <div class="columns is-mobile">
+        <div class="column">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="column">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="column">
+          <i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 2s;"></i>
+        </div>
+        <div class="column">
+          <i class="fa-solid fa-bell fa-shake"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      {% if message %}
+      <div class="block">
+        <i class="fa-solid fa-triangle-exclamation fa-fade"></i> {{ message }}</p>
+      </div>
+      {% endif %}
+    </div>
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </section>
+</body>

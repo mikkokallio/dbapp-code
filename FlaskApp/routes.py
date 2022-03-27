@@ -14,12 +14,14 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
     user = actions.get_user_by_name(username)
+    print(user)
     if not user:
         return render_template("index.html", message="Username does not exist")
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
+            session["role"] = user.role
         else:
             return render_template("index.html", message="Wrong password")
     return redirect("/")
