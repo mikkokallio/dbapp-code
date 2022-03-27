@@ -24,6 +24,9 @@ def get_all_users():
 
 def add_user(username, hash_value):
     sql = "INSERT INTO users (username, age, gender, role, password, created_at) VALUES (:username, 0, 'male', 'admin', :password, NOW());"
-    #sql = "INSERT INTO messages (content) VALUES (:content)"
-    db.session.execute(sql, {"username": username, "password": hash_value})
-    db.session.commit()
+    try:
+        db.session.execute(sql, {"username": username, "password": hash_value})
+        db.session.commit()
+    except: # TODO: Should include exception type!
+        return False
+    return True
