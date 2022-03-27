@@ -1,12 +1,13 @@
+{% if message %}
+<p>NOTE: {{ message }}</p>
+{% endif %}
+
 {% if session.username %}
 <p>Signed in as {{ session.username }}</p>
 <a href="/user/1">View my profile</a>
 <a href="/users">View users</a>
 <a href="/logout">Log out</a>
 {% else %}
-{% if message %}
-<p>NOTE: {{ message }}</p>
-{% endif %}
 <form action="/login" method="POST">
 <p>Username:<br>
 <input type="text" name="username"></p>

@@ -41,12 +41,14 @@ def add_user():
     username = request.form["username"]
     password = request.form["password"]
     password2 = request.form["password2"]
+    if not actions.validate_password(password):
+        return render_template("new_user.html", message=f"Password must be at least 6 characters long")
     if password == password2:
         hash_value = generate_password_hash(password)
         actions.add_user(username, hash_value)
-        return redirect("/")
+        return render_template("index.html", message=f"User {username} created")
     else:
-        return redirect("/new_user")
+        return render_template("new_user.html", message=f"Passwords don't match")
 
 
 @app.route("/user/<int:id>")
@@ -59,11 +61,6 @@ def user(id):
 def list_users():
     users = actions.get_all_users()
     return render_template("users.html", count=len(users), users=users)
-
-
-@app.route("/form")
-def form():
-    return render_template("form.html")
 
 
 @app.route("/result", methods=["POST"])
@@ -84,8 +81,3 @@ def ordered():
     return render_template("ordered.html", pizza=pizza,
                            extras=extras,
                            message=message)
-
-
-@app.route("/hello/<name>", methods=['GET'])
-def hello(name: str):
-    return f"hello {name}"

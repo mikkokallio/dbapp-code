@@ -1,6 +1,10 @@
 from .db import db
 
 
+def validate_password(password):
+    return len(password) >= 6
+
+
 def get_user_by_name(username):
     sql = "SELECT id, password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username": username})
