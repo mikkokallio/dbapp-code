@@ -96,6 +96,11 @@ def list_users():
     return render_template("users.html", count=len(users), users=users)
 
 
+@app.route("/new_event")
+def new_event():
+    return render_template("new_event.html")
+
+
 @app.route("/result", methods=["POST"])
 def result():
     return render_template("result.html", name=request.form["name"])

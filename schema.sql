@@ -1,6 +1,6 @@
 DROP TABLE users CASCADE;
 DROP TABLE places CASCADE;
-DROP TABLE meetups CASCADE;
+DROP TABLE events CASCADE;
 DROP TABLE signups CASCADE;
 DROP TABLE comments CASCADE;
 DROP TABLE notifications CASCADE;
@@ -30,13 +30,16 @@ CREATE TABLE places (
    created_at TIMESTAMP
 );
 
-CREATE TABLE meetups (
+CREATE TABLE events (
    id SERIAL PRIMARY KEY,
    title TEXT NOT NULL,
    place_id INT REFERENCES places (id),
-   host_id INT REFERENCES places (id),
-   begins_at TIMESTAMP NOT NULL,
+   host_id INT REFERENCES users (id),
+   date DATE NOT NULL,
+   time TIME NOT NULL,
+   min_people INT,
    max_people INT,
+   anonymous BOOLEAN,
    description TEXT,
    created_at TIMESTAMP
 );
