@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="title">
+  {{ session.user }}
+</h1>
+<h2 class="subtitle">
+  Fill in user information
+</h2>
+
+<form class="box" action="/update_user" method="POST">
+  <label class="label">Date of birth</label>
+  <div class="field has-addons">
+      <p class="control">
+        <input class="input" type="text" size="2" name="day" placeholder="Day">
+      </p>
+      <p class="control">
+        <span class="select">
+          <select name="month">
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </span>
+      </p>
+      <p class="control">
+        <input class="input" type="text" size="4" name="year" placeholder="Year">
+      </p>
+
+  </div>
+  <div class="field">
+    <label class="label">Gender</label>
+    <p class="control">
+      <span class="select">
+        <select name="gender">
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="other">Other</option>
+        </select>
+      </span>
+    </p>
+  </div>
+
+  <div class="field">
+    <label class="label">About me</label>
+    <div class="control">
+      <input class="textarea" type="text" name="description" placeholder="Tell us about your interests...">
+    </div>
+  </div>
+
+  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Save</button>
+</form>
+
+{% endblock %}

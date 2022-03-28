@@ -1,5 +1,6 @@
 from .app import app
 from . import actions
+from datetime import date
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -51,9 +52,36 @@ def add_user():
 
     hash_value = generate_password_hash(password)
     if actions.add_user(username, hash_value):
-        return render_template("index.html", message=f"User {username} created")
+        session["username"] = username
+        session["role"] = "user"
+        return render_template("edit_user.html", message=f"New user {username} created")
     else:
         return render_template("new_user.html", message=f"Can't create user")
+
+
+@app.route("/update_user", methods=["POST"])
+def update_user():
+    if not session["username"]:
+        return redirect("/")
+
+    day = request.form["day"]
+    month = request.form["month"]
+    year = request.form["year"]
+    gender = request.form["gender"]
+    description = request.form["description"]
+
+    # TODO: Separate validaton function in actions?
+    if not day.isnumeric() or int(day) < 1 or int(day) > 32:
+        return render_template("edit_user.html", message=f"Invalid day of birth")
+    if not month.isnumeric() or int(month) < 1 or int(month) > 12:
+        return render_template("edit_user.html", message=f"Invalid month of birth")
+    if not year.isnumeric() or int(year) < 1900 or int(year) > date.today().year - 1:
+        return render_template("edit_user.html", message=f"Invalid year of birth")
+
+    if actions.update_user(session["username"], f"{year}-{month}-{day}", gender, description):
+        return redirect("/users")
+    else:
+        return render_template("edit_user.html", message=f"Failed to save changes, please check the values")
 
 
 @app.route("/user/<int:id>")

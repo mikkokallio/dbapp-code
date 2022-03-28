@@ -5,14 +5,17 @@ DROP TABLE signups CASCADE;
 DROP TABLE comments CASCADE;
 DROP TABLE notifications CASCADE;
 
+DROP TYPE GENDER;
+DROP TYPE ROLE;
+
 CREATE TYPE GENDER AS ENUM ('male', 'female', 'other');
-CREATE TYPE ROLE as ENUM ('user', 'admin');
+CREATE TYPE ROLE as ENUM ('user', 'admin', 'banned');
 
 CREATE TABLE users (
    id SERIAL PRIMARY KEY,
    username TEXT UNIQUE,
-   age INT NOT NULL,
-   gender GENDER NOT NULL,
+   date_of_birth DATE,
+   gender GENDER,
    description TEXT,
    role ROLE NOT NULL,
    password TEXT NOT NULL,

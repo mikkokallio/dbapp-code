@@ -1,6 +1,6 @@
 Käyttäjien määrä: {{ count }}
 <hr>
 {% for user in users %}
-{{ user.username }} Luotu: {{ user.created_at.strftime("%Y-%m-%d %H:%M:%S") }}
+{{ user.username }} {{ user.role }} {{ user.date_of_birth }} {{ user.gender }} Luotu: {{ user.created_at.strftime("%Y-%m-%d %H:%M:%S") }}
 <hr>
 {% endfor %}
