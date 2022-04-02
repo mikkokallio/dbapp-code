@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="title">
+  {{ event[1] }}
+</h1>
+<h2 class="subtitle">
+  Upcoming event
+</h2>
+
+<div>
+  <p>Id {{ id }}</p>
+  <p>Name {{ event[0] }}</p>
+  <p>a {{ event[2] }}</p>
+  <p>a {{ event[3] }}</p>
+  <div class="columns is-mobile">
+    <div class="column">
+      <i class="fas fa-calendar"></i> {{ event[4] }}
+    </div>
+    <div class="column">
+      <i class="fas fa-clock"></i> {{ event[5] }}
+    </div>
+  </div>
+
+  <p>a {{ event[6] }}</p>
+  <p>a {{ event[7] }}</p>
+  <p>a {{ event[8] }}</p>
+  <div><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event[9] }}</div>
+  <p>a {{ event[10] }}</p>
+</div>
+
+{% endblock %}

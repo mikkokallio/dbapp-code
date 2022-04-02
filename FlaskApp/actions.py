@@ -31,6 +31,7 @@ def add_user(username, hash_value):
         return False
     return True
 
+
 def update_user(username, date_of_birth, gender, description):
     sql = "UPDATE users SET date_of_birth = :date_of_birth, gender = :gender, description = :description WHERE username = :username;"
 
@@ -41,3 +42,30 @@ def update_user(username, date_of_birth, gender, description):
         print(e)
         return False
     return True
+
+
+def upsert_event(username, fields):
+    sql = "INSERT INTO events (title, date, time, description, created_at) VALUES (:title, :date, :time, :description, NOW());"
+
+    try:
+        db.session.execute(sql, {
+            "title": fields["title"],
+            "date": f"{fields['year']}-{fields['month']}-{fields['day']}",
+            "time": f"{fields['hours']}:{fields['minutes']}",
+            "description": fields["description"]})
+        db.session.commit()
+    except Exception as e: # TODO: Should include exception type!
+        print(e)
+        return False
+    return True
+
+
+def get_all_events():
+    result = db.session.execute("SELECT * FROM events")
+    return result.fetchall()
+
+
+def get_event_by_id(id):
+    sql = "SELECT * FROM events WHERE id=:id"
+    result = db.session.execute(sql, {"id": id})
+    return result.fetchone()

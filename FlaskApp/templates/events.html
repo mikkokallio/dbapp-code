@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="title">
+  Events
+</h1>
+<h2 class="subtitle">
+  Upcoming events
+</h2>
+
+<div>
+  <div>Number of events: {{ count }}</div>
+  {% for event in events %}
+  <div class="box">
+    {{ event.title }} Created {{ event.created_at.strftime("%Y-%m-%d %H:%M:%S") }} <a
+      href="/event/{{ event.id }}">Event</a>
+  </div>
+
+  {% endfor %}
+</div>
+
+{% endblock %}

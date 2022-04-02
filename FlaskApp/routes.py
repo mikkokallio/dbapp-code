@@ -61,7 +61,7 @@ def add_user():
 
 @app.route("/update_user", methods=["POST"])
 def update_user():
-    if not session["username"]:
+    if "username" not in session:
         return redirect("/")
 
     day = request.form["day"]
@@ -98,7 +98,36 @@ def list_users():
 
 @app.route("/new_event")
 def new_event():
+    if "username" not in session:
+        return redirect("/")
     return render_template("new_event.html")
+
+
+@app.route("/add_event", methods=["POST"])
+def update_event():
+    if "username" not in session:
+        return redirect("/")
+
+    fields = request.form
+
+    # TODO: Create validation functions in actions and add here
+
+    if actions.upsert_event(session["username"], fields):
+        return redirect("/events")
+    else:
+        return render_template("new_event.html", message=f"Failed to save changes, please check the values")
+
+
+@app.route("/events")
+def list_events():
+    events = actions.get_all_events()
+    return render_template("events.html", count=len(events), events=events)
+
+
+@app.route("/event/<int:id>")
+def show_event(id):
+    event = actions.get_event_by_id(id)
+    return render_template("event.html", id=id, event=event)
 
 
 @app.route("/result", methods=["POST"])
