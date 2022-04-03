@@ -61,6 +61,12 @@ def upsert_event(username, fields):
     return True
 
 
+def get_comments_by_event_id(id):
+    sql = "SELECT users.username as username, comment, comments.created_at as created_at FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE event_id=:id"
+    result = db.session.execute(sql, {"id": id})
+    return result.fetchall()
+
+
 def get_all_events():
     result = db.session.execute("SELECT events.id AS id, title, date, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id")
     return result.fetchall()
@@ -70,3 +76,15 @@ def get_event_by_id(id):
     sql = "SELECT * FROM events WHERE id=:id"
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
+
+
+def send_comment(event_id, user, comment):
+    sql = "INSERT INTO comments (event_id, user_id, comment, created_at) values (:event_id, :user_id, :comment, NOW());"
+    user_id = get_user_by_name(user).id
+    print(user_id)
+    try:
+        db.session.execute(sql, {"event_id": event_id, "user_id": user_id, "comment": comment})
+        db.session.commit()
+    except Exception as e: # TODO: Should include exception type!
+        print(e)
+    return

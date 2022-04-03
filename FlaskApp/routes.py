@@ -1,3 +1,4 @@
+from xml.etree.ElementTree import Comment
 from .app import app
 from . import actions
 from datetime import date
@@ -127,4 +128,17 @@ def list_events():
 @app.route("/event/<int:id>")
 def show_event(id):
     event = actions.get_event_by_id(id)
-    return render_template("event.html", id=id, event=event)
+    comments = actions.get_comments_by_event_id(id)
+    return render_template("event.html", id=id, event=event, comments=comments)
+
+
+@app.route("/write_comment", methods=["POST"])
+def send_comment():
+    if "username" not in session:
+        return redirect("/")
+
+    comment = request.form["comment"]
+    event_id = request.form["event_id"]
+
+    actions.send_comment(event_id, session["username"], comment)
+    return redirect(f"/event/{event_id}")

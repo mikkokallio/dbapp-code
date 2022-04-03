@@ -46,14 +46,14 @@ CREATE TABLE events (
 
 CREATE TABLE signups (
    id SERIAL PRIMARY KEY,
-   meetup_id INT REFERENCES meetups (id),
+   event_id INT REFERENCES events (id),
    user_id INT REFERENCES users (id),
    created_at TIMESTAMP
 );
 
 CREATE TABLE comments (
    id SERIAL PRIMARY KEY,
-   meetup_id INT REFERENCES meetups (id),
+   event_id INT REFERENCES events (id),
    user_id INT REFERENCES users (id),
    comment TEXT NOT NULL,
    created_at TIMESTAMP
