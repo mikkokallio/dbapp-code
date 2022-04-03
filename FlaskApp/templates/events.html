@@ -27,10 +27,11 @@
         </div>
       </div>
       <div class="column">
-        {% if session.username == event.host %}
-          <p>This is totally secret! Only user or admin can see!</p>
+        {% if session.username == event.hostname %}
+        <i class="fa-solid fa-star fa-beat" style="--fa-animation-duration: 2s;"></i> Event organizer
+        {% else %}
+        <i class="fas fa-star"></i> Organized by {{ event.hostname }}
         {% endif %}
-        <i class="fas fa-star"></i> Organized by {{ event.username }}
       </div>
     </div>
     </a>

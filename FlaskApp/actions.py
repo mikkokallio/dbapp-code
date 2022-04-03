@@ -62,7 +62,7 @@ def upsert_event(username, fields):
 
 
 def get_all_events():
-    result = db.session.execute("SELECT * FROM events LEFT JOIN users ON events.host_id = users.id")
+    result = db.session.execute("SELECT events.id AS id, title, date, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id")
     return result.fetchall()
 
 
