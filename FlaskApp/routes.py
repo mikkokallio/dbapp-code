@@ -79,7 +79,7 @@ def update_user():
         return render_template("edit_user.html", message=f"Invalid year of birth")
 
     if actions.update_user(session["username"], f"{year}-{month}-{day}", gender, description):
-        return redirect("/users")
+        return redirect("/")
     else:
         return render_template("edit_user.html", message=f"Failed to save changes, please check the values")
 
@@ -128,23 +128,3 @@ def list_events():
 def show_event(id):
     event = actions.get_event_by_id(id)
     return render_template("event.html", id=id, event=event)
-
-
-@app.route("/result", methods=["POST"])
-def result():
-    return render_template("result.html", name=request.form["name"])
-
-
-@app.route("/order")
-def order():
-    return render_template("order.html")
-
-
-@app.route("/ordered", methods=["POST"])
-def ordered():
-    pizza = request.form["pizza"]
-    extras = request.form.getlist("extra")
-    message = request.form["message"]
-    return render_template("ordered.html", pizza=pizza,
-                           extras=extras,
-                           message=message)
