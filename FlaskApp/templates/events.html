@@ -7,7 +7,7 @@
 <h2 class="subtitle">
   Upcoming events
 </h2>
-
+<div class="box is-flex is-vcentered"><a href="/new_event" class="button is-primary"><i class="fas fa-2x fa-plus-square"></i> New event</a></div>
 <div>
   <div>Number of events: {{ count }}</div>
   {% for event in events %}
@@ -19,7 +19,7 @@
         </figure>
       </div>
       <div class="column">
-        <div><i class="fas fa-calendar"></i> {{ event[4] }}</div>
+        <div><i class="fas fa-calendar"></i> {{ event.date }}</div>
         <div>
           <h2 class="subtitle">
             <a href="/event/{{ event.id }}">{{ event.title }}</a>
