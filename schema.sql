@@ -65,6 +65,3 @@ CREATE TABLE notifications (
    message TEXT NOT NULL,
    created_at TIMESTAMP
 );
-
-
-INSERT INTO users (username, age, gender, role, password, created_at) VALUES ('Jorma', 25, 'male', 'admin', 'password123', NOW());
