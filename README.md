@@ -8,15 +8,22 @@ A user can create an account and log in to the app. Once logged in, a user can c
 
 ## Testing the app
 
-The app runs at TBA
+The app runs at https://functions-dbapp.azurewebsites.net/
+
+Not all features mentioned above exist yet. But you can try doing the following:
+1. Try creating a user account by clicking Create user account.
+2. Once logged in, try creating a new event. You can view events e.g. by clicking the star in the top pane.
+3. Try also writing a comment in an event, whether one you created or an existing one.
+
+## Reviewing the code
+
+Because of the production environment's requirements, the code is structured so that the application code is in the **FlaskApp** folder.
 
 ## Architecture
 
 In this app, Azure Functions provides serverless compute for running Flask, and the database is also a PaaS offering from Azure. The architecture is as follows:
 
 GitHub --GitHub Actions--> Azure Functions <--> Azure Database for PostgreSQL
-
-Please note that the folder structure in this repo follows the [recommended folder structure for a Python Functions project](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python?tabs=asgi%2Cazurecli-linux%2Capplication-level#folder-structure).
 
 ## Views and functionality
 
