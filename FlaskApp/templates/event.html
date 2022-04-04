@@ -24,7 +24,30 @@
     </div>
   </div>
 
-  <div><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event.description }}</div>
+  <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event.description }}</div>
+  <form action="/signup" method="POST">
+    <div class="field has-addons">
+      {% if session.username != event.hostname %}
+        {% if user_going %}
+        <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
+          <i class="fa fa-check"></i>
+        </button>
+        {% else %}
+        <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">
+          <i class='fa fa-question'></i>
+        </button>
+        {% endif %}
+      {% else %}
+      <p class="button is-static is-small">
+        <i class="fa fa-check"></i>
+      </p>
+
+      {% endif %}
+
+      <span>&nbsp; {{ going }} are going</span>
+   </div>
+    <input type="hidden" name="event_id" value="{{ id }}">
+  </form>
 </div>
 <div class="block">
   <h2 class="subtitle">

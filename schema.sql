@@ -60,8 +60,8 @@ CREATE TABLE comments (
 );
 
 CREATE TABLE notifications (
-   id serial PRIMARY KEY,
-   user_id INT,
+   id SERIAL PRIMARY KEY,
+   user_id INT REFERENCES users (id),,
    message TEXT NOT NULL,
    created_at TIMESTAMP
 );

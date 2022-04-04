@@ -121,15 +121,21 @@ def update_event():
 
 @app.route("/events")
 def list_events():
+    if "username" not in session:
+        return redirect("/")
     events = actions.get_all_events()
     return render_template("events.html", count=len(events), events=events)
 
 
 @app.route("/event/<int:id>")
 def show_event(id):
+    if "username" not in session:
+        return redirect("/")
     event = actions.get_event_by_id(id)
     comments = actions.get_comments_by_event_id(id)
-    return render_template("event.html", id=id, event=event, comments=comments)
+    signups = actions.get_signups_by_event_id(id)
+    user_going = actions.get_signup_by_id(id, session["username"])
+    return render_template("event.html", id=id, event=event, comments=comments, signups=signups, going=len(signups), user_going=user_going)
 
 
 @app.route("/write_comment", methods=["POST"])
@@ -141,4 +147,13 @@ def send_comment():
     comment = request.form["comment"]
     if len(comment) >= 1:
         actions.send_comment(event_id, session["username"], comment)
+    return redirect(f"/event/{event_id}")
+
+@app.route("/signup", methods=["POST"])
+def sign_up():
+    if "username" not in session:
+        return redirect("/")
+
+    event_id = request.form["event_id"]
+    actions.add_or_remove_signup(event_id, session["username"])
     return redirect(f"/event/{event_id}")

@@ -67,6 +67,12 @@ def get_comments_by_event_id(id):
     return result.fetchall()
 
 
+def get_signups_by_event_id(id):
+    sql = "SELECT username, user_id FROM signups LEFT JOIN users ON signups.user_id = users.id WHERE event_id=:id"
+    result = db.session.execute(sql, {"id": id})
+    return result.fetchall()
+
+
 def get_all_events():
     result = db.session.execute("SELECT events.id AS id, title, date, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id")
     return result.fetchall()
@@ -85,6 +91,27 @@ def send_comment(event_id, user, comment):
     try:
         db.session.execute(sql, {"event_id": event_id, "user_id": user_id, "comment": comment})
         db.session.commit()
+    except Exception as e: # TODO: Should include exception type!
+        print(e)
+    return
+
+
+def get_signup_by_id(event_id, username):
+    user_id = get_user_by_name(username).id
+    sql = "SELECT COUNT(*) FROM signups WHERE event_id=:event_id AND user_id=:user_id"
+    result = db.session.execute(sql, {"event_id": event_id, "user_id": user_id})
+    return result.fetchone().count > 0 
+
+
+def add_or_remove_signup(event_id, username):
+    user_id = get_user_by_name(username).id
+    if get_signup_by_id(event_id, username):
+        sql = "DELETE FROM signups WHERE event_id=:event_id AND user_id=:user_id"
+    else:
+        sql = "INSERT INTO signups (event_id, user_id, created_at) values (:event_id, :user_id, NOW());"
+    try:
+        db.session.execute(sql, {"event_id": event_id, "user_id": user_id})
+        db.session.commit()        
     except Exception as e: # TODO: Should include exception type!
         print(e)
     return
