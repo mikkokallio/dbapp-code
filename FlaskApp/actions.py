@@ -73,7 +73,7 @@ def get_all_events():
 
 
 def get_event_by_id(id):
-    sql = "SELECT * FROM events WHERE id=:id"
+    sql = "SELECT events.id AS id, title, date, time, events.description as description, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id WHERE events.id=:id"
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
 

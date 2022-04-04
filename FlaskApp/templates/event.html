@@ -8,17 +8,23 @@
   Upcoming event
 </h2>
 
-<div class="box">
-  <div class="columns is-mobile">
-    <div class="column is-one-fifth">
+<div class="box has-text-primary has-background-primary-light">
+  <div class="columns">
+    <div class="column">
       <i class="fas fa-calendar"></i> {{ event.date }}
     </div>
     <div class="column">
       <i class="fas fa-clock"></i> {{ event.time }}
     </div>
+    <div class="column">
+      <i class="fas fa-map-marker"></i> To be added
+    </div>
+    <div class="column">
+      Organized by {{ event.hostname }}
+    </div>
   </div>
 
-  <div><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event[9] }}</div>
+  <div><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event.description }}</div>
 </div>
 <div>
   <h2 class="subtitle">
