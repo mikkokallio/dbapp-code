@@ -137,8 +137,8 @@ def send_comment():
     if "username" not in session:
         return redirect("/")
 
-    comment = request.form["comment"]
     event_id = request.form["event_id"]
-
-    actions.send_comment(event_id, session["username"], comment)
+    comment = request.form["comment"]
+    if len(comment) >= 1:
+        actions.send_comment(event_id, session["username"], comment)
     return redirect(f"/event/{event_id}")
