@@ -2,7 +2,7 @@
 {% block content %}
 
 <h1 class="title">
-  {{ event[1] }}
+  {{ event.title }}
 </h1>
 <h2 class="subtitle">
   Upcoming event
@@ -11,10 +11,10 @@
 <div class="box has-background-primary-light">
   <div class="columns">
     <div class="column">
-      <i class="fas fa-calendar"></i> {{ event.date }}
+      <i class="fas fa-calendar"></i> {{ event.date.strftime("%a %d %b") }}
     </div>
     <div class="column">
-      <i class="fas fa-clock"></i> {{ event.time }}
+      <i class="fas fa-clock"></i> {{ event.time.strftime("%H:%M") }}
     </div>
     <div class="column">
       <i class="fas fa-map-marker"></i> To be added
@@ -26,25 +26,46 @@
 
   <div><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event.description }}</div>
 </div>
-<div>
+<div class="block">
   <h2 class="subtitle">
     Comments
   </h2>
 </div>
 
 <div>
-  {% if comments %}
+  <div class="notification">
+    <div class="columns is-mobile is-size-7">
+      <div class="column is-one-fifth">
+        {{ session.username }}
+        <i class="fas fa-star"></i>
+      </div>
+      <div class="column">
+        now
+      </div>
+    </div>
+    <form action="/write_comment" method="POST">
+      <div class="field">
+        <div class="control">
+          <input class="input is-small" type="text" name="comment" placeholder="Write a comment...">
+        </div>
+      </div>
+      <input type="hidden" name="event_id" value="{{ id }}">
+      <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">Post</button>
+    </form>
+  </div>
+
   {% for comment in comments %}
-  <div class="box">
+  <div class="notification">
     <div class="columns is-mobile is-size-7">
       <div class="column is-one-fifth">
         {{ comment.username }}
+        {% if session.username == comment.username %}
+        <i class="fas fa-star"></i>
+        {% endif %}
+
       </div>
       <div class="column">
-        {{ comment.created_at }}
-        {% if session.username == comment.username %}
-        My comment
-        {% endif %}
+        {{ comment.created_at.strftime("%a %d %b %H:%M") }}
       </div>
     </div>
     <div>
@@ -53,17 +74,6 @@
   </div>
 
   {% endfor %}
-  {% endif %}
-
-  <form class="box" action="/write_comment" method="POST">
-    <div class="field">
-      <div class="control">
-        <input class="textarea" type="text" name="comment" placeholder="Write a comment...">
-      </div>
-    </div>
-    <input type="hidden" name="event_id" value="{{ id }}">
-    <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Send</button>
-  </form>
 
 </div>
 {% endblock %}
