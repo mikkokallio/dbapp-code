@@ -21,7 +21,7 @@ Because of the production environment's requirements, the code is structured so 
 
 ## Todo list
 
-* Indicate "you and n are going" when user is one of the people going.
+* Indicate "you and n are going" instead of "n are going" when user is one of the people going.
 * Create links from usernames shown in comments, events view, and individual event view that open that user's profile. This could be a modal.
 * When clicking "n are going", show in a modal all users that have so far signed up to an event.
 * When giving invalid information in a form, show error proactively, or preserve information in fields so it doesn't have to be entered again.
