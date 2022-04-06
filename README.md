@@ -19,6 +19,16 @@ Not all features mentioned above exist yet. But you can try doing the following:
 
 Because of the production environment's requirements, the code is structured so that the application code is in the **FlaskApp** folder.
 
+## Todo list
+
+* Indicate "you and n are going" instead of "n are going" when user is one of the people going.
+* Create links from usernames shown in comments, events view, and individual event view that open that user's profile. This could be a modal.
+* When clicking "n are going", show in a modal all users that have so far signed up to an event.
+* When giving invalid information in a form, show error proactively, or preserve information in fields so it doesn't have to be entered again.
+* Validate dates, passwords, username more rigorously. E.g. no events occurring in the past allowed.
+* Show all errors at once if there are multiple fields with invalid inputs.
+* Add notifications for different kinds of actions.
+
 ## Architecture
 
 In this app, Azure Functions provides serverless compute for running Flask, and the database is also a PaaS offering from Azure. The architecture is as follows:
