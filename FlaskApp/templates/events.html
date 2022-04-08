@@ -41,14 +41,22 @@
     <div class="modal-background"></div>
   
     <div class="modal-content">
-      <div class="box">
-        <p>{{ event.hostname }}</p>
-        <p>Member since {{ event.member_since.strftime("%d %b %y") }}</p>
-        <p>{{ event.gender }}</p>
-        <p>{{ event.description}}</p>
+      <div class="box has-background-primary-light">
+        <div class="columns">
+          <div class="column">
+            <i class="fas fa-user"></i> {{ event.hostname }}
+          </div>
+          <div class="column">
+            Member since {{ event.member_since.strftime("%d %b %y") }}
+          </div>
+          <div class="column">
+            <i class="fa fa-venus-mars"></i> {{ event.gender }}
+          </div>
+        </div>
+        <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event.description }}</div>  
      </div>
     </div>
-  
+
     <button class="modal-close is-large" aria-label="close"></button>
   </div>
 
