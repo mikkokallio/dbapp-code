@@ -42,9 +42,11 @@
   
     <div class="modal-content">
       <div class="box">
-        <p>{{ users[event.host_id-1] }}</p>
-        <!-- Your content -->
-      </div>
+        <p>{{ event.hostname }}</p>
+        <p>Member since {{ event.member_since.strftime("%d %b %y") }}</p>
+        <p>{{ event.gender }}</p>
+        <p>{{ event.description}}</p>
+     </div>
     </div>
   
     <button class="modal-close is-large" aria-label="close"></button>

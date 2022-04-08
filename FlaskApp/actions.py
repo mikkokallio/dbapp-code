@@ -74,9 +74,8 @@ def get_signups_by_event_id(id):
 
 
 def get_all_events():
-    result = db.session.execute("SELECT events.id AS id, title, date, users.id as host_id, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id")
+    result = db.session.execute("SELECT events.id AS id, title, date, users.id as host_id, gender, users.description as description, users.created_at as member_since, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id")
     return result.fetchall()
-
 
 def get_event_by_id(id):
     sql = "SELECT events.id AS id, title, date, time, events.description as description, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id WHERE events.id=:id"
