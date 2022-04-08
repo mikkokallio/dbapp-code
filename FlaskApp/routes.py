@@ -123,8 +123,9 @@ def update_event():
 def list_events():
     if "username" not in session:
         return redirect("/")
+    users = actions.get_all_users()
     events = actions.get_all_events()
-    return render_template("events.html", count=len(events), events=events)
+    return render_template("events.html", count=len(events), events=events, users=users)
 
 
 @app.route("/event/<int:id>")

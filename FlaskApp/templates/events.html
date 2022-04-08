@@ -30,26 +30,27 @@
         {% if session.username == event.hostname %}
         <i class="fa-solid fa-star fa-beat" style="--fa-animation-duration: 2s;"></i> Event organizer
         {% else %}
-        <i class="fas fa-star"></i> Organized by <a class="js-modal-trigger" data-target="user-modal">{{ event.hostname }}</a>
+        <i class="fas fa-star"></i> Organized by <a class="js-modal-trigger" data-target="user-modal{{ event.host_id }}">{{ event.hostname }}</a>
         {% endif %}
       </div>
     </div>
     </a>
   </div>
 
+  <div id="user-modal{{ event.host_id }}" class="modal">
+    <div class="modal-background"></div>
+  
+    <div class="modal-content">
+      <div class="box">
+        <p>{{ users[event.host_id-1] }}</p>
+        <!-- Your content -->
+      </div>
+    </div>
+  
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
+
   {% endfor %}
 </div>
 
-<div id="user-modal" class="modal">
-  <div class="modal-background"></div>
-
-  <div class="modal-content">
-    <div class="box">
-      <p>Modal JS example</p>
-      <!-- Your content -->
-    </div>
-  </div>
-
-  <button class="modal-close is-large" aria-label="close"></button>
-</div>
 {% endblock %}
