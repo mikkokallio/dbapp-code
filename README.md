@@ -29,6 +29,7 @@ Because of the production environment's requirements, the code is structured so 
 * Show all errors at once if there are multiple fields with invalid inputs. Message could be array, then for-each loop through those.
 * Add notifications for different kinds of actions.
 * Editing user or event information should be possible.
+* Add locations to events.
 
 ## Architecture
 
