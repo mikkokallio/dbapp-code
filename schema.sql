@@ -37,9 +37,7 @@ CREATE TABLE events (
    host_id INT REFERENCES users (id),
    date DATE NOT NULL,
    time TIME NOT NULL,
-   min_people INT,
    max_people INT,
-   anonymous BOOLEAN,
    description TEXT,
    created_at TIMESTAMP
 );
@@ -61,7 +59,8 @@ CREATE TABLE comments (
 
 CREATE TABLE notifications (
    id SERIAL PRIMARY KEY,
-   user_id INT REFERENCES users (id),,
+   user_id INT REFERENCES users (id),
    message TEXT NOT NULL,
+   acknowledged BOOLEAN,
    created_at TIMESTAMP
 );
