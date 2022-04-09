@@ -1,20 +1,20 @@
-<div id="user-modal{{ event.host_id }}" class="modal">
+<div id="user-modal{{ unit.username }}" class="modal">
     <div class="modal-background"></div>
   
     <div class="modal-content">
       <div class="box has-background-primary-light">
         <div class="columns">
           <div class="column">
-            <i class="fas fa-user"></i> {{ event.hostname }}
+            <i class="fas fa-user"></i> {{ unit.username }}
           </div>
           <div class="column">
-            Member since {{ event.member_since.strftime("%d %b %y") }}
+            Member since {{ unit.member_since.strftime("%d %b %y") }}
           </div>
           <div class="column">
-            <i class="fa fa-venus-mars"></i> {{ event.gender }}
+            <i class="fa fa-venus-mars"></i> {{ unit.gender }}
           </div>
         </div>
-        <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event.description }}</div>  
+        <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>  
      </div>
     </div>
 

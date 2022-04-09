@@ -75,25 +75,26 @@
     </form>
   </div>
 
-  {% for comment in comments %}
+  {% for unit in comments %}
   <div class="notification">
     <div class="columns is-mobile is-size-7">
       <div class="column is-one-fifth">
-        {{ comment.username }}
-        {% if session.username == comment.username %}
+        <a class="js-modal-trigger" data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
+        {% if session.username == unit.username %}
         <i class="fas fa-star"></i>
         {% endif %}
 
       </div>
       <div class="column">
-        {{ comment.created_at.strftime("%a %d %b %H:%M") }}
+        {{ unit.created_at.strftime("%a %d %b %H:%M") }}
       </div>
     </div>
     <div>
-      {{ comment.comment }}
+      {{ unit.comment }}
     </div>
   </div>
 
+  {% include "user_modal.html" %}
   {% endfor %}
 
 </div>

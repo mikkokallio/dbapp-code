@@ -10,7 +10,7 @@
 <div class="box is-flex is-vcentered"><a href="/new_event" class="button is-primary"><i class="fas fa-2x fa-plus-square"></i> New event</a></div>
 <div>
   <div>Number of events: {{ count }}</div>
-  {% for event in events %}
+  {% for unit in events %}
   <div class="box">
     <div class="columns">
       <div class="column is-one-fifth">
@@ -19,18 +19,18 @@
         </figure>
       </div>
       <div class="column">
-        <div><i class="fas fa-calendar"></i> {{ event.date }}</div>
+        <div><i class="fas fa-calendar"></i> {{ unit.date }}</div>
         <div>
           <h2 class="subtitle">
-            <a href="/event/{{ event.id }}">{{ event.title }}</a>
+            <a href="/event/{{ unit.id }}">{{ unit.title }}</a>
           </h2>
         </div>
       </div>
       <div class="column">
-        {% if session.username == event.hostname %}
+        {% if session.username == unit.username %}
         <i class="fa-solid fa-star fa-beat" style="--fa-animation-duration: 2s;"></i> Event organizer
         {% else %}
-        <i class="fas fa-star"></i> Organized by <a class="js-modal-trigger" data-target="user-modal{{ event.host_id }}">{{ event.hostname }}</a>
+        <i class="fas fa-star"></i> Organized by <a class="js-modal-trigger" data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
         {% endif %}
       </div>
     </div>

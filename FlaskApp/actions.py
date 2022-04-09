@@ -62,7 +62,7 @@ def upsert_event(username, fields):
 
 
 def get_comments_by_event_id(id):
-    sql = "SELECT users.username as username, comment, comments.created_at as created_at FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE event_id=:id"
+    sql = "SELECT users.username as username, comment, comments.created_at as created_at, gender, users.description as description, users.created_at as member_since FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE event_id=:id"
     result = db.session.execute(sql, {"id": id})
     return result.fetchall()
 
@@ -74,7 +74,7 @@ def get_signups_by_event_id(id):
 
 
 def get_all_events():
-    result = db.session.execute("SELECT events.id AS id, title, date, users.id as host_id, gender, users.description as description, users.created_at as member_since, users.username as hostname FROM events LEFT JOIN users ON events.host_id = users.id")
+    result = db.session.execute("SELECT events.id AS id, title, date, gender, users.description as description, users.created_at as member_since, users.username as username FROM events LEFT JOIN users ON events.host_id = users.id")
     return result.fetchall()
 
 def get_event_by_id(id):
