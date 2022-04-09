@@ -28,20 +28,10 @@ Because of the production environment's requirements, the code is structured so 
 * Add notifications for different kinds of actions.
 * Editing user or event information should be possible.
 * Add locations to events.
+* Deleting an event should be possible.
+* Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
+* In user modal, show what events they've signed up for.
 
 ## Architecture
 
-In this app, Azure Functions provides serverless compute for running Flask, and the database is also a PaaS offering from Azure. The architecture is as follows:
-
-GitHub --GitHub Actions--> Azure Functions <--> Azure Database for PostgreSQL
-
-## Views and functionality
-
-The app shall have the following views:
-* Login
-* Create user account
-* Home, which shows newest events, latest notifications, and contains links to other views
-* List events
-* List users
-* View 1 event, allows commenting & signing up for event, also suggesting event to other users (more controls shown if you created it, e.g. delete event)
-* View 1 user, which shows their public information as well as what events they have created or signed up for
+In this app, Azure Functions provides serverless compute for running Flask, and the database is also a PaaS offering from Azure. Github and Github Actions are used for CI/CD, deploying the app automatically to Azure each time the main branch is updated.
