@@ -29,7 +29,7 @@
   <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>
   <form action="/signup" method="POST">
     <div class="field has-addons">
-      {% if session.username != unit.hostname %}
+      {% if session.username != unit.username %}
         {% if user_going %}
         <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
           <i class="fa fa-check"></i>

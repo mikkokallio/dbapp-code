@@ -40,6 +40,12 @@ def new_user():
     return render_template("new_user.html")
 
 
+@app.route("/edit_user")
+def edit_user():
+    user = actions.get_user_by_name(session["username"])
+    return render_template("edit_user.html", user=user)
+
+
 @app.route("/add_user", methods=["POST"])
 def add_user():
     username = request.form["username"]
