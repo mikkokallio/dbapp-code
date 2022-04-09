@@ -11,9 +11,9 @@ A user can create an account and log in to the app. Once logged in, a user can c
 The app runs at https://functions-dbapp.azurewebsites.net/
 
 Not all features mentioned above exist yet. But you can try doing the following:
-1. Try creating a user account by clicking Create user account.
-2. Once logged in, try creating a new event. You can view events e.g. by clicking the star in the top pane.
-3. Try also writing a comment in an event, whether one you created or an existing one.
+1. Create a new user account and log in.
+2. View events and register to join an event, or comment on an event.
+3. View profiles for users that have left comments, and view who have registered to join an event.
 
 ## Reviewing the code
 
@@ -21,30 +21,17 @@ Because of the production environment's requirements, the code is structured so 
 
 ## Todo list
 
-* Indicate "you and n are going" instead of "n are going" when user is one of the people going.
-* Create links from usernames shown in comments, events view, and individual event view that open that user's profile. This could be a modal.
-* When clicking "n are going", show in a modal all users that have so far signed up to an event.
 * When giving invalid information in a form, show error proactively, or preserve information in fields so it doesn't have to be entered again.
+* Show all errors at once if there are multiple fields with invalid inputs. Message could be array, then for-each loop through those.
 * Validate dates, passwords, username more rigorously. E.g. no events occurring in the past allowed.
 * Past events should not allow registering anymore, and they should be listed under a different heading: past events.
-* Show all errors at once if there are multiple fields with invalid inputs. Message could be array, then for-each loop through those.
 * Add notifications for different kinds of actions.
 * Editing user or event information should be possible.
 * Add locations to events.
+* Deleting an event should be possible.
+* Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
+* In user modal, show what events they've signed up for.
 
 ## Architecture
 
-In this app, Azure Functions provides serverless compute for running Flask, and the database is also a PaaS offering from Azure. The architecture is as follows:
-
-GitHub --GitHub Actions--> Azure Functions <--> Azure Database for PostgreSQL
-
-## Views and functionality
-
-The app shall have the following views:
-* Login
-* Create user account
-* Home, which shows newest events, latest notifications, and contains links to other views
-* List events
-* List users
-* View 1 event, allows commenting & signing up for event, also suggesting event to other users (more controls shown if you created it, e.g. delete event)
-* View 1 user, which shows their public information as well as what events they have created or signed up for
+In this app, Azure Functions provides serverless compute for running Flask, and the database is also a PaaS offering from Azure. Github and Github Actions are used for CI/CD, deploying the app automatically to Azure each time the main branch is updated.
