@@ -135,7 +135,7 @@ def show_event(id):
     comments = actions.get_comments_by_event_id(id)
     signups = actions.get_signups_by_event_id(id)
     user_going = actions.get_signup_by_id(id, session["username"])
-    return render_template("event.html", id=id, event=event, comments=comments, signups=signups, going=len(signups), user_going=user_going)
+    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, going=len(signups), user_going=user_going)
 
 
 @app.route("/write_comment", methods=["POST"])
@@ -148,6 +148,7 @@ def send_comment():
     if len(comment) >= 1:
         actions.send_comment(event_id, session["username"], comment)
     return redirect(f"/event/{event_id}")
+
 
 @app.route("/signup", methods=["POST"])
 def sign_up():

@@ -2,7 +2,7 @@
 {% block content %}
 
 <h1 class="title">
-  {{ event.title }}
+  {{ unit.title }}
 </h1>
 <h2 class="subtitle">
   Upcoming event
@@ -11,23 +11,25 @@
 <div class="box has-background-primary-light">
   <div class="columns">
     <div class="column">
-      <i class="fas fa-calendar"></i> {{ event.date.strftime("%a %d %b") }}
+      <i class="fas fa-calendar"></i> {{ unit.date.strftime("%a %d %b") }}
     </div>
     <div class="column">
-      <i class="fas fa-clock"></i> {{ event.time.strftime("%H:%M") }}
+      <i class="fas fa-clock"></i> {{ unit.time.strftime("%H:%M") }}
     </div>
     <div class="column">
       <i class="fas fa-map-marker"></i> To be added
     </div>
     <div class="column">
-      Organized by {{ event.hostname }}
+      Organized by <a class="js-modal-trigger" data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
     </div>
   </div>
 
-  <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ event.description }}</div>
+  {% include "user_modal.html" %}
+
+  <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>
   <form action="/signup" method="POST">
     <div class="field has-addons">
-      {% if session.username != event.hostname %}
+      {% if session.username != unit.hostname %}
         {% if user_going %}
         <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
           <i class="fa fa-check"></i>
