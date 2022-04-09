@@ -134,8 +134,12 @@ def show_event(id):
     event = actions.get_event_by_id(id)
     comments = actions.get_comments_by_event_id(id)
     signups = actions.get_signups_by_event_id(id)
-    user_going = actions.get_signup_by_id(id, session["username"])
-    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, going=len(signups), user_going=user_going)
+    going = len(signups)
+    if session["username"] == event.username:
+        user_going = True
+    else:
+        user_going = actions.get_signup_by_id(id, session["username"])
+    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, going=going, user_going=user_going)
 
 
 @app.route("/write_comment", methods=["POST"])

@@ -47,21 +47,15 @@
       {% endif %}
 
       <span>&nbsp; <a class="js-modal-trigger" data-target="user-list">
-        {% if session.username == unit.hostname and going == 0 %}
+        {% if user_going and going == 0 %}
         You are going
-        {% elif session.username == unit.hostname and going == 1 %}
+        {% elif user_going and going == 1 %}
         You and 1 is going
-        {% elif session.username == unit.hostname and going > 1 %}
+        {% elif user_going and going > 1 %}
         You and {{ going }} are going
-        {% elif session.username != unit.hostname and going == 1 and user_going %}
-        You are going
-        {% elif session.username != unit.hostname and going == 2 and user_going %}
-        You and 1 is going
-        {% elif session.username != unit.hostname and going > 2 and user_going %}
-        You and {{ going }} are going
-        {% elif session.username != unit.hostname and going == 0 and not user_going %}
+        {% elif not user_going and going == 0 %}
         1 is going
-        {% elif session.username != unit.hostname and going > 0 and not user_going %}
+        {% else %}
         {{ going+1 }} are going
         {% endif %}
       </a></span>
