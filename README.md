@@ -11,9 +11,9 @@ A user can create an account and log in to the app. Once logged in, a user can c
 The app runs at https://functions-dbapp.azurewebsites.net/
 
 Not all features mentioned above exist yet. But you can try doing the following:
-1. Try creating a user account by clicking Create user account.
-2. Once logged in, try creating a new event. You can view events e.g. by clicking the star in the top pane.
-3. Try also writing a comment in an event, whether one you created or an existing one.
+1. Create a new user account and log in.
+2. View events and register to join an event, or comment on an event.
+3. View profiles for users that have left comments, and view who have registered to join an event.
 
 ## Reviewing the code
 
