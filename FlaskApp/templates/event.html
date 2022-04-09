@@ -46,7 +46,26 @@
 
       {% endif %}
 
-      <span>&nbsp; {{ going }} are going</span>
+      <span>&nbsp; <a class="js-modal-trigger" data-target="user-list">
+        {% if session.username == unit.hostname and going == 0 %}
+        You are going
+        {% elif session.username == unit.hostname and going == 1 %}
+        You and 1 is going
+        {% elif session.username == unit.hostname and going > 1 %}
+        You and {{ going }} are going
+        {% elif session.username != unit.hostname and going == 1 and user_going %}
+        You are going
+        {% elif session.username != unit.hostname and going == 2 and user_going %}
+        You and 1 is going
+        {% elif session.username != unit.hostname and going > 2 and user_going %}
+        You and {{ going }} are going
+        {% elif session.username != unit.hostname and going == 0 and not user_going %}
+        1 is going
+        {% elif session.username != unit.hostname and going > 0 and not user_going %}
+        {{ going+1 }} are going
+        {% endif %}
+      </a></span>
+      {% include "user_list_modal.html" %}
    </div>
     <input type="hidden" name="event_id" value="{{ id }}">
   </form>

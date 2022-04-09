@@ -1,0 +1,25 @@
+<div id="user-list" class="modal">
+  <div class="modal-background"></div>
+
+  <div class="modal-content">
+    <div class="box has-background-primary-light">
+      <div class="block">
+        {% if going == 0 %}
+        1 person has signed up:
+        {% else %}
+        {{ going+1 }} people have signed up:
+        {% endif %}
+      </div>
+      <div class="block">
+        <strong>{{ unit.username }}</strong> (meeting organizer)
+      </div>
+      {% for user in signups %}
+      <div class="block">
+        <strong>{{ user.username }}</strong>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
