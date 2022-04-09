@@ -28,6 +28,7 @@ Because of the production environment's requirements, the code is structured so 
 * Validate dates, passwords, username more rigorously. E.g. no events occurring in the past allowed.
 * Show all errors at once if there are multiple fields with invalid inputs.
 * Add notifications for different kinds of actions.
+* Editing user or event information should be possible.
 
 ## Architecture
 
