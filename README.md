@@ -30,7 +30,6 @@ Because of the production environment's requirements, the code is structured so 
 * Editing event information should be possible.
 * Add locations to events.
 * User can change password.
-* Comments, events, etc should be shown in order.
 * Deleting an event should be possible. Or canceling, so the event doesn't just vanish.
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
 * In user modal, show what events they've signed up for.
