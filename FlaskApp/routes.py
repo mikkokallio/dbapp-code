@@ -71,21 +71,18 @@ def update_user():
     if "username" not in session:
         return redirect("/")
 
-    day = request.form["day"]
-    month = request.form["month"]
-    year = request.form["year"]
+    date_of_birth = request.form["date_of_birth"]
     gender = request.form["gender"]
     description = request.form["description"]
+    
+    print(date_of_birth)
 
-    # TODO: Separate validaton function in actions?
-    if not day.isnumeric() or int(day) < 1 or int(day) > 32:
-        return render_template("edit_user.html", message=f"Invalid day of birth")
-    if not month.isnumeric() or int(month) < 1 or int(month) > 12:
-        return render_template("edit_user.html", message=f"Invalid month of birth")
-    if not year.isnumeric() or int(year) < 1900 or int(year) > date.today().year - 1:
-        return render_template("edit_user.html", message=f"Invalid year of birth")
+    # TODO: Add dob validation here or in "actions"
+    #    return render_template("edit_user.html", message=f"Invalid month of birth")
+    #if not year.isnumeric() or int(year) < 1900 or int(year) > date.today().year - 1:
+    #    return render_template("edit_user.html", message=f"Invalid year of birth")
 
-    if actions.update_user(session["username"], f"{year}-{month}-{day}", gender, description):
+    if actions.update_user(session["username"], date_of_birth, gender, description):
         return redirect("/")
     else:
         return render_template("edit_user.html", message=f"Failed to save changes, please check the values")

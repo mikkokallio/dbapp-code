@@ -6,7 +6,7 @@ def validate_password(password):
 
 
 def get_user_by_name(username):
-    sql = "SELECT id, username, gender, description, password, role FROM users WHERE username=:username"
+    sql = "SELECT id, username, date_of_birth, gender, description, password, role FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username": username})
     return result.fetchone()
 

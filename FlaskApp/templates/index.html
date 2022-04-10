@@ -9,8 +9,8 @@
 </h2>
 {% if session.username %}
 <p>Signed in as {{ session.username }}</p>
-<div><a href="/users">View users</a></div>
-<div><a href="/new_event">Create new event</a></div>
+<div><a href="/edit_user">Edit profile</a></div>
+<div><a href="/change_password">Change password</a></div>
 <div><a href="/logout">Log out</a></div>
 {% else %}
 <form class="box" action="/login" method="POST">
