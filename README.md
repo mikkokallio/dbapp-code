@@ -23,8 +23,7 @@ Because of the production environment's requirements, the code is structured so 
 ## Todo list
 
 * When giving invalid information in a form, show error proactively, or preserve information in fields so it doesn't have to be entered again.
-* Show all errors at once if there are multiple fields with invalid inputs. Message could be array, then for-each loop through those.
-* Validate dates, passwords, username more rigorously. E.g. no events occurring in the past allowed.
+* Validate events and additional details more rigorously. E.g. no events occurring in the past allowed.
 * Past events should not allow registering anymore, and they should be listed under a different heading: past events.
 * Add notifications for different kinds of actions.
 * Editing event information should be possible.
