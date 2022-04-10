@@ -117,11 +117,11 @@ def update_event():
     fields = request.form
     messages = actions.validate_event(fields)
     if len(messages) > 0:
-        return render_template("new_event.html", messages=messages)
+        return render_template("new_event.html", messages=messages, fields=fields)
     if actions.upsert_event(session["username"], fields):
         return redirect("/events")
     else:
-        return render_template("new_event.html", messages=[f"Failed to save changes, please check the values"])
+        return render_template("new_event.html", messages=[f"Failed to save changes, please check the values"], fields=fields)
 
 
 @app.route("/events")

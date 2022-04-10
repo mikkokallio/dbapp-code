@@ -12,44 +12,44 @@
   <div class="field">
     <label class="label">Title</label>
     <div class="control">
-      <input class="input" type="text" name="title">
+      <input class="input" type="text" name="title" value="{{ fields['title'] }}">
     </div>
   </div>
 
   <div class="field">
     <label class="label">Place</label>
     <div class="control">
-      <input class="input" type="text" name="place">
+      <input class="input" type="text" name="place" value="{{ fields['place'] }}">
     </div>
   </div>
   <div class="field">
     <label class="label">Date of event</label>
     <p class="control">
-      <input class="input" name="date" type="date" value="">
+      <input class="input" name="date" type="date" value="{{ fields['date'] }}">
     </p>
   </div>
 
   <label class="label">Starting time</label>
   <div class="field has-addons">
     <p class="control">
-      <input class="input" type="text" size="2" name="hours" placeholder="Hours">
+      <input class="input" type="text" size="2" name="hours" placeholder="Hours" value="{{ fields['hours'] }}">
     </p>
     <p class="control">
-      <input class="input" type="text" size="2" name="minutes" placeholder="Mins">
+      <input class="input" type="text" size="2" name="minutes" placeholder="Mins" value="{{ fields['minutes'] }}">
     </p>
   </div>
 
   <label class="label">Maximum attendees</label>
   <div class="field has-addons">
     <p class="control">
-      <input class="input" type="text" size="2" name="max">
+      <input class="input" type="text" size="2" name="max" value="{{ fields['max'] }}">
     </p>
   </div>
 
   <div class="field">
     <label class="label">Description</label>
     <div class="control">
-      <input class="textarea" type="text" name="description" placeholder="Tell us about your event...">
+      <input class="textarea" type="text" name="description" placeholder="Tell us about your event..." value="{{ fields['description'] }}">
     </div>
   </div>
 
