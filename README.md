@@ -1,4 +1,4 @@
-# MeetApp
+# Minglerz.net
 
 ![workflow status](https://github.com/mikkokallio/dbapp-code/actions/workflows/main_functions-dbapp.yml/badge.svg)
 
