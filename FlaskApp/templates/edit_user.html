@@ -2,7 +2,7 @@
 {% block content %}
 
 <h1 class="title">
-  {{ user.username }}
+  {{ session["username"] }}
 </h1>
 <h2 class="subtitle">
   Fill in user information
@@ -10,7 +10,7 @@
 <form class="box has-background-primary-light" action="/update_user" method="POST">
   <label class="label">Username</label>
   <div class="block">
-    {{ user.username }}
+    {{ session["username"] }}
   </div>
   <div class="columns">
     <div class="column is-4">
@@ -47,4 +47,41 @@
   <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Save</button>
 </form>
 
+{% if new_user %}
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box has-background-primary-light">
+      <p class="block">Welcome to <strong>MeetApp</strong>!</p>
+      <p class="block">Your user account has been created. You can now fill in some additional information for your user profile. If you wish to change this information later, you can find your profile by clicking the <i class="fa-solid fa-user"></i> icon in the top bar.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endif %}
+
 {% endblock %}
+
+
+<div id="user-modal{{ unit.username }}" class="modal">
+  <div class="modal-background"></div>
+
+  <div class="modal-content">
+    <div class="box has-background-primary-light">
+      <div class="columns">
+        <div class="column">
+          <i class="fas fa-user"></i> {{ unit.username }}
+        </div>
+        <div class="column">
+          Member since {{ unit.member_since.strftime("%d %b %y") }}
+        </div>
+        <div class="column">
+          <i class="fa fa-venus-mars"></i> {{ unit.gender }}
+        </div>
+      </div>
+      <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.about_me }}</div>  
+   </div>
+  </div>
+
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>

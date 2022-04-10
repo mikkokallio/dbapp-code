@@ -72,7 +72,7 @@ def add_user():
     if actions.add_user(username, hash_value):
         session["username"] = username
         session["role"] = "user"
-        return render_template("edit_user.html", message=f"New user {username} created")
+        return render_template("edit_user.html", new_user=True, user=None)
     else:
         return render_template("new_user.html", message=f"Can't create user")
 
@@ -85,10 +85,8 @@ def update_user():
     date_of_birth = request.form["date_of_birth"]
     gender = request.form["gender"]
     description = request.form["description"]
-    
+
     print(date_of_birth)
-    
-    
 
     # TODO: Add dob validation here or in "actions"
     #if not year.isnumeric() or int(year) < 1900 or int(year) > date.today().year - 1:
@@ -98,12 +96,6 @@ def update_user():
         return redirect("/")
     else:
         return render_template("edit_user.html", message=f"Failed to save changes, please check the values")
-
-
-@app.route("/users")
-def list_users():
-    users = actions.get_all_users()
-    return render_template("users.html", count=len(users), users=users)
 
 
 @app.route("/new_event")
