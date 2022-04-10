@@ -13,7 +13,7 @@ The app runs at https://functions-dbapp.azurewebsites.net/
 Not all features mentioned above exist yet. But you can try doing the following:
 1. Create a new user account and log in.
 2. View events and register to join an event, or comment on an event.
-3. View profiles for users that have left comments, and view who have registered to join an event.
+3. View other users' profiles wherever their username appears as a link.
 4. Click the user icon in the top bar to view your own profile, and edit your profile or log out.
 
 ## Reviewing the code
@@ -23,8 +23,7 @@ Because of the production environment's requirements, the code is structured so 
 ## Todo list
 
 * When giving invalid information in a form, show error proactively, or preserve information in fields so it doesn't have to be entered again.
-* Show all errors at once if there are multiple fields with invalid inputs. Message could be array, then for-each loop through those.
-* Validate dates, passwords, username more rigorously. E.g. no events occurring in the past allowed.
+* Validate events and additional details more rigorously. E.g. no events occurring in the past allowed.
 * Past events should not allow registering anymore, and they should be listed under a different heading: past events.
 * Add notifications for different kinds of actions.
 * Editing event information should be possible.
@@ -35,7 +34,6 @@ Because of the production environment's requirements, the code is structured so 
 * In user modal, show what events they've signed up for.
 * Bug: On mobile, viewing who's going triggers the button that determines who's going.
 * On mobile, some fields are too small to display placeholder text.
-* Create also modal as transition between create and edit user, with a reminder that user can later come back using the (user) icon.
 * Add cross-site scripting protection and other security measures.
 
 ## Architecture
