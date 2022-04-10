@@ -14,6 +14,7 @@ Not all features mentioned above exist yet. But you can try doing the following:
 1. Create a new user account and log in.
 2. View events and register to join an event, or comment on an event.
 3. View profiles for users that have left comments, and view who have registered to join an event.
+4. Click the user icon in the top bar to view your own profile, and edit your profile or log out.
 
 ## Reviewing the code
 
@@ -26,7 +27,7 @@ Because of the production environment's requirements, the code is structured so 
 * Validate dates, passwords, username more rigorously. E.g. no events occurring in the past allowed.
 * Past events should not allow registering anymore, and they should be listed under a different heading: past events.
 * Add notifications for different kinds of actions.
-* Editing user or event information should be possible.
+* Editing event information should be possible.
 * Add locations to events.
 * User can change password.
 * Comments, events, etc should be shown in order.
