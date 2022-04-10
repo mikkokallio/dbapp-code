@@ -115,9 +115,9 @@ def update_event():
         return redirect("/")
 
     fields = request.form
-
-    # TODO: Create validation functions in actions and add here
-
+    messages = actions.validate_event(fields)
+    if len(messages) > 0:
+        return render_template("new_event.html", messages=messages)
     if actions.upsert_event(session["username"], fields):
         return redirect("/events")
     else:

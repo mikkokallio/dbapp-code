@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from .db import db
 
 
@@ -22,6 +23,19 @@ def validate_username(username):
         errors.append("Username should be at least 3 characters")
     if any(character.isspace() for character in username):
         errors.append("Username should not contain spaces")
+    return errors
+
+
+def validate_event(fields):
+    errors = []
+    if len(fields["title"]) < 5:
+        errors.append("Title must be at least 5 characters")
+    if fields["date"] == "":
+        errors.append("Event must have a date")
+    elif date.today() > datetime.strptime(fields["date"], "%Y-%m-%d").date():
+        errors.append("Event can't happen in the past")
+    if len(fields["description"].split(" ")) < 5:
+        errors.append("Description must be at least 5 words")
     return errors
 
 
@@ -71,7 +85,7 @@ def upsert_event(username, fields):
         db.session.execute(sql, {
             "title": fields["title"],
             "host_id": id,
-            "date": f"{fields['year']}-{fields['month']}-{fields['day']}",
+            "date": fields["date"],
             "time": f"{fields['hours']}:{fields['minutes']}",
             "description": fields["description"]})
         db.session.commit()
