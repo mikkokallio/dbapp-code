@@ -28,7 +28,9 @@ Because of the production environment's requirements, the code is structured so 
 * Add notifications for different kinds of actions.
 * Editing user or event information should be possible.
 * Add locations to events.
-* Deleting an event should be possible.
+* User can change password.
+* Comments, events, etc should be shown in order.
+* Deleting an event should be possible. Or canceling, so the event doesn't just vanish.
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
 * In user modal, show what events they've signed up for.
 
