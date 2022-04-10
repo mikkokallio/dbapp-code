@@ -34,6 +34,8 @@ Because of the production environment's requirements, the code is structured so 
 * Deleting an event should be possible. Or canceling, so the event doesn't just vanish.
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
 * In user modal, show what events they've signed up for.
+* Bug: On mobile, viewing who's going triggers the button that determines who's going.
+* On mobile, some fields are too small to display placeholder text.
 * Create also modal as transition between create and edit user, with a reminder that user can later come back using the (user) icon.
 
 ## Architecture
