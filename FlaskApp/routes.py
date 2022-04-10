@@ -95,7 +95,7 @@ def update_user():
     if len(messages) > 0:
         return render_template("edit_user.html", messages=messages, user=request.form)
     if actions.update_user(session["username"], date_of_birth, gender, description):
-        return render_template("events.html", new_user=True)
+        return redirect("/profile")
     else:
         return render_template("edit_user.html", messages=[f"Failed to save changes, please check the values"], user=request.form)
 
@@ -117,7 +117,7 @@ def update_event():
     if len(messages) > 0:
         return render_template("new_event.html", messages=messages, fields=fields)
     if actions.upsert_event(session["username"], fields):
-        return redirect("/")
+        return redirect("/events")
     else:
         return render_template("new_event.html", messages=[f"Failed to save changes, please check the values"], fields=fields)
 
