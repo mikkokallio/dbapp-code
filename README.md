@@ -36,6 +36,7 @@ Because of the production environment's requirements, the code is structured so 
 * Bug: On mobile, viewing who's going triggers the button that determines who's going.
 * On mobile, some fields are too small to display placeholder text.
 * Create also modal as transition between create and edit user, with a reminder that user can later come back using the (user) icon.
+* Add cross-site scripting protection and other security measures.
 
 ## Architecture
 
