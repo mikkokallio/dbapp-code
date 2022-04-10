@@ -18,7 +18,7 @@ def login():
     password = request.form["password"]
     user = actions.get_user_by_name(username)
     if not user:
-        return render_template("index.html", message="Username does not exist")
+        return render_template("index.html", messages=["Username does not exist"])
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):
@@ -26,7 +26,7 @@ def login():
             session["role"] = user.role
             session["id"] = user.id
         else:
-            return render_template("index.html", message="Wrong password")
+            return render_template("index.html", messages=["Wrong password"])
     return redirect("/events")
 
 
@@ -63,10 +63,14 @@ def add_user():
     password = request.form["password"]
     password2 = request.form["password2"]
 
+    messages = []
+    messages.extend(actions.validate_username(username))
+    messages.extend(actions.validate_password(password))
     if password != password2:
-        return render_template("new_user.html", message=f"Passwords don't match")
-    if not actions.validate_password(password):
-        return render_template("new_user.html", message=f"Password must be at least 6 characters long")
+        messages.append("Passwords don't match")
+
+    if len(messages) > 0:
+        return render_template("new_user.html", messages=messages)
 
     hash_value = generate_password_hash(password)
     if actions.add_user(username, hash_value):
@@ -74,7 +78,7 @@ def add_user():
         session["role"] = "user"
         return render_template("edit_user.html", new_user=True, user=None)
     else:
-        return render_template("new_user.html", message=f"Can't create user")
+        return render_template("new_user.html", messages=[f"Can't create user"])
 
 
 @app.route("/update_user", methods=["POST"])
@@ -95,7 +99,7 @@ def update_user():
     if actions.update_user(session["username"], date_of_birth, gender, description):
         return redirect("/")
     else:
-        return render_template("edit_user.html", message=f"Failed to save changes, please check the values")
+        return render_template("edit_user.html", messages=[f"Failed to save changes, please check the values"])
 
 
 @app.route("/new_event")
@@ -117,7 +121,7 @@ def update_event():
     if actions.upsert_event(session["username"], fields):
         return redirect("/events")
     else:
-        return render_template("new_event.html", message=f"Failed to save changes, please check the values")
+        return render_template("new_event.html", messages=[f"Failed to save changes, please check the values"])
 
 
 @app.route("/events")

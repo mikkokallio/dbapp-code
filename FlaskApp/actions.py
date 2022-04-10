@@ -2,7 +2,27 @@ from .db import db
 
 
 def validate_password(password):
-    return len(password) >= 6
+    errors = []
+    if len(password) < 6:
+        errors.append("Password should be at least 6 characters")
+    if any(character.isspace() for character in password):
+        errors.append("Password should not contain spaces")
+    if not any(character.isdigit() for character in password):
+        errors.append("Password should have at least one number")
+    if not any(character.islower() for character in password):
+        errors.append("Password should have at least one lowercase letter")
+    if not any(character.isupper() for character in password):
+        errors.append("Password should have at least one uppercase letter")
+    return errors
+
+
+def validate_username(username):
+    errors = []
+    if len(username) < 3:
+        errors.append("Username should be at least 3 characters")
+    if any(character.isspace() for character in username):
+        errors.append("Username should not contain spaces")
+    return errors
 
 
 def get_user_by_name(username):

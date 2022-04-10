@@ -80,10 +80,12 @@
     </div>
 
     <div class="container block is-max-desktop">
-      {% if message %}
+      {% if messages %}
       <div id="message" class="notification is-warning">
         <button type="submit" class="delete" onclick="closeMessage()"></button>
-        <i class="fa-solid fa-triangle-exclamation fa-fade"></i> {{ message }}</p>
+        {% for message in messages %}
+        <p><i class="fa-solid fa-triangle-exclamation fa-fade"></i> {{ message }}</p>
+        {% endfor %}
       </div>
       {% endif %}
     </div>
