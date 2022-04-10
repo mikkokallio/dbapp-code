@@ -39,6 +39,17 @@ def validate_event(fields):
     return errors
 
 
+def validate_user(fields):
+    errors = []
+    if fields["date_of_birth"] == "":
+        errors.append("User must have a date of birth")
+    elif date.today() < datetime.strptime(fields["date_of_birth"], "%Y-%m-%d").date():
+        errors.append("Date of birth can't be in the future")
+    if len(fields["description"].split(" ")) < 5:
+        errors.append("Description must be at least 5 words")
+    return errors
+
+
 def get_user_by_name(username):
     sql = "SELECT id, username, date_of_birth, gender, description, created_at, password, role FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username": username})

@@ -70,7 +70,7 @@ def add_user():
         messages.append("Passwords don't match")
 
     if len(messages) > 0:
-        return render_template("new_user.html", messages=messages)
+        return render_template("new_user.html", messages=messages, fields=request.form)
 
     hash_value = generate_password_hash(password)
     if actions.add_user(username, hash_value):
@@ -78,7 +78,7 @@ def add_user():
         session["role"] = "user"
         return render_template("edit_user.html", new_user=True, user=None)
     else:
-        return render_template("new_user.html", messages=[f"Can't create user"])
+        return render_template("new_user.html", messages=[f"Can't create user"], fields=request.form)
 
 
 @app.route("/update_user", methods=["POST"])
@@ -90,16 +90,14 @@ def update_user():
     gender = request.form["gender"]
     description = request.form["description"]
 
-    print(date_of_birth)
+    messages = actions.validate_user(request.form)
 
-    # TODO: Add dob validation here or in "actions"
-    #if not year.isnumeric() or int(year) < 1900 or int(year) > date.today().year - 1:
-    #    return render_template("edit_user.html", message=f"Invalid year of birth")
-
+    if len(messages) > 0:
+        return render_template("edit_user.html", messages=messages, user=request.form)
     if actions.update_user(session["username"], date_of_birth, gender, description):
-        return redirect("/")
+        return render_template("events.html", new_user=True)
     else:
-        return render_template("edit_user.html", messages=[f"Failed to save changes, please check the values"])
+        return render_template("edit_user.html", messages=[f"Failed to save changes, please check the values"], user=request.form)
 
 
 @app.route("/new_event")
@@ -119,7 +117,7 @@ def update_event():
     if len(messages) > 0:
         return render_template("new_event.html", messages=messages, fields=fields)
     if actions.upsert_event(session["username"], fields):
-        return redirect("/events")
+        return redirect("/")
     else:
         return render_template("new_event.html", messages=[f"Failed to save changes, please check the values"], fields=fields)
 
