@@ -1,13 +1,14 @@
-from xml.etree.ElementTree import Comment
 from .app import app
 from . import actions
-from datetime import date
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
 @app.route("/")
 def index():
+    if "username" in session:
+        return redirect("/profile")
+
     return render_template("index.html")
 
 
@@ -16,7 +17,6 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
     user = actions.get_user_by_name(username)
-    print(user)
     if not user:
         return render_template("index.html", message="Username does not exist")
     else:
@@ -24,15 +24,26 @@ def login():
         if check_password_hash(hash_value, password):
             session["username"] = username
             session["role"] = user.role
+            session["id"] = user.id
         else:
             return render_template("index.html", message="Wrong password")
-    return redirect("/")
+    return redirect("/events")
 
 
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["role"]
     return redirect("/")
+
+
+@app.route("/profile")
+def show_profile():
+    if "username" not in session:
+        return redirect("/")
+
+    user = actions.get_user_by_name(session["username"])
+    return render_template("profile.html", user=user)
 
 
 @app.route("/new_user")
@@ -76,9 +87,10 @@ def update_user():
     description = request.form["description"]
     
     print(date_of_birth)
+    
+    
 
     # TODO: Add dob validation here or in "actions"
-    #    return render_template("edit_user.html", message=f"Invalid month of birth")
     #if not year.isnumeric() or int(year) < 1900 or int(year) > date.today().year - 1:
     #    return render_template("edit_user.html", message=f"Invalid year of birth")
 
@@ -86,12 +98,6 @@ def update_user():
         return redirect("/")
     else:
         return render_template("edit_user.html", message=f"Failed to save changes, please check the values")
-
-
-@app.route("/user/<int:id>")
-def user(id):
-    user = actions.get_user_by_id(id)
-    return render_template("user.html", id=id, user=user)
 
 
 @app.route("/users")

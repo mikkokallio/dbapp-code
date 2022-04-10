@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="title">
+    MeetApp
+</h1>
+<h2 class="subtitle">
+    Your user profile
+</h2>
+
+<div class="box has-background-primary-light">
+    <div class="columns">
+        <div class="column">
+            <i class="fas fa-user"></i> {{ user.username }} {% if session.role == "admin" %}(Admin){% endif %}
+        </div>
+        <div class="column">
+            Member since {{ user.created_at.strftime("%d %b %y") }}
+        </div>
+        <div class="column">
+            <i class="fa fa-venus-mars"></i> {{ user.gender }}
+        </div>
+        <div class="column">
+            <i class="fa-solid fa-cake-candles"></i> {{ user.date_of_birth }} (xxx years)
+        </div>
+    </div>
+    <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ user.description }}</div>
+
+    <div class="columns">
+        <div class="column">
+            <a href="/logout" class="button is-primary">Log out</a>
+        </div>
+        <div class="column">
+            <a href="/edit_user" class="button is-primary">Edit profile</a>
+        </div>
+        <div class="column">
+            <a href="/change_password" class="button is-primary">Change password</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

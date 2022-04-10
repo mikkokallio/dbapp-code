@@ -2,33 +2,39 @@
 {% block content %}
 
 <h1 class="title">
-  {{ session.user }}
+  {{ user.username }}
 </h1>
 <h2 class="subtitle">
   Fill in user information
 </h2>
-<form class="box" action="/update_user" method="POST">
+<form class="box has-background-primary-light" action="/update_user" method="POST">
   <label class="label">Username</label>
   <div class="block">
     {{ user.username }}
   </div>
-  <div class="field">
-    <label class="label">Date of birth</label>
-    <p class="control">
-      <input class="input" name="date_of_birth" type="date" value="{{ user.date_of_birth }}" size="5">
-    </p>
-  </div>
-  <div class="field">
-    <label class="label">Gender</label>
-    <p class="control">
-      <span class="select">
-        <select name="gender">
-          <option value="female">Female</option>
-          <option value="male" {% if user.gender == "male" %}selected{% endif %}>Male</option>
-          <option value="other" {% if user.gender == "other" %}selected{% endif %}>Other</option>
-        </select>
-      </span>
-    </p>
+  <div class="columns">
+    <div class="column is-4">
+      <div class="field">
+        <label class="label">Date of birth</label>
+        <p class="control">
+          <input class="input" name="date_of_birth" type="date" value="{{ user.date_of_birth }}">
+        </p>
+      </div>    
+    </div>
+    <div class="column is-2">
+      <div class="field">
+        <label class="label">Gender</label>
+        <p class="control">
+          <span class="select">
+            <select name="gender">
+              <option value="female">Female</option>
+              <option value="male" {% if user.gender == "male" %}selected{% endif %}>Male</option>
+              <option value="other" {% if user.gender == "other" %}selected{% endif %}>Other</option>
+            </select>
+          </span>
+        </p>
+      </div>          
+    </div>
   </div>
 
   <div class="field">

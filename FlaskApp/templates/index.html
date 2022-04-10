@@ -7,12 +7,6 @@
 <h2 class="subtitle">
   Log in to your account
 </h2>
-{% if session.username %}
-<p>Signed in as {{ session.username }}</p>
-<div><a href="/edit_user">Edit profile</a></div>
-<div><a href="/change_password">Change password</a></div>
-<div><a href="/logout">Log out</a></div>
-{% else %}
 <form class="box" action="/login" method="POST">
   <div class="field">
     <label class="label">Username</label>
@@ -31,7 +25,10 @@
   <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Sign in</button>
 </form>
 
-<a href="/new_user">Create user account</a>
-{% endif %}
+<h2 class="subtitle">
+  Or create a new account
+</h2>
+
+<a href="/new_user" class="button is-primary">Create user account</a>
 
 {% endblock %}

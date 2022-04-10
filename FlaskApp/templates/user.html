@@ -1,8 +1,0 @@
-<p>Id {{ id }}</p>
-<p>Name {{ user[0] }}</p>
-<p>Age {{ user[1] }}</p>
-<p>Gender {{ user[2] }}</p>
-<p>You are {{ session }}</p>
-{% if session.username == user[0] or session.role == "admin" %}
-<p>This is totally secret! Only user themself or admin can see!</p>
-{% endif %}
