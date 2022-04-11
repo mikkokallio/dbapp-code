@@ -30,6 +30,8 @@ def validate_event(fields):
     errors = []
     if len(fields["title"]) < 5:
         errors.append("Title must be at least 5 characters")
+    if not fields["time"]:
+        errors.append("Event must have a starting time")
     if fields["date"] == "":
         errors.append("Event must have a date")
     elif date.today() > datetime.strptime(fields["date"], "%Y-%m-%d").date():
@@ -90,14 +92,15 @@ def update_user(username, date_of_birth, gender, description):
 
 
 def upsert_event(username, fields):
-    sql = "INSERT INTO events (title, host_id, date, time, description, created_at) VALUES (:title, :host_id, :date, :time, :description, NOW());"
+    sql = "INSERT INTO events (title, host_id, date, time, max_people, description, created_at) VALUES (:title, :host_id, :date, :time, :max, :description, NOW());"
     id = get_user_by_name(username).id
     try:
         db.session.execute(sql, {
             "title": fields["title"],
             "host_id": id,
             "date": fields["date"],
-            "time": f"{fields['hours']}:{fields['minutes']}",
+            "time": fields["time"],
+            "max": fields["max"],
             "description": fields["description"]})
         db.session.commit()
     except Exception as e: # TODO: Should include exception type!
