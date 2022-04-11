@@ -32,7 +32,6 @@ The code is structured so that the application code is in the **FlaskApp** folde
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
 * In user modal, show what events they've signed up for.
 * Bug: On mobile, viewing who's going triggers the button that determines who's going.
-* On mobile, some fields are too small to display placeholder text.
 * Add cross-site scripting protection and other security measures.
 * Admin users can also see deleted events and other hidden information. They can also ban users or elevate regular users to admins.
 * Different types of actions users perform create notifications, e.g. if a user has created an event, they get notifications when people sign up for the event or leave comments.
