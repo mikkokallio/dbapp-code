@@ -48,7 +48,7 @@ def show_profile():
 
 @app.route("/new_user")
 def new_user():
-    return render_template("new_user.html")
+    return render_template("new_user.html", fields=None)
 
 
 @app.route("/edit_user")
