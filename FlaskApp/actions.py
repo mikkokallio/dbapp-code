@@ -125,7 +125,15 @@ def get_signups_by_event_id(id):
 def get_all_events():
     sql = """SELECT events.id AS id, title, date, gender, users.description as about_me,
         users.created_at as member_since, users.username as username FROM events
-        LEFT JOIN users ON events.host_id = users.id ORDER BY events.date ASC;"""
+        LEFT JOIN users ON events.host_id = users.id WHERE events.date >= NOW() ORDER BY events.date ASC;"""
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+
+def get_past_events():
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me,
+        users.created_at as member_since, users.username as username FROM events
+        LEFT JOIN users ON events.host_id = users.id WHERE events.date < NOW() ORDER BY events.date DESC;"""
     result = db.session.execute(sql)
     return result.fetchall()
 

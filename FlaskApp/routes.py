@@ -157,7 +157,8 @@ def list_events():
     if "username" not in session:
         return redirect("/")
     events = actions.get_all_events()
-    return render_template("events.html", count=len(events), events=events, events_view=True)
+    past_events = actions.get_past_events()
+    return render_template("events.html", count=len(events), past_count=len(past_events), events=events, past_events=past_events, events_view=True)
 
 
 @app.route("/event/<int:id>")
