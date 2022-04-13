@@ -28,6 +28,7 @@ The code is structured so that the application code is in the **FlaskApp** folde
 * Editing event information should be possible.
 * Add locations to events.
 * User can change password.
+* Max attendees show be shown and should have effect.
 * Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
 * Deleting an event should be possible. Or canceling, so the event doesn't just vanish.
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
