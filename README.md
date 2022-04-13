@@ -28,6 +28,7 @@ The code is structured so that the application code is in the **FlaskApp** folde
 * Editing event information should be possible.
 * Add locations to events.
 * User can change password.
+* Bug: entering an incomplete birthdate xx/xx/1901 causes the app to crash.
 * Deleting an event should be possible. Or canceling, so the event doesn't just vanish.
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
 * In user modal, show what events they've signed up for.
