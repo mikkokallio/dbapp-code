@@ -34,25 +34,26 @@ CREATE TABLE events (
    id SERIAL PRIMARY KEY,
    title TEXT NOT NULL,
    place_id INT REFERENCES places (id),
-   host_id INT REFERENCES users (id),
+   host_id INT REFERENCES users (id) ON DELETE CASCADE,
    date DATE NOT NULL,
    time TIME NOT NULL,
    max_people INT,
+   hidden BOOLEAN,
    description TEXT,
    created_at TIMESTAMP
 );
 
 CREATE TABLE signups (
    id SERIAL PRIMARY KEY,
-   event_id INT REFERENCES events (id),
-   user_id INT REFERENCES users (id),
+   event_id INT REFERENCES events (id) ON DELETE CASCADE,
+   user_id INT REFERENCES users (id) ON DELETE CASCADE,
    created_at TIMESTAMP
 );
 
 CREATE TABLE comments (
    id SERIAL PRIMARY KEY,
-   event_id INT REFERENCES events (id),
-   user_id INT REFERENCES users (id),
+   event_id INT REFERENCES events (id) ON DELETE CASCADE,
+   user_id INT REFERENCES users (id) ON DELETE CASCADE,
    comment TEXT NOT NULL,
    created_at TIMESTAMP
 );

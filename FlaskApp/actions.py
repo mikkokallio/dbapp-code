@@ -136,6 +136,16 @@ def get_event_by_id(id):
     return result.fetchone()
 
 
+def delete_event_by_id(id, user_id):
+    sql = "DELETE FROM events WHERE id = :id AND host_id = :user_id RETURNING title;"
+    #try:
+    db.session.execute(sql, {"id": id, "user_id": user_id})
+    db.session.commit()
+    #except:
+    #    return ["Can't delete the event."]
+    return ["Event deleted."]
+
+
 def send_comment(event_id, user_id, comment):
     sql = "INSERT INTO comments (event_id, user_id, comment, created_at) values (:event_id, :user_id, :comment, NOW());"
     try:

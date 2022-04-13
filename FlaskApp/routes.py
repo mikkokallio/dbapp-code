@@ -119,7 +119,21 @@ def edit_event():
         return redirect("/events")
     id = request.form["event_id"]
     event = actions.get_event_by_id(id)
+    if session["username"] != event.username:
+        return redirect("/events")
     return render_template("edit_event.html", fields=event, id=id)
+
+
+@app.route("/delete_event", methods=["POST"])
+def del_event():
+    if "username" not in session:
+        return redirect("/")
+    if not request.form["event_id"]:
+        return redirect("/events")
+    id = request.form["event_id"]
+    messages = actions.delete_event_by_id(id, session["id"])
+    events = actions.get_all_events()
+    return render_template("events.html", count=len(events), events=events, events_view=True, messages=messages)
 
 
 @app.route("/add_event", methods=["POST"])
