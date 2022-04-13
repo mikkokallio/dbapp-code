@@ -108,7 +108,7 @@ def update_user():
 def new_event():
     if "username" not in session:
         return redirect("/")
-    return render_template("edit_event.html", fields=None, id=None)
+    return render_template("edit_event.html", fields=None, id="")
 
 
 @app.route("/edit_event", methods=["POST"])

@@ -89,7 +89,7 @@ def update_user(username, date_of_birth, gender, description):
 
 
 def upsert_event(user_id, fields):
-    if fields["event_id"] != "None":
+    if fields["event_id"] != "":
         sql = "UPDATE events SET title = :title, date = :date, time = :time, max_people = :max_people, description = :description WHERE id = :id;"
     else:
         sql = "INSERT INTO events (title, host_id, date, time, max_people, description, created_at) VALUES (:title, :host_id, :date, :time, :max_people, :description, NOW());"
