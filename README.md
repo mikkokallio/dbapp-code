@@ -25,7 +25,6 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 * Past events should not allow registering anymore, and they should be listed under a different heading: past events.
 * Add notifications for different kinds of actions.
-* Editing event information should be possible.
 * Add locations to events.
 * User can change password.
 * Max attendees show be shown and should have effect.
