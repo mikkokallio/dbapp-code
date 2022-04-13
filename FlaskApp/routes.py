@@ -73,12 +73,14 @@ def add_user():
         return render_template("new_user.html", messages=messages, fields=request.form)
 
     hash_value = generate_password_hash(password)
-    if actions.add_user(username, hash_value):
+    messages = actions.add_user(username, hash_value)
+    if len(messages) == 0:
         session["username"] = username
         session["role"] = "user"
+        session["id"] = actions.get_user_by_name(username).id
         return render_template("edit_user.html", new_user=True, user=None)
     else:
-        return render_template("new_user.html", messages=[f"Can't create user"], fields=request.form)
+        return render_template("new_user.html", messages=messages, fields=request.form)
 
 
 @app.route("/update_user", methods=["POST"])
@@ -87,6 +89,7 @@ def update_user():
         return redirect("/")
 
     date_of_birth = request.form["date_of_birth"]
+    print(date_of_birth)
     gender = request.form["gender"]
     description = request.form["description"]
 
@@ -94,10 +97,11 @@ def update_user():
 
     if len(messages) > 0:
         return render_template("edit_user.html", messages=messages, user=request.form)
-    if actions.update_user(session["username"], date_of_birth, gender, description):
+    messages = actions.update_user(session["username"], date_of_birth, gender, description)
+    if len(messages) == 0:
         return redirect("/profile")
     else:
-        return render_template("edit_user.html", messages=[f"Failed to save changes, please check the values"], user=request.form)
+        return render_template("edit_user.html", messages=messages, user=request.form)
 
 
 @app.route("/new_event")
@@ -116,10 +120,11 @@ def update_event():
     messages = actions.validate_event(fields)
     if len(messages) > 0:
         return render_template("new_event.html", messages=messages, fields=fields)
-    if actions.upsert_event(session["username"], fields):
+    messages = actions.upsert_event(session["id"], fields)
+    if len(messages) == 0:
         return redirect("/events")
     else:
-        return render_template("new_event.html", messages=[f"Failed to save changes, please check the values"], fields=fields)
+        return render_template("new_event.html", messages=messages, fields=fields)
 
 
 @app.route("/events")
@@ -141,7 +146,7 @@ def show_event(id):
     if session["username"] == event.username:
         user_going = True
     else:
-        user_going = actions.get_signup_by_id(id, session["username"])
+        user_going = actions.get_signup_by_id(id, session["id"])
     return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, going=going, user_going=user_going)
 
 
@@ -153,7 +158,7 @@ def send_comment():
     event_id = request.form["event_id"]
     comment = request.form["comment"]
     if len(comment) >= 1:
-        actions.send_comment(event_id, session["username"], comment)
+        actions.send_comment(event_id, session["id"], comment)
     return redirect(f"/event/{event_id}")
 
 
@@ -163,5 +168,5 @@ def sign_up():
         return redirect("/")
 
     event_id = request.form["event_id"]
-    actions.add_or_remove_signup(event_id, session["username"])
+    actions.add_or_remove_signup(event_id, session["id"])
     return redirect(f"/event/{event_id}")
