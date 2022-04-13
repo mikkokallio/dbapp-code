@@ -89,15 +89,19 @@ def update_user(username, date_of_birth, gender, description):
 
 
 def upsert_event(user_id, fields):
-    sql = "INSERT INTO events (title, host_id, date, time, max_people, description, created_at) VALUES (:title, :host_id, :date, :time, :max, :description, NOW());"
+    if fields["event_id"] != "None":
+        sql = "UPDATE events SET title = :title, date = :date, time = :time, max_people = :max_people, description = :description WHERE id = :id;"
+    else:
+        sql = "INSERT INTO events (title, host_id, date, time, max_people, description, created_at) VALUES (:title, :host_id, :date, :time, :max_people, :description, NOW());"
     try:
         db.session.execute(sql, {
             "title": fields["title"],
             "host_id": user_id,
             "date": fields["date"],
             "time": fields["time"],
-            "max": fields["max"],
-            "description": fields["description"]})
+            "max_people": fields["max_people"],
+            "description": fields["description"],
+            "id": fields["event_id"]})
         db.session.commit()
     except (AttributeError, OperationalError):
         return ["An error with saving the data occurred. Please try again later."]
@@ -127,7 +131,7 @@ def get_all_events():
 
 
 def get_event_by_id(id):
-    sql = "SELECT events.id AS id, title, date, time, events.description as description, gender, users.description as about_me, users.created_at as member_since, users.username as username FROM events LEFT JOIN users ON events.host_id = users.id WHERE events.id=:id;"
+    sql = "SELECT events.id AS id, title, date, time, max_people, events.description as description, gender, users.description as about_me, users.created_at as member_since, users.username as username FROM events LEFT JOIN users ON events.host_id = users.id WHERE events.id=:id;"
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
 

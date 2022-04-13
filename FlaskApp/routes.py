@@ -108,7 +108,18 @@ def update_user():
 def new_event():
     if "username" not in session:
         return redirect("/")
-    return render_template("new_event.html", fields=None)
+    return render_template("edit_event.html", fields=None, id=None)
+
+
+@app.route("/edit_event", methods=["POST"])
+def edit_event():
+    if "username" not in session:
+        return redirect("/")
+    if not request.form["event_id"]:
+        return redirect("/events")
+    id = request.form["event_id"]
+    event = actions.get_event_by_id(id)
+    return render_template("edit_event.html", fields=event, id=id)
 
 
 @app.route("/add_event", methods=["POST"])
@@ -119,12 +130,12 @@ def update_event():
     fields = request.form
     messages = actions.validate_event(fields)
     if len(messages) > 0:
-        return render_template("new_event.html", messages=messages, fields=fields)
+        return render_template("edit_event.html", messages=messages, fields=fields, id=fields["event_id"])
     messages = actions.upsert_event(session["id"], fields)
     if len(messages) == 0:
         return redirect("/events")
     else:
-        return render_template("new_event.html", messages=messages, fields=fields)
+        return render_template("edit_event.html", messages=messages, fields=fields, id=fields["event_id"])
 
 
 @app.route("/events")

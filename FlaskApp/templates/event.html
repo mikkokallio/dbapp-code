@@ -64,6 +64,18 @@
     <input type="hidden" name="event_id" value="{{ id }}">
   </form>
 </div>
+
+{% if session.username == unit.username %}
+<form action="/edit_event" method="POST">
+  <div class="field">
+      <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
+        Edit event
+      </button>
+ </div>
+  <input type="hidden" name="event_id" value="{{ id }}">
+</form>
+{% endif %}
+
 <div class="block">
   <h2 class="subtitle">
     Comments

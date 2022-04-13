@@ -45,7 +45,7 @@
   <label class="label">Maximum attendees</label>
   <div class="field has-addons">
     <p class="control">
-      <input class="input" type="text" size="4" name="max" value="{{ fields['max'] }}">
+      <input class="input" type="text" size="4" name="max_people" value="{{ fields['max_people'] }}">
     </p>
   </div>
 
@@ -56,8 +56,8 @@
         value="{{ fields['description'] }}">
     </div>
   </div>
-
-  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Create</button>
+  <input type="hidden" name="event_id" value="{{ id }}">
+  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Save</button>
 </form>
 
 {% endblock %}
