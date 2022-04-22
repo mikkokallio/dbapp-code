@@ -24,7 +24,7 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 ## Todo list
 
-* Past events should not allow registering anymore, and they should be listed under a different heading: past events.
+* Past events should not allow registering anymore.
 * Add notifications for different kinds of actions.
 * Add locations to events.
 * User can change password.
