@@ -14,7 +14,7 @@ Not all features mentioned above exist yet. But you can try doing the following:
 1. Create a new user account and log in. Try entering intentionally bad usernames and poor passwords first, then viewing the error messages and changing the values accordingly.
 2. Create new events. Here too, you can try submitting e.g. an empty event, then fixing the values according to instructions.
 3. Edit events you have created.
-4. View events other people have created and register to join an event, or comment on an event.
+4. View events other people have created and register to join an event, or comment on an event. You can also check that you can't register to a past event.
 5. View other users' profiles wherever their username appears as a link.
 6. Click the user icon in the top bar to view your own profile, and edit your profile or log out.
 
@@ -24,7 +24,6 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 ## Todo list
 
-* Past events should not allow registering anymore.
 * Add notifications for different kinds of actions.
 * Add locations to events.
 * User can change password.
