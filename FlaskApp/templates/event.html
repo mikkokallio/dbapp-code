@@ -5,7 +5,7 @@
   {{ unit.title }}
 </h1>
 <h2 class="subtitle">
-  Upcoming event
+  {% if past %}Past{% else %}Upcoming{% endif %} event
 </h2>
 
 <div class="box has-background-primary-light">
