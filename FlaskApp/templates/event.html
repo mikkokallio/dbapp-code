@@ -30,37 +30,48 @@
   <form action="/signup" method="POST">
     <div class="field has-addons">
       {% if session.username != unit.username %}
-        {% if user_going %}
-        <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
-          <i class="fa fa-check"></i>
-        </button>
-        {% else %}
-        <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">
-          <i class='fa fa-question'></i>
-        </button>
-        {% endif %}
+      {% if user_going %}
+      {% if past %}
+      <p class="button is-static is-small">
+        <i class="fa fa-check"></i>
+      </p>
+      {% else %}
+      <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
+        <i class="fa fa-check"></i>
+      </button>
+      {% endif %}
+      {% else %}
+      {% if past %}
+      <p class="button is-static is-small">
+        <i class="fa fa-question"></i>
+      </p>
+      {% else %}
+      <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">
+        <i class='fa fa-question'></i>
+      </button>
+      {% endif %}
+      {% endif %}
       {% else %}
       <p class="button is-static is-small">
         <i class="fa fa-check"></i>
       </p>
-
       {% endif %}
 
       <span>&nbsp; <a class="js-modal-trigger" data-target="user-list">
-        {% if user_going and going == 0 %}
-        You are going
-        {% elif user_going and going == 1 %}
-        You and 1 are going
-        {% elif user_going and going > 1 %}
-        You and {{ going }} are going
-        {% elif not user_going and going == 0 %}
-        1 is going
-        {% else %}
-        {{ going+1 }} are going
-        {% endif %}
-      </a></span>
+          {% if user_going and going == 0 %}
+          You are going
+          {% elif user_going and going == 1 %}
+          You and 1 are going
+          {% elif user_going and going > 1 %}
+          You and {{ going }} are going
+          {% elif not user_going and going == 0 %}
+          1 is going
+          {% else %}
+          {{ going+1 }} are going
+          {% endif %}
+        </a></span>
       {% include "user_list_modal.html" %}
-   </div>
+    </div>
     <input type="hidden" name="event_id" value="{{ id }}">
   </form>
 </div>
@@ -68,18 +79,18 @@
 {% if session.username == unit.username %}
 <form action="/edit_event" method="POST">
   <div class="field">
-      <button id="button" type="submit" class="button is-success" onclick="showSpinner()">
-        Edit event
-      </button>
- </div>
+    <button id="button" type="submit" class="button is-success" onclick="showSpinner()">
+      Edit event
+    </button>
+  </div>
   <input type="hidden" name="event_id" value="{{ id }}">
 </form>
 <form action="/delete_event" method="POST">
   <div class="field">
-      <button id="button" type="submit" class="button is-success" onclick="showSpinner()">
-        Delete event
-      </button>
- </div>
+    <button id="button" type="submit" class="button is-success" onclick="showSpinner()">
+      Delete event
+    </button>
+  </div>
   <input type="hidden" name="event_id" value="{{ id }}">
 </form>
 {% endif %}
@@ -103,9 +114,10 @@
     </div>
     <form action="/write_comment" method="POST">
       <div class="field has-addons">
-        <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()"><i class='fa fa-share'></i></button>
+        <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()"><i
+            class='fa fa-share'></i></button>
         <input class="input is-small" type="text" name="comment" placeholder="Write a comment...">
-     </div>
+      </div>
       <input type="hidden" name="event_id" value="{{ id }}">
     </form>
   </div>

@@ -53,6 +53,9 @@ def validate_user(fields):
     return errors
 
 
+def is_past_event(event):
+    return date.today() > event["date"]
+
 def get_user_by_name(username):
     sql = "SELECT id, username, date_of_birth, gender, description, created_at, password, role FROM users WHERE username=:username;"
     result = db.session.execute(sql, {"username": username})

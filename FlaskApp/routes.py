@@ -16,7 +16,11 @@ def index():
 def login():
     username = request.form["username"]
     password = request.form["password"]
-    user = actions.get_user_by_name(username)
+    user = None
+    try:
+        user = actions.get_user_by_name(username)
+    except (AttributeError):
+        return render_template("index.html", messages=["A problem occurred while fetching user data."])
     if not user:
         return render_template("index.html", messages=["Username does not exist"])
     else:
@@ -169,11 +173,13 @@ def show_event(id):
     comments = actions.get_comments_by_event_id(id)
     signups = actions.get_signups_by_event_id(id)
     going = len(signups)
+    past = actions.is_past_event(event)
     if session["username"] == event.username:
         user_going = True
     else:
         user_going = actions.get_signup_by_id(id, session["id"])
-    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, going=going, user_going=user_going)
+    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, 
+                           going=going, user_going=user_going, past=past)
 
 
 @app.route("/write_comment", methods=["POST"])
