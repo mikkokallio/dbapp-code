@@ -69,10 +69,11 @@
           {% else %}
           {{ going+1 }} are going
           {% endif %}
-        </a></span>
+        </a>(max {{ unit.max_people }})</span>
       {% include "user_list_modal.html" %}
     </div>
     <input type="hidden" name="event_id" value="{{ id }}">
+    <input type="hidden" name="max_people" value="{{ unit.max_people }}">
   </form>
 </div>
 

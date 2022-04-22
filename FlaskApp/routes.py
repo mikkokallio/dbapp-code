@@ -200,5 +200,7 @@ def sign_up():
         return redirect("/")
 
     event_id = request.form["event_id"]
-    actions.add_or_remove_signup(event_id, session["id"])
+    max_people = request.form["max_people"]
+    signups = len(actions.get_signups_by_event_id(event_id))
+    actions.add_or_remove_signup(event_id, session["id"], max_people, signups)
     return redirect(f"/event/{event_id}")

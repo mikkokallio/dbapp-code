@@ -149,11 +149,8 @@ def get_event_by_id(id):
 
 def delete_event_by_id(id, user_id):
     sql = "DELETE FROM events WHERE id = :id AND host_id = :user_id RETURNING title;"
-    #try:
     db.session.execute(sql, {"id": id, "user_id": user_id})
     db.session.commit()
-    #except:
-    #    return ["Can't delete the event."]
     return ["Event deleted."]
 
 
@@ -173,10 +170,12 @@ def get_signup_by_id(event_id, user_id):
     return result.fetchone().count > 0 
 
 
-def add_or_remove_signup(event_id, user_id):
+def add_or_remove_signup(event_id, user_id, max_people, signups):
     if get_signup_by_id(event_id, user_id):
         sql = "DELETE FROM signups WHERE event_id=:event_id AND user_id=:user_id;"
     else:
+        if max_people != "None" and signups >= int(max_people) - 1:
+            return
         sql = "INSERT INTO signups (event_id, user_id, created_at) values (:event_id, :user_id, NOW());"
     try:
         db.session.execute(sql, {"event_id": event_id, "user_id": user_id})
