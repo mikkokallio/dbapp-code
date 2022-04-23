@@ -24,7 +24,6 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 ## Todo list
 
-* Add notifications for different kinds of actions.
 * Add locations to events.
 * User can change password.
 * Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
