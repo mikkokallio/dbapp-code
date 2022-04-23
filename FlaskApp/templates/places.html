@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="title">
+  Places
+</h1>
+<h2 class="subtitle">
+  All places
+</h2>
+<div class="box has-background-info-light is-flex is-vcentered"><a href="/new_place" class="button is-primary">New place</a></div>
+<div class="block">
+  {% for unit in places %}
+  <p>Place</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

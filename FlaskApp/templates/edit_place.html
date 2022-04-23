@@ -12,22 +12,47 @@
   <div class="field">
     <label class="label">Name</label>
     <div class="control">
-      <input class="input" type="text" name="title" value="">
+      <input class="input" type="text" name="name" value="{{ fields['name'] }}">
     </div>
   </div>
 
-  <div class="field">
-    <label class="label">Position</label>
-    <div class="control">
-      <input class="input" type="text" name="latitude" value="{{ latitude }}">
-      <input class="input" type="text" name="longitude" value="{{ longitude }}">
+  <div class="columns">
+    <div class="column is-3">
+      <div class="field">
+        <label class="label">Latitude</label>
+        <p class="control">
+          <input class="input is-static" type="text" name="latitude" value="{{ fields['latitude'] }}">
+        </p>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="field">
+        <label class="label">Longitude</label>
+        <p class="control">
+          <input class="input is-static" type="text" name="longitude" value="{{ fields['longitude'] }}">
+        </p>
+      </div>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Address</label>
     <div class="control">
-      <input class="input" type="text" name="address" value="{{ address }}">
+      <input class="input is-static" type="text" name="address" value="{{ fields['address'] }}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Picture URL</label>
+    <div class="control">
+      <input class="input" type="text" name="pic_url" value="{{ pic_url }}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Web page URL</label>
+    <div class="control">
+      <input class="input" type="text" name="page_url" value="{{ page_url }}">
     </div>
   </div>
 

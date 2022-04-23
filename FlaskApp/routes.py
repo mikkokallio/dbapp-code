@@ -39,8 +39,31 @@ def add_place():
     address = request.form["address"]
     latitude = request.form["latitude"]
     longitude = request.form["longitude"]
-    print(address, latitude, longitude)
-    return render_template("edit_place.html", address=address, latitude=latitude, longitude=longitude)
+    return render_template("edit_place.html", fields={"address": address, "latitude": latitude, "longitude": longitude})
+
+
+@app.route("/save_place", methods=["POST"])
+def save_place():
+    if "username" not in session:
+        return redirect("/")
+
+    fields = request.form
+    messages = actions.validate_place(fields)
+    if len(messages) > 0:
+        return render_template("edit_place.html", messages=messages, fields=fields)
+    messages = actions.save_place(fields)
+    if len(messages) == 0:
+        return redirect("/places")
+    else:
+        return render_template("edit_place.html", messages=messages, fields=fields)
+
+
+@app.route("/places")
+def list_places():
+    if "username" not in session:
+        return redirect("/")
+    places = actions.get_places()
+    return render_template("places.html", places=places)
 
 
 @app.route("/maps")

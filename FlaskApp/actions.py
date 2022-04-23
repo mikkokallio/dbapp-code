@@ -42,6 +42,10 @@ def validate_event(fields):
     return errors
 
 
+def validate_place(fields):
+    return []
+
+
 def validate_user(fields):
     errors = []
     if fields["date_of_birth"] == "":
@@ -89,6 +93,31 @@ def update_user(username, date_of_birth, gender, description):
     except (AttributeError, OperationalError):
         return ["An error with saving the data occurred. Please try again later."]
     return []
+
+
+def save_place(fields):
+    sql = "INSERT INTO places (name, location, address, description, page_url, pic_url, created_at) VALUES (:name, POINT(:longitude, :latitude), :address, :description, :page_url, :pic_url, NOW());"
+    try:
+        db.session.execute(sql, {
+            "name": fields["name"],
+            "longitude": float(fields["longitude"]),
+            "latitude": float(fields["latitude"]),
+            "address": fields["address"],
+            "description": fields["description"],
+            "page_url": fields["page_url"],
+            "pic_url": fields["pic_url"]})
+        db.session.commit()
+    except (AttributeError, OperationalError):
+        return ["An error with saving the data occurred. Please try again later."]
+    except IntegrityError:
+        return ['That name already exists.']
+    return []
+
+
+def get_places():
+    sql = "SELECT * FROM places ORDER BY name ASC;"
+    result = db.session.execute(sql)
+    return result.fetchall()
 
 
 def upsert_event(user_id, fields):
