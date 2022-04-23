@@ -25,6 +25,7 @@ The code is structured so that the application code is in the **FlaskApp** folde
 ## Todo list
 
 * Add locations to events.
+* New view: my places. List + can add new places manually or copy from other people's events ("Add to my places").
 * User can change password.
 * Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
