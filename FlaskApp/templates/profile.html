@@ -37,4 +37,25 @@
         </div>
     </div>
 </div>
+
+<h2 class="subtitle">
+    Events organized by {{ user.username }}
+  </h2>
+  <div class="block">
+    <div>Number of events: {{ my_count }}</div>
+    {% for unit in my_events %}
+    {% include "event_box.html" %}
+    {% endfor %}
+  </div>
+  
+  <h2 class="subtitle">
+    {{ user.username }} is going to
+  </h2>
+  <div class="block">
+    <div>Number of events: {{ other_count }}</div>
+    {% for unit in other_events %}
+    {% include "event_box.html" %}
+    {% endfor %}
+  </div>
+  
 {% endblock %}

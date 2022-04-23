@@ -47,7 +47,12 @@ def show_profile():
         return redirect("/")
 
     user = actions.get_user_by_name(session["username"])
-    return render_template("profile.html", user=user)
+    my_events = actions.get_organized_events_by_user_id(session["id"])
+    other_events = actions.get_registered_events_by_user_id(session["id"])
+    my_count = len(my_events)
+    other_count = len(other_events)
+    return render_template("profile.html", user=user, my_events=my_events, other_events=other_events,
+                           my_count=my_count, other_count=other_count)
 
 
 @app.route("/new_user")
@@ -136,8 +141,10 @@ def del_event():
         return redirect("/events")
     id = request.form["event_id"]
     messages = actions.delete_event_by_id(id, session["id"])
-    events = actions.get_all_events()
-    return render_template("events.html", count=len(events), events=events, events_view=True, messages=messages)
+    events = actions.get_upcoming_events()
+    past_events = actions.get_past_events()
+    return render_template("events.html", count=len(events), events=events, past_events=past_events,
+                           events_view=True, messages=messages)
 
 
 @app.route("/add_event", methods=["POST"])
@@ -160,9 +167,10 @@ def update_event():
 def list_events():
     if "username" not in session:
         return redirect("/")
-    events = actions.get_all_events()
+    events = actions.get_upcoming_events()
     past_events = actions.get_past_events()
-    return render_template("events.html", count=len(events), past_count=len(past_events), events=events, past_events=past_events, events_view=True)
+    return render_template("events.html", count=len(events), past_count=len(past_events),
+                           events=events, past_events=past_events, events_view=True)
 
 
 @app.route("/event/<int:id>")
