@@ -3,6 +3,8 @@ from . import actions
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from os import getenv
+import requests
+import json
 
 
 @app.route("/")
@@ -11,6 +13,21 @@ def index():
         return redirect("/profile")
 
     return render_template("index.html")
+
+
+@app.route("/new_place")
+def new_place():
+    return render_template("pick_place.html")
+
+
+@app.route("/search_places", methods=["POST"])
+def search_places():
+    location = request.form["location"]
+    key = getenv("MAPS_API_KEY")
+    url = f"https://atlas.microsoft.com/search/address/json?&subscription-key={key}&api-version=1.0&language=en-US&query={location}"
+    response = requests.get(url)
+    places = json.loads(response.text)["results"] if response.status_code == 200 else None
+    return render_template("pick_place.html", location=location, places=places)
 
 
 @app.route("/maps")

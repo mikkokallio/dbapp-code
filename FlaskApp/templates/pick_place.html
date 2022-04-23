@@ -8,16 +8,33 @@
   Search events locations
 </h2>
 
-<form class="box" action="/search_place" method="POST">
+<form class="box" action="/search_places" method="POST">
   <div class="field">
-    <label class="label">Place name or address</label>
+    <label class="label">Street address</label>
     <div class="control">
-      <input class="input" type="text" name="location"  value="{{ fields['location'] }}">
+      <input class="input" type="text" name="location"  value="{{ location }}">
       <p class="help">Be as specific as you need</p>
     </div>
   </div>
 
   <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Search</button>
 </form>
+
+<h2 class="subtitle">
+  Search results
+</h2>
+{% if not places %}
+<div>No results. Did you include the right street number?</div>
+{% endif %}
+{% for place in places %}
+<form class="box" action="/edit_place" method="POST">
+  <div class="field has-addons">
+    <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()"><i
+      class="fas fa-plus"></i></button>
+    <label class="label">{{ place.address.freeformAddress }}</label>
+  </div>
+  <input type="hidden" name="place" value="{{ place }}">
+</form>
+{% endfor %}
 
 {% endblock %}

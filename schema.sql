@@ -26,7 +26,10 @@ CREATE TABLE places (
    id SERIAL PRIMARY KEY,
    name TEXT NOT NULL,
    location POINT NOT NULL,
+   address TEXT NOT NULL,
    description TEXT,
+   page_url TEXT,
+   pic_url TEXT,
    created_at TIMESTAMP
 );
 
