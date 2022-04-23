@@ -2,6 +2,7 @@ from .app import app
 from . import actions
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
+from os import getenv
 
 
 @app.route("/")
@@ -10,6 +11,11 @@ def index():
         return redirect("/profile")
 
     return render_template("index.html")
+
+
+@app.route("/maps")
+def maps():
+    return render_template("azuremap.html", key=getenv("MAPS_API_KEY"))
 
 
 @app.route("/login", methods=["POST"])

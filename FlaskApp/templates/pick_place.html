@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="title">
+  Minglerz.net
+</h1>
+<h2 class="subtitle">
+  Search events locations
+</h2>
+
+<form class="box" action="/search_place" method="POST">
+  <div class="field">
+    <label class="label">Place name or address</label>
+    <div class="control">
+      <input class="input" type="text" name="location"  value="{{ fields['location'] }}">
+      <p class="help">Be as specific as you need</p>
+    </div>
+  </div>
+
+  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Search</button>
+</form>
+
+{% endblock %}
