@@ -22,12 +22,25 @@ def new_place():
 
 @app.route("/search_places", methods=["POST"])
 def search_places():
+    if "username" not in session:
+        return redirect("/")
     location = request.form["location"]
     key = getenv("MAPS_API_KEY")
     url = f"https://atlas.microsoft.com/search/address/json?&subscription-key={key}&api-version=1.0&language=en-US&query={location}"
     response = requests.get(url)
     places = json.loads(response.text)["results"] if response.status_code == 200 else None
     return render_template("pick_place.html", location=location, places=places)
+
+
+@app.route("/add_place", methods=["POST"])
+def add_place():
+    if "username" not in session:
+        return redirect("/")
+    address = request.form["address"]
+    latitude = request.form["latitude"]
+    longitude = request.form["longitude"]
+    print(address, latitude, longitude)
+    return render_template("edit_place.html", address=address, latitude=latitude, longitude=longitude)
 
 
 @app.route("/maps")

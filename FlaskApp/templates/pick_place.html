@@ -27,13 +27,15 @@
 <div>No results. Did you include the right street number?</div>
 {% endif %}
 {% for place in places %}
-<form class="box" action="/edit_place" method="POST">
+<form class="box" action="/add_place" method="POST">
   <div class="field has-addons">
     <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()"><i
       class="fas fa-plus"></i></button>
     <label class="label">{{ place.address.freeformAddress }}</label>
   </div>
-  <input type="hidden" name="place" value="{{ place }}">
+  <input type="hidden" name="address" value="{{ place.address.freeformAddress }}">
+  <input type="hidden" name="latitude" value="{{ place.position.lat }}">
+  <input type="hidden" name="longitude" value="{{ place.position.lon }}">
 </form>
 {% endfor %}
 

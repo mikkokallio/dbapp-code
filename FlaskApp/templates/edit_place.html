@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="title">
+  Minglerz.net
+</h1>
+<h2 class="subtitle">
+  Enter place details
+</h2>
+
+<form class="box" action="/save_place" method="POST" novalidate>
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" name="title" value="">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Position</label>
+    <div class="control">
+      <input class="input" type="text" name="latitude" value="{{ latitude }}">
+      <input class="input" type="text" name="longitude" value="{{ longitude }}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Address</label>
+    <div class="control">
+      <input class="input" type="text" name="address" value="{{ address }}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Description</label>
+    <div class="control">
+      <input class="textarea" type="text" name="description" placeholder="Tell us about the place..."
+        value="">
+    </div>
+  </div>
+  <input type="hidden" name="place_id" value="">
+  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Save</button>
+</form>
+
+{% endblock %}
