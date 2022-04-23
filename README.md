@@ -28,7 +28,7 @@ The code is structured so that the application code is in the **FlaskApp** folde
 * User can change password.
 * Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
 * Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
-* In user modal, show what events they've signed up for.
+* In user profile, show what events they've organized & signed up for. From modals, add buttons to full profiles.
 * Bug: On mobile, viewing who's going triggers the button that determines who's going.
 * Add cross-site scripting protection and other security measures.
 * Admin users can also see deleted events and other hidden information. They can also ban users or elevate regular users to admins.
