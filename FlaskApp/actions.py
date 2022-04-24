@@ -122,13 +122,14 @@ def get_places():
 
 def upsert_event(user_id, fields):
     if fields["event_id"] != "":
-        sql = "UPDATE events SET title = :title, date = :date, time = :time, max_people = :max_people, description = :description WHERE id = :id;"
+        sql = "UPDATE events SET title = :title, place_id = :place_id, date = :date, time = :time, max_people = :max_people, description = :description WHERE id = :id;"
     else:
-        sql = "INSERT INTO events (title, host_id, date, time, max_people, description, created_at) VALUES (:title, :host_id, :date, :time, :max_people, :description, NOW());"
+        sql = "INSERT INTO events (title, host_id, place_id, date, time, max_people, description, created_at) VALUES (:title, :host_id, :place_id, :date, :time, :max_people, :description, NOW());"
     try:
         db.session.execute(sql, {
             "title": fields["title"],
             "host_id": user_id,
+            "place_id": fields["place"],
             "date": fields["date"],
             "time": fields["time"],
             "max_people": fields["max_people"],
@@ -187,7 +188,10 @@ def get_past_events():
 
 
 def get_event_by_id(id):
-    sql = "SELECT events.id AS id, title, date, time, max_people, events.description as description, gender, users.description as about_me, users.created_at as member_since, users.username as username FROM events LEFT JOIN users ON events.host_id = users.id WHERE events.id=:id;"
+    sql = """SELECT events.id AS id, title, date, time, max_people,
+        events.description as description, places.name as place,
+        gender, users.description as about_me, users.created_at as member_since, users.username as username FROM events 
+        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id WHERE events.id=:id;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
 

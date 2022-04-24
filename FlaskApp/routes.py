@@ -176,7 +176,8 @@ def update_user():
 def new_event():
     if "username" not in session:
         return redirect("/")
-    return render_template("edit_event.html", fields=None, id="")
+    places = actions.get_places()
+    return render_template("edit_event.html", fields=None, places=places, id="")
 
 
 @app.route("/edit_event", methods=["POST"])
@@ -187,9 +188,11 @@ def edit_event():
         return redirect("/events")
     id = request.form["event_id"]
     event = actions.get_event_by_id(id)
+    places = actions.get_places()
+    print(places)
     if session["username"] != event.username:
         return redirect("/events")
-    return render_template("edit_event.html", fields=event, id=id)
+    return render_template("edit_event.html", fields=event, places=places, id=id)
 
 
 @app.route("/delete_event", methods=["POST"])
@@ -212,14 +215,15 @@ def update_event():
         return redirect("/")
 
     fields = request.form
+    places = actions.get_places() # TODO: Get from form?
     messages = actions.validate_event(fields)
     if len(messages) > 0:
-        return render_template("edit_event.html", messages=messages, fields=fields, id=fields["event_id"])
+        return render_template("edit_event.html", messages=messages, fields=fields, places=places, id=fields["event_id"])
     messages = actions.upsert_event(session["id"], fields)
     if len(messages) == 0:
         return redirect("/events")
     else:
-        return render_template("edit_event.html", messages=messages, fields=fields, id=fields["event_id"])
+        return render_template("edit_event.html", messages=messages, fields=fields, places=places, id=fields["event_id"])
 
 
 @app.route("/events")

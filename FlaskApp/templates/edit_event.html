@@ -18,8 +18,13 @@
 
   <div class="field">
     <label class="label">Place</label>
-    <div class="control">
-      <input class="input" type="text" name="place" value="{{ fields['place'] }}">
+    <div class="control select is-primary">
+      <select name="place">
+        <option value="none" selected disabled hidden>Select a place</option>
+        {% for place in places %}
+        <option value="{{ place.id }}">{{ place.name }}</option>
+        {% endfor %}
+      </select>
     </div>
   </div>
 
