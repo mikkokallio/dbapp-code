@@ -8,15 +8,16 @@ A user can create an account and log in to the app. Once logged in, a user can c
 
 ## Testing the app
 
-The app runs at https://functions-dbapp.azurewebsites.net/
+The app runs at https://minglerz.net/
 
 Not all features mentioned above exist yet. But you can try doing the following:
 1. Create a new user account and log in. Try entering intentionally bad usernames and poor passwords first, then viewing the error messages and changing the values accordingly.
-2. Create new events. Here too, you can try submitting e.g. an empty event, then fixing the values according to instructions.
-3. Edit events you have created.
-4. View events other people have created and register to join an event, or comment on an event. You can also check that you can't register to a past event or when max number of attendees is reached.
-5. View other users' profiles wherever their username appears as a link.
-6. Click the user icon in the top bar to view your own profile, and edit your profile or log out.
+2. Create a new place. When searching for locations, use street name with address number and city, e.g. Leppäsuonkatu 11, 00100 Helsinki. Otherwise, the results may be inaccurate. Validation doesn't work in the place form yet.
+3. Create new events. Here too, you can try submitting e.g. an empty event, then fixing the values according to instructions.
+4. Edit events you have created.
+5. View events other people have created and register to join an event, or comment on an event. You can also check that you can't register to a past event or when max number of attendees is reached.
+6. View other users' profiles wherever their username appears as a link.
+7. Click the user icon in the top bar to view your own profile, and edit your profile or log out.
 
 ## Reviewing the code
 
@@ -26,11 +27,11 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 * Places can't be edited and they have no ownership. Should they be user-specific or shared? E.g.can add new places to "my places" manually or copy from other people's events.
 * Start new event from place page. (Organize event here)
+* Validation of place data.
 * User can change password.
 * Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
 * From modals, add buttons to full profiles.
 * Bug: On mobile, viewing who's going triggers the button that determines who's going.
-* Add cross-site scripting protection and other security measures.
 * Admin users can also see deleted events and other hidden information. They can also ban users or elevate regular users to admins.
 
 ### Low priority
