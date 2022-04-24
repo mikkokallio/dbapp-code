@@ -25,15 +25,14 @@ The code is structured so that the application code is in the **FlaskApp** folde
 ## Todo list
 
 * Add locations to events.
-* New view: my places. List + can add new places manually or copy from other people's events ("Add to my places").
+* Places can't be edited and they have no ownership. Should they be user-specific or shared? E.g.can add new places to "my places" manually or copy from other people's events.
+* Start new event from place page. (Organize event here)
 * User can change password.
 * Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
-* Intro transition screen for new users after registration: go to events and show modal "welcome, blah blah"
-* In user profile, show what events they've organized & signed up for. From modals, add buttons to full profiles.
+* From modals, add buttons to full profiles.
 * Bug: On mobile, viewing who's going triggers the button that determines who's going.
 * Add cross-site scripting protection and other security measures.
 * Admin users can also see deleted events and other hidden information. They can also ban users or elevate regular users to admins.
-* Different types of actions users perform create notifications, e.g. if a user has created an event, they get notifications when people sign up for the event or leave comments.
 
 ### Low priority
 
