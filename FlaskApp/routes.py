@@ -5,6 +5,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from os import getenv
 import requests
 import json
+import secrets
+from os import abort
 
 
 @app.route("/")
@@ -46,6 +48,8 @@ def add_place():
 def save_place():
     if "username" not in session:
         return redirect("/")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
     fields = request.form
     messages = actions.validate_place(fields)
@@ -88,6 +92,7 @@ def login():
             session["username"] = username
             session["role"] = user.role
             session["id"] = user.id
+            session["csrf_token"] = secrets.token_hex(16)
         else:
             return render_template("index.html", messages=["Wrong password"])
     return redirect("/events")
@@ -97,6 +102,8 @@ def login():
 def logout():
     del session["username"]
     del session["role"]
+    del session["id"]
+    del session["csrf_token"]
     return redirect("/")
 
 
@@ -121,6 +128,8 @@ def new_user():
 
 @app.route("/edit_user")
 def edit_user():
+    if "username" not in session:
+        return redirect("/")
     user = actions.get_user_by_name(session["username"])
     return render_template("edit_user.html", user=user)
 
@@ -146,6 +155,7 @@ def add_user():
         session["username"] = username
         session["role"] = "user"
         session["id"] = actions.get_user_by_name(username).id
+        session["csrf_token"] = secrets.token_hex(16)
         return render_template("edit_user.html", new_user=True, user=None)
     else:
         return render_template("new_user.html", messages=messages, fields=request.form)
@@ -155,6 +165,8 @@ def add_user():
 def update_user():
     if "username" not in session:
         return redirect("/")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
     date_of_birth = request.form["date_of_birth"]
     print(date_of_birth)
@@ -184,6 +196,8 @@ def new_event():
 def edit_event():
     if "username" not in session:
         return redirect("/")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     if not request.form["event_id"]:
         return redirect("/events")
     id = request.form["event_id"]
@@ -213,6 +227,8 @@ def del_event():
 def update_event():
     if "username" not in session:
         return redirect("/")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
     fields = request.form
     places = actions.get_places() # TODO: Get from form?
@@ -257,6 +273,8 @@ def show_event(id):
 def send_comment():
     if "username" not in session:
         return redirect("/")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
     event_id = request.form["event_id"]
     comment = request.form["comment"]
@@ -269,6 +287,8 @@ def send_comment():
 def sign_up():
     if "username" not in session:
         return redirect("/")
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
     event_id = request.form["event_id"]
     max_people = request.form["max_people"]

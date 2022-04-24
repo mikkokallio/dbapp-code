@@ -64,6 +64,7 @@
     </div>
   </div>
   <input type="hidden" name="place_id" value="">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Save</button>
 </form>
 
