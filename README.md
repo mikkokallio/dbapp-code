@@ -24,7 +24,6 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 ## Todo list
 
-* Add locations to events.
 * Places can't be edited and they have no ownership. Should they be user-specific or shared? E.g.can add new places to "my places" manually or copy from other people's events.
 * Start new event from place page. (Organize event here)
 * User can change password.
