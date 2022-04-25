@@ -10,14 +10,14 @@ A user can create an account and log in to the app. Once logged in, a user can c
 
 The app runs at https://minglerz.net/. Most functionality should work ok also on cell phone, but there are a few bugs still.
 
-Not all features mentioned above exist yet. But you can try doing the following:
-1. Create a new user account and log in. Try entering intentionally bad usernames and poor passwords first, then viewing the error messages and changing the values accordingly.
-2. Create a new place. When searching for locations, use street name with address number and city, e.g. Leppäsuonkatu 11, 00100 Helsinki. Otherwise, the results may be inaccurate. Validation doesn't work in the place form yet.
-3. Create new events. Here too, you can try submitting e.g. an empty event, then fixing the values according to instructions.
-4. Edit events you have created.
-5. View events other people have created and register to join an event, or comment on an event. You can also check that you can't register to a past event or when max number of attendees is reached.
-6. View other users' profiles wherever their username appears as a link.
-7. Click the user icon in the top bar to view your own profile, and edit your profile or log out.
+You can test the app by trying out the following features:
+1. **Create a new user account and log in**. Try entering intentionally bad usernames and poor passwords first, then viewing the error messages and changing the values accordingly.
+2. **Create a new place**. When searching for locations, use street name with address number and city, e.g. Leppäsuonkatu 11, 00100 Helsinki. Otherwise, the results may be inaccurate. Validation doesn't work in the place form yet.
+3. **Create new events**. Here too, you can try submitting e.g. an empty event, then fixing the values according to instructions.
+4. **Edit events** you have created.
+5. While viewing events other people have created, **register to join an event, or comment on an event**. You can also check that you can't register to a past event or when max number of attendees is reached.
+6. **View other users' profiles** in a popup view by clicking their username.
+7. Click the user icon in the top bar to **view your own profile, and edit your profile or log out**. Password change doesn't work yet.
 
 ## Reviewing the code
 
