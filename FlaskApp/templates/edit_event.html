@@ -20,7 +20,7 @@
     <label class="label">Place</label>
     <div class="control select is-primary">
       <select name="place" value="{{ fields['place'] }}">
-        <option value="none" selected disabled hidden>Select a place</option>
+        <option value="None" selected disabled hidden>Select a place</option>
         {% for place in places %}
         <option value="{{ place.id }}">{{ place.name }}</option>
         {% endfor %}

@@ -196,8 +196,6 @@ def new_event():
 def edit_event():
     if "username" not in session:
         return redirect("/")
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
     if not request.form["event_id"]:
         return redirect("/events")
     id = request.form["event_id"]
