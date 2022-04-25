@@ -8,7 +8,7 @@ A user can create an account and log in to the app. Once logged in, a user can c
 
 ## Testing the app
 
-The app runs at https://minglerz.net/
+The app runs at https://minglerz.net/. Most functionality should work ok also on cell phone, but there are a few bugs still.
 
 Not all features mentioned above exist yet. But you can try doing the following:
 1. Create a new user account and log in. Try entering intentionally bad usernames and poor passwords first, then viewing the error messages and changing the values accordingly.
