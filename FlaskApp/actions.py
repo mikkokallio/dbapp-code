@@ -43,7 +43,16 @@ def validate_event(fields):
 
 
 def validate_place(fields):
-    return []
+    errors = []
+    if len(fields["name"]) < 5 or len(fields["name"]) > 20:
+        errors.append("Name must 5-20 characters long")
+    if not fields["pic_url"].startswith("https://") or not fields["page_url"].startswith("https://"):
+        errors.append("Each URL should begin with https://")
+    if not any([fields["pic_url"].endswith(filetype) for filetype in ["jpg", "png", "gif"]]):
+        errors.append("Picture URL should point to an image file")
+    if len(fields["description"].split(" ")) < 5:
+        errors.append("Description must be at least 5 words")
+    return errors
 
 
 def validate_user(fields):
