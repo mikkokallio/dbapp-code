@@ -12,6 +12,19 @@
                 subscriptionKey: '{{ key }}'
             }
         });
+
+        //Wait until the map resources are ready.
+        map.events.add('ready', function () {
+
+            //Create a HTML marker and add it to the map.
+            var marker = new atlas.HtmlMarker({
+                color: 'Crimson',
+                position: {{ pos }}
+            });
+
+            map.markers.add(marker);
+
+        });
     }
 </script>
 <div id="myMap" style="width: 100%; height: 256px;"></div>

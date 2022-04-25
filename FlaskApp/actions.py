@@ -1,5 +1,6 @@
 from datetime import date, datetime
 from sqlalchemy.exc import IntegrityError, OperationalError
+import requests
 from .db import db
 
 
@@ -46,8 +47,20 @@ def validate_place(fields):
     errors = []
     if len(fields["name"]) < 5 or len(fields["name"]) > 20:
         errors.append("Name must 5-20 characters long")
-    if not fields["pic_url"].startswith("https://") or not fields["page_url"].startswith("https://"):
-        errors.append("Each URL should begin with https://")
+    try:
+        if not fields["pic_url"].startswith("https://"):
+            errors.append("Each URL should begin with https://")
+        elif requests.get(fields["pic_url"]).status_code != 200:
+            errors.append("Invalid picture URL")
+    except:
+        errors.append("Invalid picture URL")        
+    try:
+        if not fields["page_url"].startswith("https://"):
+            errors.append("Each URL should begin with https://")
+        elif requests.get(fields["page_url"]).status_code != 200:
+            errors.append("Invalid web page URL")
+    except:
+        errors.append("Invalid web page URL")
     if not any([fields["pic_url"].endswith(filetype) for filetype in ["jpg", "png", "gif"]]):
         errors.append("Picture URL should point to an image file")
     if len(fields["description"].split(" ")) < 5:
