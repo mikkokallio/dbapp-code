@@ -120,6 +120,12 @@ def get_places():
     return result.fetchall()
 
 
+def get_place_by_id(id):
+    sql = "SELECT * FROM places WHERE id = :id;"
+    result = db.session.execute(sql, {"id": id})
+    return result.fetchone()
+
+
 def upsert_event(user_id, fields):
     if fields["event_id"] != "":
         sql = "UPDATE events SET title = :title, place_id = :place_id, date = :date, time = :time, max_people = :max_people, description = :description WHERE id = :id;"
@@ -156,7 +162,7 @@ def get_signups_by_event_id(id):
 
 
 def get_registered_events_by_user_id(id):
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
         users.created_at as member_since, users.username as username FROM signups LEFT JOIN events ON signups.event_id = events.id
         LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id WHERE signups.user_id = :id ORDER BY events.date DESC;"""
     result = db.session.execute(sql, {"id": id})
@@ -164,7 +170,7 @@ def get_registered_events_by_user_id(id):
 
 
 def get_organized_events_by_user_id(id):
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
         users.created_at as member_since, users.username as username FROM events
         LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
         WHERE events.host_id = :id ORDER BY events.date DESC;"""
@@ -173,7 +179,7 @@ def get_organized_events_by_user_id(id):
 
 
 def get_upcoming_events():
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
         users.created_at as member_since, users.username as username FROM events
         LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
         WHERE events.date >= NOW() ORDER BY events.date ASC;"""
@@ -182,7 +188,7 @@ def get_upcoming_events():
 
 
 def get_past_events():
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
         users.created_at as member_since, users.username as username FROM events
         LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
         WHERE events.date < NOW() ORDER BY events.date DESC;"""
@@ -191,8 +197,8 @@ def get_past_events():
 
 
 def get_event_by_id(id):
-    sql = """SELECT events.id AS id, title, date, time, max_people,
-        events.description as description, places.name as place,
+    sql = """SELECT events.id AS id, title, date, time, max_people, pic_url, address, page_url, name,
+        events.description as description,
         gender, users.description as about_me, users.created_at as member_since, users.username as username FROM events 
         LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
         WHERE events.id=:id;"""

@@ -18,12 +18,15 @@
       </div>
     </div>
     <div class="column">
-      {% if session.username == unit.username %}
-      <i class="fa-solid fa-star fa-beat" style="--fa-animation-duration: 2s;"></i> Event organizer
-      {% else %}
-      <i class="fas fa-star"></i> Organized by <a class="js-modal-trigger"
-        data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
-      {% endif %}
+      <div><i class="fas fa-map-marker-alt"></i> {{ unit.place }}</div>
+      <div>
+        {% if session.username == unit.username %}
+        <i class="fa-solid fa-star fa-beat" style="--fa-animation-duration: 2s;"></i> Event organizer
+        {% else %}
+        <i class="fas fa-star"></i> Organized by <a class="js-modal-trigger"
+          data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
+        {% endif %}
+      </div>
     </div>
   </div>
   </a>

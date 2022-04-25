@@ -17,9 +17,6 @@
       <i class="fas fa-clock"></i> {{ unit.time.strftime("%H:%M") }}
     </div>
     <div class="column">
-      <i class="fas fa-map-marker"></i> {{ unit.place }}
-    </div>
-    <div class="column">
       Organized by <a class="js-modal-trigger" data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
     </div>
   </div>
@@ -97,6 +94,8 @@
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endif %}
+
+{% include "place_box.html" %}
 
 <div class="block">
   <h2 class="subtitle">
