@@ -156,33 +156,36 @@ def get_signups_by_event_id(id):
 
 
 def get_registered_events_by_user_id(id):
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
         users.created_at as member_since, users.username as username FROM signups LEFT JOIN events ON signups.event_id = events.id
-        LEFT JOIN users ON events.host_id = users.id WHERE signups.user_id = :id ORDER BY events.date DESC;"""
+        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id WHERE signups.user_id = :id ORDER BY events.date DESC;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchall()
 
 
 def get_organized_events_by_user_id(id):
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
         users.created_at as member_since, users.username as username FROM events
-        LEFT JOIN users ON events.host_id = users.id WHERE events.host_id = :id ORDER BY events.date DESC;"""
+        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
+        WHERE events.host_id = :id ORDER BY events.date DESC;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchall()
 
 
 def get_upcoming_events():
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
         users.created_at as member_since, users.username as username FROM events
-        LEFT JOIN users ON events.host_id = users.id WHERE events.date >= NOW() ORDER BY events.date ASC;"""
+        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
+        WHERE events.date >= NOW() ORDER BY events.date ASC;"""
     result = db.session.execute(sql)
     return result.fetchall()
 
 
 def get_past_events():
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me,
+    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url,
         users.created_at as member_since, users.username as username FROM events
-        LEFT JOIN users ON events.host_id = users.id WHERE events.date < NOW() ORDER BY events.date DESC;"""
+        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
+        WHERE events.date < NOW() ORDER BY events.date DESC;"""
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -191,7 +194,8 @@ def get_event_by_id(id):
     sql = """SELECT events.id AS id, title, date, time, max_people,
         events.description as description, places.name as place,
         gender, users.description as about_me, users.created_at as member_since, users.username as username FROM events 
-        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id WHERE events.id=:id;"""
+        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
+        WHERE events.id=:id;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
 
