@@ -12,7 +12,7 @@ The app runs at https://minglerz.net/. Most functionality should work ok also on
 
 You can test the app by trying out the following features:
 1. **Create a new user account and log in**. Try entering intentionally bad usernames and poor passwords first, then viewing the error messages and changing the values accordingly.
-2. **Create a new place**. When searching for locations, use street name with address number and city, e.g. Leppäsuonkatu 11, 00100 Helsinki. Otherwise, the results may be inaccurate. Validation doesn't work in the place form yet.
+2. **Create a new place**. When searching for locations, use street name with address number and city, e.g. Leppäsuonkatu 11, 00100 Helsinki. Otherwise, the results may be inaccurate. Try fooling the validation with weird inputs.
 3. **Create new events**. Here too, you can try submitting e.g. an empty event, then fixing the values according to instructions.
 4. **Edit events** you have created.
 5. While viewing events other people have created, **register to join an event, or comment on an event**. You can also check that you can't register to a past event or when max number of attendees is reached.
@@ -27,7 +27,6 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 * Places can't be edited and they have no ownership. Should they be user-specific or shared? E.g.can add new places to "my places" manually or copy from other people's events.
 * Start new event from place page. (Organize event here)
-* Validation of place data.
 * User can change password.
 * Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
 * From modals, add buttons to full profiles.
