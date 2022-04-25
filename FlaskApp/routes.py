@@ -70,11 +70,6 @@ def list_places():
     return render_template("places.html", places=places)
 
 
-@app.route("/maps")
-def maps():
-    return render_template("azuremap.html", key=getenv("MAPS_API_KEY"))
-
-
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
@@ -255,6 +250,7 @@ def show_event(id):
     if "username" not in session:
         return redirect("/")
     event = actions.get_event_by_id(id)
+    pos = f"[{event.location[1:-1]}]"
     comments = actions.get_comments_by_event_id(id)
     signups = actions.get_signups_by_event_id(id)
     going = len(signups)
@@ -263,8 +259,8 @@ def show_event(id):
         user_going = True
     else:
         user_going = actions.get_signup_by_id(id, session["id"])
-    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, 
-                           going=going, user_going=user_going, past=past)
+    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, pos=pos,
+                           going=going, user_going=user_going, past=past, key=getenv("MAPS_API_KEY"))
 
 
 @app.route("/write_comment", methods=["POST"])

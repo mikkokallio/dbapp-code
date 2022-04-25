@@ -10,70 +10,76 @@
 
 <div class="box has-background-primary-light">
   <div class="columns">
-    <div class="column">
-      <i class="fas fa-calendar"></i> {{ unit.date.strftime("%a %d %b") }}
+    <div class="column is-one-third">
+      {% include "azuremap.html" %}
     </div>
     <div class="column">
-      <i class="fas fa-clock"></i> {{ unit.time.strftime("%H:%M") }}
-    </div>
-    <div class="column">
-      Organized by <a class="js-modal-trigger" data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
+      <div class="columns">
+        <div class="column">
+          <i class="fas fa-calendar"></i> {{ unit.date.strftime("%a %d %b") }}
+        </div>
+        <div class="column">
+          <i class="fas fa-clock"></i> {{ unit.time.strftime("%H:%M") }}
+        </div>
+        <div class="column">
+          Organized by <a class="js-modal-trigger" data-target="user-modal{{ unit.username }}">{{ unit.username }}</a>
+        </div>
+      </div>
+      <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>
+      <form action="/signup" method="POST">
+        <div class="field has-addons">
+          {% if session.username != unit.username %}
+          {% if user_going %}
+          {% if past %}
+          <p class="button is-static is-small">
+            <i class="fa fa-check"></i>
+          </p>
+          {% else %}
+          <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
+            <i class="fa fa-check"></i>
+          </button>
+          {% endif %}
+          {% else %}
+          {% if past %}
+          <p class="button is-static is-small">
+            <i class="fa fa-question"></i>
+          </p>
+          {% else %}
+          <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">
+            <i class='fa fa-question'></i>
+          </button>
+          {% endif %}
+          {% endif %}
+          {% else %}
+          <p class="button is-static is-small">
+            <i class="fa fa-check"></i>
+          </p>
+          {% endif %}
+
+          <span>&nbsp; <a class="js-modal-trigger" data-target="user-list">
+              {% if user_going and going == 0 %}
+              You are going
+              {% elif user_going and going == 1 %}
+              You and 1 are going
+              {% elif user_going and going > 1 %}
+              You and {{ going }} are going
+              {% elif not user_going and going == 0 %}
+              1 is going
+              {% else %}
+              {{ going+1 }} are going
+              {% endif %}
+            </a>(max {{ unit.max_people }})</span>
+          {% include "user_list_modal.html" %}
+        </div>
+        <input type="hidden" name="event_id" value="{{ id }}">
+        <input type="hidden" name="max_people" value="{{ unit.max_people }}">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      </form>
     </div>
   </div>
-
-  {% include "user_modal.html" %}
-
-  <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>
-  <form action="/signup" method="POST">
-    <div class="field has-addons">
-      {% if session.username != unit.username %}
-      {% if user_going %}
-      {% if past %}
-      <p class="button is-static is-small">
-        <i class="fa fa-check"></i>
-      </p>
-      {% else %}
-      <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
-        <i class="fa fa-check"></i>
-      </button>
-      {% endif %}
-      {% else %}
-      {% if past %}
-      <p class="button is-static is-small">
-        <i class="fa fa-question"></i>
-      </p>
-      {% else %}
-      <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">
-        <i class='fa fa-question'></i>
-      </button>
-      {% endif %}
-      {% endif %}
-      {% else %}
-      <p class="button is-static is-small">
-        <i class="fa fa-check"></i>
-      </p>
-      {% endif %}
-
-      <span>&nbsp; <a class="js-modal-trigger" data-target="user-list">
-          {% if user_going and going == 0 %}
-          You are going
-          {% elif user_going and going == 1 %}
-          You and 1 are going
-          {% elif user_going and going > 1 %}
-          You and {{ going }} are going
-          {% elif not user_going and going == 0 %}
-          1 is going
-          {% else %}
-          {{ going+1 }} are going
-          {% endif %}
-        </a>(max {{ unit.max_people }})</span>
-      {% include "user_list_modal.html" %}
-    </div>
-    <input type="hidden" name="event_id" value="{{ id }}">
-    <input type="hidden" name="max_people" value="{{ unit.max_people }}">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  </form>
 </div>
+
+{% include "user_modal.html" %}
 
 {% if session.username == unit.username %}
 <form action="/edit_event" method="POST">

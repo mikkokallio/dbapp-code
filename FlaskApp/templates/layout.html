@@ -5,6 +5,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Minglerz.net</title>
+  <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
+  <link href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" rel="stylesheet" />
+  <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+  <!-- Add a reference to the Azure Maps Services Module JavaScript file. -->
+  <script src="https://atlas.microsoft.com/sdk/javascript/service/2/atlas-service.min.js"></script>
+
+  <!-- Font Awesome and Bulma references. -->
   <script src="https://kit.fontawesome.com/bddfa0468b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <script>
@@ -63,7 +71,7 @@
   </script>
 </head>
 
-<body>
+<body onload="loadScript()">
   <section class="section">
     <div class="container fa-2x block">
       <div class="columns is-mobile">
