@@ -300,7 +300,7 @@ def send_comment():
 
     event_id = request.form["event_id"]
     comment = request.form["comment"]
-    if len(comment) >= 1:
+    if len(comment) > 0:
         actions.send_comment(event_id, session["id"], comment)
     return redirect(f"/event/{event_id}")
 
