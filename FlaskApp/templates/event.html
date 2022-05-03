@@ -48,7 +48,7 @@
               <i class="fa fa-check"></i>
             </p>
             {% else %}
-            <button id="button" type="submit" class="button is-small is-success" onclick="showSpinner()">
+            <button id="button" type="submit" class="button is-small is-success" onclick="showSmallSpinner('button')">
               <i class="fa fa-check"></i>
             </button>
             {% endif %}
@@ -58,7 +58,7 @@
               <i class="fas fa-plus"></i>
             </p>
             {% else %}
-            <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">
+            <button id="button" type="submit" class="button is-small is-primary" onclick="showSmallSpinner('button')">
               <i class='fas fa-plus'></i>
             </button>
             {% endif %}
@@ -99,7 +99,7 @@
 {% if session.username == unit.username %}
 <form action="/edit_event" method="POST">
   <div class="field">
-    <button id="button" type="submit" class="button is-success" onclick="showSpinner()">
+    <button id="button2" type="submit" class="button is-success" onclick="showSpinner('button2')">
       Edit event
     </button>
   </div>
@@ -107,7 +107,7 @@
 </form>
 <form action="/delete_event" method="POST">
   <div class="field">
-    <button id="button" type="submit" class="button is-success" onclick="showSpinner()">
+    <button id="button3" type="submit" class="button is-success" onclick="showSpinner('button3')">
       Delete event
     </button>
   </div>
@@ -135,7 +135,7 @@
     </div>
     <form action="/write_comment" method="POST">
       <div class="field has-addons">
-        <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()"><i
+        <button id="button4" type="submit" class="button is-small is-primary" onclick="showSmallSpinner('button4')"><i
             class='fa fa-share'></i></button>
         <input class="input is-small" type="text" name="comment" placeholder="Write a comment...">
       </div>

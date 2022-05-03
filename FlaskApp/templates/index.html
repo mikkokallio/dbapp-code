@@ -22,13 +22,17 @@
     </div>
   </div>
 
-  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Sign in</button>
+  <button id="button" type="submit" class="button is-primary" onclick="showSpinner('button')">
+    Sign in
+  </button>
 </form>
 
 <h2 class="subtitle">
   Or create a new account
 </h2>
 
-<a href="/new_user" class="button is-primary">Create user account</a>
+<a href="/new_user" id="button2" class="button is-primary" onclick="showSpinner('button2')">
+  Create user account
+</a>
 
 {% endblock %}

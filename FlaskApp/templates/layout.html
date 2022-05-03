@@ -16,8 +16,11 @@
   <script src="https://kit.fontawesome.com/bddfa0468b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <script>
-    function showSpinner() {
-      document.getElementById('button').setAttribute("class", "button is-primary is-loading");
+    function showSpinner(id) {
+      document.getElementById(id).setAttribute("class", "button is-primary is-loading");
+    };
+    function showSmallSpinner(id) {
+      document.getElementById(id).setAttribute("class", "button is-primary is-small is-loading");
     };
     function closeMessage() {
       document.getElementById('message').setAttribute("style", "display:none");

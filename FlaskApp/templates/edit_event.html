@@ -63,7 +63,7 @@
   </div>
   <input type="hidden" name="event_id" value="{{ id }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Save</button>
+  <button id="button" type="submit" class="button is-primary" onclick="showSpinner('button')">Save</button>
 </form>
 
 {% endblock %}

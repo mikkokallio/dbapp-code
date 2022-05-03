@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <button id="button" type="submit" class="button is-primary" onclick="showSpinner()">Search</button>
+  <button id="button" type="submit" class="button is-primary" onclick="showSpinner('button')">Search</button>
 </form>
 
 <h2 class="subtitle">
@@ -29,8 +29,9 @@
 {% for place in places %}
 <form class="box" action="/add_place" method="POST">
   <div class="field has-addons">
-    <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()"><i
-      class="fas fa-plus"></i></button>
+    <button id="{{ place.address.freeformAddress }}" type="submit" class="button is-small is-primary" 
+      onclick="showSmallSpinner('{{ place.address.freeformAddress }}')">
+      <i class="fas fa-plus"></i></button>
     <label class="label">{{ place.address.freeformAddress }}</label>
   </div>
   <input type="hidden" name="address" value="{{ place.address.freeformAddress }}">
