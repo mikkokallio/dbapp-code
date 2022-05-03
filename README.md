@@ -23,20 +23,22 @@ You can test the app by trying out the following features:
 
 The code is structured so that the application code is in the **FlaskApp** folder.
 
+## Technologies used
+
+* The app is written Python, HTML, and JS using Flask as the web framework and Bulma as a style library. 
+* Azure Functions provides serverless compute for running Flask.
+* Azure Database for PostgreSQL is used for persisting the app data.
+* Azure Maps APIs are used for fetching street address information and displaying maps in events.
+* Github and Github Actions are used for CI/CD, deploying the app automatically to Azure each time the main branch is updated.
+
 ## Todo list
 
-* Places can't be edited and they have no ownership. Should they be user-specific or shared? E.g.can add new places to "my places" manually or copy from other people's events.
-* Start new event from place page. (Organize event here)
-* User can change password.
-* Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
-* From modals, add buttons to full profiles.
-* Bug: On mobile, viewing who's going triggers the button that determines who's going.
-* Admin users can also see deleted events and other hidden information. They can also ban users or elevate regular users to admins.
+The following tasks were planned but not completed during the project, and may be implemented later.
 
-### Low priority
-
-* Cancel events or soft delete, so the event doesn't just vanish.
-
-## Architecture
-
-In this app, Azure Functions provides serverless compute for running Flask, and the database is also a PaaS offering from Azure. Github and Github Actions are used for CI/CD, deploying the app automatically to Azure each time the main branch is updated.
+* Places should be editable and/or deletable. Further, they might have ownership by the user who created them, so only the same user (or admin) can edit or delete (just like events).
+* When viewing the list of places, there should be a button "Create event here" as a shortcut so that the place gets inserted in the form automatically.
+* User should be able to change password.
+* Other users, too, should have full profiles. When viewing participant list in a modal, there should be links to full profiles.
+* Bug: On mobile, viewing the list of who's going to an event triggers the button that registers participation.
+* Admin users should be able to see deleted events and other hidden information. They should also be able to ban users or elevate regular users to admins.
+* Users can cancel events ("soft delete") without immediately removing the event. Also, there should be a confirmation dialog for deleting an event.
