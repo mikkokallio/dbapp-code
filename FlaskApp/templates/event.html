@@ -37,8 +37,6 @@
         </div>
       </div>
 
-      <!--<div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>-->
-
       <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>
       <div class="block">
         <form action="/signup" method="POST">
@@ -57,11 +55,11 @@
             {% else %}
             {% if past %}
             <p class="button is-static is-small">
-              <i class="fa fa-question"></i>
+              <i class="fas fa-plus"></i>
             </p>
             {% else %}
             <button id="button" type="submit" class="button is-small is-primary" onclick="showSpinner()">
-              <i class='fa fa-question'></i>
+              <i class='fas fa-plus'></i>
             </button>
             {% endif %}
             {% endif %}
