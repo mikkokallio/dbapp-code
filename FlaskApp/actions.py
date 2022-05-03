@@ -53,7 +53,7 @@ def validate_place(fields):
         elif requests.get(fields["pic_url"]).status_code != 200:
             errors.append("Invalid picture URL")
     except:
-        errors.append("Invalid picture URL")        
+        errors.append("Invalid picture URL")
     try:
         if not fields["page_url"].startswith("https://"):
             errors.append("Each URL should begin with https://")
@@ -82,8 +82,10 @@ def validate_user(fields):
 def is_past_event(event):
     return date.today() > event["date"]
 
+
 def get_user_by_name(username):
-    sql = "SELECT id, username, date_of_birth, gender, description, created_at, password, role FROM users WHERE username=:username;"
+    sql = """SELECT id, username, date_of_birth, gender, description, created_at, password, role
+             FROM users WHERE username=:username;"""
     result = db.session.execute(sql, {"username": username})
     return result.fetchone()
 
@@ -110,7 +112,8 @@ def update_user(username, date_of_birth, gender, description):
     sql = "UPDATE users SET date_of_birth = :date_of_birth, gender = :gender, description = :description WHERE username = :username;"
 
     try:
-        db.session.execute(sql, {"username": username, "date_of_birth": date_of_birth, "gender": gender, "description": description})
+        db.session.execute(sql, {"username": username, "date_of_birth": date_of_birth,
+                           "gender": gender, "description": description})
         db.session.commit()
     except (AttributeError, OperationalError):
         return ["An error with saving the data occurred. Please try again later."]
@@ -150,9 +153,12 @@ def get_place_by_id(id):
 
 def upsert_event(user_id, fields):
     if fields["event_id"] != "":
-        sql = "UPDATE events SET title = :title, place_id = :place_id, date = :date, time = :time, max_people = :max_people, description = :description WHERE id = :id;"
+        sql = """UPDATE events SET title = :title, place_id = :place_id, date = :date, time = :time,
+                 max_people = :max_people, description = :description WHERE id = :id;"""
     else:
-        sql = "INSERT INTO events (title, host_id, place_id, date, time, max_people, description, created_at) VALUES (:title, :host_id, :place_id, :date, :time, :max_people, :description, NOW());"
+        sql = """INSERT INTO events (title, host_id, place_id, date, time, max_people, description,
+                 created_at)
+                 VALUES (:title, :host_id, :place_id, :date, :time, :max_people, :description, NOW());"""
     try:
         db.session.execute(sql, {
             "title": fields["title"],
@@ -170,60 +176,73 @@ def upsert_event(user_id, fields):
 
 
 def get_comments_by_event_id(id):
-    sql = """SELECT users.username as username, comment, comments.created_at as created_at, gender,
-        users.description as about_me, users.created_at as member_since FROM comments
-        LEFT JOIN users ON comments.user_id = users.id WHERE event_id=:id ORDER BY created_at DESC;"""
+    sql = """SELECT users.username as username, comment, comments.created_at AS created_at, gender,
+             users.description AS about_me, users.created_at AS member_since FROM comments
+             LEFT JOIN users ON comments.user_id = users.id
+             WHERE event_id=:id ORDER BY created_at DESC;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchall()
 
 
 def get_signups_by_event_id(id):
-    sql = "SELECT username, user_id FROM signups LEFT JOIN users ON signups.user_id = users.id WHERE event_id=:id;"
+    sql = """SELECT username, user_id FROM signups LEFT JOIN users ON signups.user_id = users.id
+             WHERE event_id=:id;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchall()
 
 
 def get_registered_events_by_user_id(id):
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
-        users.created_at as member_since, users.username as username FROM signups LEFT JOIN events ON signups.event_id = events.id
-        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id WHERE signups.user_id = :id ORDER BY events.date DESC;"""
+    sql = """SELECT events.id AS id, title, date, gender, users.description AS about_me,
+             places.pic_url AS pic_url, places.name AS place, users.created_at AS member_since,
+             users.username AS username FROM signups
+             LEFT JOIN events ON signups.event_id = events.id
+             LEFT JOIN users ON events.host_id = users.id
+             LEFT JOIN places ON events.place_id = places.id
+             WHERE signups.user_id = :id ORDER BY events.date DESC;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchall()
 
 
 def get_organized_events_by_user_id(id):
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
-        users.created_at as member_since, users.username as username FROM events
-        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
-        WHERE events.host_id = :id ORDER BY events.date DESC;"""
+    sql = """SELECT events.id AS id, title, date, gender, users.description AS about_me,
+             places.pic_url AS pic_url, places.name AS place, users.created_at AS member_since,
+             users.username as username FROM events
+             LEFT JOIN users ON events.host_id = users.id
+             LEFT JOIN places ON events.place_id = places.id
+             WHERE events.host_id = :id ORDER BY events.date DESC;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchall()
 
 
 def get_upcoming_events():
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
-        users.created_at as member_since, users.username as username FROM events
-        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
-        WHERE events.date >= NOW() ORDER BY events.date ASC;"""
+    sql = """SELECT events.id AS id, title, date, gender, users.description AS about_me,
+             places.pic_url AS pic_url, places.name AS place, users.created_at AS member_since,
+             users.username AS username FROM events
+             LEFT JOIN users ON events.host_id = users.id
+             LEFT JOIN places ON events.place_id = places.id
+             WHERE events.date >= NOW() ORDER BY events.date ASC;"""
     result = db.session.execute(sql)
     return result.fetchall()
 
 
 def get_past_events():
-    sql = """SELECT events.id AS id, title, date, gender, users.description as about_me, places.pic_url as pic_url, places.name as place,
-        users.created_at as member_since, users.username as username FROM events
-        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
-        WHERE events.date < NOW() ORDER BY events.date DESC;"""
+    sql = """SELECT events.id AS id, title, date, gender, users.description AS about_me,
+             places.pic_url AS pic_url, places.name AS place, users.created_at AS member_since,
+             users.username AS username FROM events
+             LEFT JOIN users ON events.host_id = users.id
+             LEFT JOIN places ON events.place_id = places.id
+             WHERE events.date < NOW() ORDER BY events.date DESC;"""
     result = db.session.execute(sql)
     return result.fetchall()
 
 
 def get_event_by_id(id):
-    sql = """SELECT events.id AS id, title, date, time, max_people, pic_url, address, page_url, name, location,
-        events.description as description,
-        gender, users.description as about_me, users.created_at as member_since, users.username as username FROM events 
-        LEFT JOIN users ON events.host_id = users.id LEFT JOIN places ON events.place_id = places.id
-        WHERE events.id=:id;"""
+    sql = """SELECT events.id AS id, title, date, time, max_people, pic_url, address, page_url,
+             name, location, events.description AS description, gender, users.description
+             AS about_me, users.created_at AS member_since, users.username as username FROM events
+             LEFT JOIN users ON events.host_id = users.id
+             LEFT JOIN places ON events.place_id = places.id
+             WHERE events.id=:id;"""
     result = db.session.execute(sql, {"id": id})
     return result.fetchone()
 
@@ -236,9 +255,11 @@ def delete_event_by_id(id, user_id):
 
 
 def send_comment(event_id, user_id, comment):
-    sql = "INSERT INTO comments (event_id, user_id, comment, created_at) values (:event_id, :user_id, :comment, NOW());"
+    sql = """INSERT INTO comments (event_id, user_id, comment, created_at)
+             values (:event_id, :user_id, :comment, NOW());"""
     try:
-        db.session.execute(sql, {"event_id": event_id, "user_id": user_id, "comment": comment})
+        db.session.execute(
+            sql, {"event_id": event_id, "user_id": user_id, "comment": comment})
         db.session.commit()
     except (AttributeError, OperationalError):
         return ["An error with saving the data occurred. Please try again later."]
@@ -247,8 +268,9 @@ def send_comment(event_id, user_id, comment):
 
 def get_signup_by_id(event_id, user_id):
     sql = "SELECT COUNT(*) FROM signups WHERE event_id=:event_id AND user_id=:user_id;"
-    result = db.session.execute(sql, {"event_id": event_id, "user_id": user_id})
-    return result.fetchone().count > 0 
+    result = db.session.execute(
+        sql, {"event_id": event_id, "user_id": user_id})
+    return result.fetchone().count > 0
 
 
 def add_or_remove_signup(event_id, user_id, max_people, signups):
@@ -257,10 +279,11 @@ def add_or_remove_signup(event_id, user_id, max_people, signups):
     else:
         if max_people != "None" and signups >= int(max_people) - 1:
             return
-        sql = "INSERT INTO signups (event_id, user_id, created_at) values (:event_id, :user_id, NOW());"
+        sql = """INSERT INTO signups (event_id, user_id, created_at)
+                 values (:event_id, :user_id, NOW());"""
     try:
         db.session.execute(sql, {"event_id": event_id, "user_id": user_id})
-        db.session.commit()        
-    except Exception as e: # TODO: Should include exception type!
-        print(e)
+        db.session.commit()
+    except Exception:
+        return
     return

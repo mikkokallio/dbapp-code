@@ -11,6 +11,7 @@ from os import abort
 
 @app.route("/")
 def index():
+    """Show user's profile unless user hasn't logged in."""
     if "username" in session:
         return redirect("/profile")
 
@@ -19,33 +20,39 @@ def index():
 
 @app.route("/new_place")
 def new_place():
+    """Show street address selector view."""
     return render_template("pick_place.html")
 
 
 @app.route("/search_places", methods=["POST"])
 def search_places():
+    """Fetch addresses based on user input."""
     if "username" not in session:
         return redirect("/")
     location = request.form["location"]
     key = getenv("MAPS_API_KEY")
     url = f"https://atlas.microsoft.com/search/address/json?&subscription-key={key}&api-version=1.0&language=en-US&query={location}"
     response = requests.get(url)
-    places = json.loads(response.text)["results"] if response.status_code == 200 else None
+    places = json.loads(response.text)[
+        "results"] if response.status_code == 200 else None
     return render_template("pick_place.html", location=location, places=places)
 
 
 @app.route("/add_place", methods=["POST"])
 def add_place():
+    """Open form for filling in information about a place."""
     if "username" not in session:
         return redirect("/")
     address = request.form["address"]
     latitude = request.form["latitude"]
     longitude = request.form["longitude"]
-    return render_template("edit_place.html", fields={"address": address, "latitude": latitude, "longitude": longitude})
+    return render_template("edit_place.html", fields={
+        "address": address, "latitude": latitude, "longitude": longitude})
 
 
 @app.route("/save_place", methods=["POST"])
 def save_place():
+    """Save submitted place information."""
     if "username" not in session:
         return redirect("/")
     if session["csrf_token"] != request.form["csrf_token"]:
@@ -58,12 +65,13 @@ def save_place():
     messages = actions.save_place(fields)
     if len(messages) == 0:
         return redirect("/places")
-    else:
-        return render_template("edit_place.html", messages=messages, fields=fields)
+
+    return render_template("edit_place.html", messages=messages, fields=fields)
 
 
 @app.route("/places")
 def list_places():
+    """Show a list of all places."""
     if "username" not in session:
         return redirect("/")
     places = actions.get_places()
@@ -72,15 +80,18 @@ def list_places():
 
 @app.route("/login", methods=["POST"])
 def login():
+    """Log user in using password and username from form."""
     username = request.form["username"]
     password = request.form["password"]
     user = None
     try:
         user = actions.get_user_by_name(username)
-    except (AttributeError):
-        return render_template("index.html", messages=["A problem occurred while fetching user data."])
+    except AttributeError:
+        return render_template("index.html",
+                               messages=["A problem occurred while fetching user data."])
     if not user:
-        return render_template("index.html", messages=["Username does not exist"])
+        return render_template("index.html",
+                               messages=["Username does not exist"])
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):
@@ -95,6 +106,7 @@ def login():
 
 @app.route("/logout")
 def logout():
+    """Log user out by removing session data."""
     del session["username"]
     del session["role"]
     del session["id"]
@@ -104,6 +116,7 @@ def logout():
 
 @app.route("/profile")
 def show_profile():
+    """Show information about user logged in."""
     if "username" not in session:
         return redirect("/")
 
@@ -112,17 +125,19 @@ def show_profile():
     other_events = actions.get_registered_events_by_user_id(session["id"])
     my_count = len(my_events)
     other_count = len(other_events)
-    return render_template("profile.html", user=user, my_events=my_events, other_events=other_events,
-                           my_count=my_count, other_count=other_count)
+    return render_template("profile.html", user=user, my_events=my_events,
+                           other_events=other_events, my_count=my_count, other_count=other_count)
 
 
 @app.route("/new_user")
 def new_user():
+    """Show form for entering a new username and password."""
     return render_template("new_user.html", fields=None)
 
 
 @app.route("/edit_user")
 def edit_user():
+    """Show form for filling in other user information."""
     if "username" not in session:
         return redirect("/")
     user = actions.get_user_by_name(session["username"])
@@ -131,6 +146,7 @@ def edit_user():
 
 @app.route("/add_user", methods=["POST"])
 def add_user():
+    """Save submitted username and password."""
     username = request.form["username"]
     password = request.form["password"]
     password2 = request.form["password2"]
@@ -152,12 +168,13 @@ def add_user():
         session["id"] = actions.get_user_by_name(username).id
         session["csrf_token"] = secrets.token_hex(16)
         return render_template("edit_user.html", new_user=True, user=None)
-    else:
-        return render_template("new_user.html", messages=messages, fields=request.form)
+
+    return render_template("new_user.html", messages=messages, fields=request.form)
 
 
 @app.route("/update_user", methods=["POST"])
 def update_user():
+    """Save submitted user information."""
     if "username" not in session:
         return redirect("/")
     if session["csrf_token"] != request.form["csrf_token"]:
@@ -172,15 +189,17 @@ def update_user():
 
     if len(messages) > 0:
         return render_template("edit_user.html", messages=messages, user=request.form)
-    messages = actions.update_user(session["username"], date_of_birth, gender, description)
+    messages = actions.update_user(
+        session["username"], date_of_birth, gender, description)
     if len(messages) == 0:
         return redirect("/profile")
-    else:
-        return render_template("edit_user.html", messages=messages, user=request.form)
+
+    return render_template("edit_user.html", messages=messages, user=request.form)
 
 
 @app.route("/new_event")
 def new_event():
+    """Open form to create new event from scratch."""
     if "username" not in session:
         return redirect("/")
     places = actions.get_places()
@@ -189,6 +208,7 @@ def new_event():
 
 @app.route("/edit_event", methods=["POST"])
 def edit_event():
+    """Open event form for editing."""
     if "username" not in session:
         return redirect("/")
     if not request.form["event_id"]:
@@ -204,6 +224,7 @@ def edit_event():
 
 @app.route("/delete_event", methods=["POST"])
 def del_event():
+    """Delete event using id from currently viewed event."""
     if "username" not in session:
         return redirect("/")
     if not request.form["event_id"]:
@@ -218,25 +239,30 @@ def del_event():
 
 @app.route("/add_event", methods=["POST"])
 def update_event():
+    """Save event form fields."""
     if "username" not in session:
         return redirect("/")
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
 
     fields = request.form
-    places = actions.get_places() # TODO: Get from form?
+    places = actions.get_places()  # TODO: Get from form?
     messages = actions.validate_event(fields)
     if len(messages) > 0:
-        return render_template("edit_event.html", messages=messages, fields=fields, places=places, id=fields["event_id"])
+        return render_template("edit_event.html", messages=messages, fields=fields,
+                               places=places, id=fields["event_id"])
+
     messages = actions.upsert_event(session["id"], fields)
     if len(messages) == 0:
         return redirect("/events")
     else:
-        return render_template("edit_event.html", messages=messages, fields=fields, places=places, id=fields["event_id"])
+        return render_template("edit_event.html", messages=messages, fields=fields,
+                               places=places, id=fields["event_id"])
 
 
 @app.route("/events")
 def list_events():
+    """Show a view with past and future events."""
     if "username" not in session:
         return redirect("/")
     events = actions.get_upcoming_events()
@@ -247,6 +273,7 @@ def list_events():
 
 @app.route("/event/<int:id>")
 def show_event(id):
+    """Show more detailed information about one event."""
     if "username" not in session:
         return redirect("/")
     event = actions.get_event_by_id(id)
@@ -259,12 +286,14 @@ def show_event(id):
         user_going = True
     else:
         user_going = actions.get_signup_by_id(id, session["id"])
-    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups, pos=pos,
-                           going=going, user_going=user_going, past=past, key=getenv("MAPS_API_KEY"))
+    return render_template("event.html", id=id, unit=event, comments=comments, signups=signups,
+                           pos=pos, going=going, user_going=user_going, past=past,
+                           key=getenv("MAPS_API_KEY"))
 
 
 @app.route("/write_comment", methods=["POST"])
 def send_comment():
+    """Save a new comment."""
     if "username" not in session:
         return redirect("/")
     if session["csrf_token"] != request.form["csrf_token"]:
@@ -279,6 +308,7 @@ def send_comment():
 
 @app.route("/signup", methods=["POST"])
 def sign_up():
+    """Save registration to event or remove it."""
     if "username" not in session:
         return redirect("/")
     if session["csrf_token"] != request.form["csrf_token"]:
