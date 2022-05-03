@@ -162,13 +162,6 @@ def get_places():
     return result.fetchall()
 
 
-def get_place_by_id(id):
-    """Fetch one place based on id."""
-    sql = "SELECT pic_url, address, name, page_url FROM places WHERE id = :id;"
-    result = db.session.execute(sql, {"id": id})
-    return result.fetchone()
-
-
 def upsert_event(user_id, fields):
     """Add new or update existing event's information."""
     if fields["event_id"] != "":
