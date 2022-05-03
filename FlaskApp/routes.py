@@ -15,7 +15,7 @@ def index():
     if "username" in session:
         return redirect("/profile")
 
-    return render_template("index.html")
+    return render_template("index.html", mode="4")
 
 
 @app.route("/new_place")
@@ -75,7 +75,7 @@ def list_places():
     if "username" not in session:
         return redirect("/")
     places = actions.get_places()
-    return render_template("places.html", places=places, mode=2)
+    return render_template("places.html", places=places, mode="2")
 
 
 @app.route("/login", methods=["POST"])
@@ -87,10 +87,10 @@ def login():
     try:
         user = actions.get_user_by_name(username)
     except AttributeError:
-        return render_template("index.html",
+        return render_template("index.html", mode="4",
                                messages=["A problem occurred while fetching user data."])
     if not user:
-        return render_template("index.html",
+        return render_template("index.html", mode="4",
                                messages=["Username does not exist"])
 
     hash_value = user.password
@@ -101,7 +101,8 @@ def login():
         session["csrf_token"] = secrets.token_hex(16)
         return redirect("/events")
 
-    return render_template("index.html", messages=["Wrong password"])
+    return render_template("index.html", mode="4",
+                           messages=["Wrong password"])
 
 
 @app.route("/logout")
@@ -125,14 +126,14 @@ def show_profile():
     other_events = actions.get_registered_events_by_user_id(session["id"])
     my_count = len(my_events)
     other_count = len(other_events)
-    return render_template("profile.html", user=user, my_events=my_events, mode=1,
+    return render_template("profile.html", user=user, my_events=my_events, mode="1",
                            other_events=other_events, my_count=my_count, other_count=other_count)
 
 
 @app.route("/new_user")
 def new_user():
     """Show form for entering a new username and password."""
-    return render_template("new_user.html", fields=None)
+    return render_template("new_user.html", fields=None, mode="4")
 
 
 @app.route("/edit_user")
@@ -158,7 +159,7 @@ def add_user():
         messages.append("Passwords don't match")
 
     if len(messages) > 0:
-        return render_template("new_user.html", messages=messages, fields=request.form)
+        return render_template("new_user.html", messages=messages, fields=request.form, mode="4")
 
     hash_value = generate_password_hash(password)
     messages = actions.add_user(username, hash_value)
@@ -167,9 +168,9 @@ def add_user():
         session["role"] = "user"
         session["id"] = actions.get_user_by_name(username).id
         session["csrf_token"] = secrets.token_hex(16)
-        return render_template("edit_user.html", new_user=True, user=None)
+        return render_template("edit_user.html", new_user=True, user=None, mode="4")
 
-    return render_template("new_user.html", messages=messages, fields=request.form)
+    return render_template("new_user.html", messages=messages, fields=request.form, mode="4")
 
 
 @app.route("/update_user", methods=["POST"])
@@ -183,15 +184,16 @@ def update_user():
     date_of_birth = request.form["date_of_birth"]
     gender = request.form["gender"]
     description = request.form["description"]
+    mode = request.form["mode"]
 
     messages = actions.validate_user(request.form)
     if len(messages) > 0:
-        return render_template("edit_user.html", messages=messages, user=request.form)
+        return render_template("edit_user.html", messages=messages, user=request.form, mode=mode)
 
     messages = actions.update_user(
         session["username"], date_of_birth, gender, description)
     if len(messages) > 0:
-        return render_template("edit_user.html", messages=messages, user=request.form)
+        return render_template("edit_user.html", messages=messages, user=request.form, mode=mode)
     
     return redirect("/profile")
 
@@ -267,7 +269,7 @@ def list_events():
     events = actions.get_upcoming_events()
     past_events = actions.get_past_events()
     return render_template("events.html", count=len(events), past_count=len(past_events),
-                           events=events, past_events=past_events, events_view=True, mode=3)
+                           events=events, past_events=past_events, events_view=True, mode="3")
 
 
 @app.route("/event/<int:id>")

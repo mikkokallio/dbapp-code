@@ -79,21 +79,21 @@
     <div class="container fa-2x block">
       <div class="columns is-mobile">
         <div class="column has-text-centered">
-          {% if mode==1 or mode==4 %}
+          {% if mode=="1" or mode=="4" %}
           <i class="fa-solid fa-user"></i>
           {% else %}
           <a href="/"><i class="fa-solid fa-user fa-beat" style="--fa-animation-duration: 2s;"></i></a>
           {% endif %}
         </div>
         <div class="column has-text-centered">
-          {% if mode==2 or mode==4 %}
+          {% if mode=="2" or mode=="4" %}
           <i class="fas fa-map-marker-alt"></i>
           {% else %}
           <a href="/places"><i class="fas fa-map-marker-alt fa-beat" style="--fa-animation-duration: 2s;"></i></a>
           {% endif %}
         </div>
         <div class="column has-text-centered">
-          {% if mode==3 or mode==4 %}
+          {% if mode=="3" or mode=="4" %}
           <i class="fa-solid fa-star"></i>
           {% else %}
           <a href="/events"><i class="fa-solid fa-star fa-beat" style="--fa-animation-duration: 2s;"></i></a>
