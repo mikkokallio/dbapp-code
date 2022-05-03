@@ -75,7 +75,7 @@ def list_places():
     if "username" not in session:
         return redirect("/")
     places = actions.get_places()
-    return render_template("places.html", places=places)
+    return render_template("places.html", places=places, mode=2)
 
 
 @app.route("/login", methods=["POST"])
@@ -125,7 +125,7 @@ def show_profile():
     other_events = actions.get_registered_events_by_user_id(session["id"])
     my_count = len(my_events)
     other_count = len(other_events)
-    return render_template("profile.html", user=user, my_events=my_events,
+    return render_template("profile.html", user=user, my_events=my_events, mode=1,
                            other_events=other_events, my_count=my_count, other_count=other_count)
 
 
@@ -267,7 +267,7 @@ def list_events():
     events = actions.get_upcoming_events()
     past_events = actions.get_past_events()
     return render_template("events.html", count=len(events), past_count=len(past_events),
-                           events=events, past_events=past_events, events_view=True)
+                           events=events, past_events=past_events, events_view=True, mode=3)
 
 
 @app.route("/event/<int:id>")
