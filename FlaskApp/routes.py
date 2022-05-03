@@ -181,20 +181,19 @@ def update_user():
         abort(403)
 
     date_of_birth = request.form["date_of_birth"]
-    print(date_of_birth)
     gender = request.form["gender"]
     description = request.form["description"]
 
     messages = actions.validate_user(request.form)
-
     if len(messages) > 0:
         return render_template("edit_user.html", messages=messages, user=request.form)
+
     messages = actions.update_user(
         session["username"], date_of_birth, gender, description)
-    if len(messages) == 0:
-        return redirect("/profile")
-
-    return render_template("edit_user.html", messages=messages, user=request.form)
+    if len(messages) > 0:
+        return render_template("edit_user.html", messages=messages, user=request.form)
+    
+    return redirect("/profile")
 
 
 @app.route("/new_event")
@@ -216,7 +215,6 @@ def edit_event():
     id = request.form["event_id"]
     event = actions.get_event_by_id(id)
     places = actions.get_places()
-    print(places)
     if session["username"] != event.username:
         return redirect("/events")
     return render_template("edit_event.html", fields=event, places=places, id=id)
@@ -246,18 +244,19 @@ def update_event():
         abort(403)
 
     fields = request.form
-    places = actions.get_places()  # TODO: Get from form?
+    places = actions.get_places()
+
     messages = actions.validate_event(fields)
     if len(messages) > 0:
         return render_template("edit_event.html", messages=messages, fields=fields,
                                places=places, id=fields["event_id"])
 
     messages = actions.upsert_event(session["id"], fields)
-    if len(messages) == 0:
-        return redirect("/events")
-    else:
+    if len(messages) > 0:
         return render_template("edit_event.html", messages=messages, fields=fields,
                                places=places, id=fields["event_id"])
+    
+    return redirect("/events")
 
 
 @app.route("/events")
