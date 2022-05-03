@@ -25,7 +25,7 @@ The code is structured so that the application code is in the **FlaskApp** folde
 
 ## Technologies used
 
-* The app is written Python, HTML, and JS using Flask as the web framework and Bulma as a style library. 
+* The app is written Python, SQL, HTML, and JS using Flask as the web framework and Bulma as a style library. 
 * Azure Functions provides serverless compute for running Flask.
 * Azure Database for PostgreSQL is used for persisting the app data.
 * Azure Maps APIs are used for fetching street address information and displaying maps in events.
