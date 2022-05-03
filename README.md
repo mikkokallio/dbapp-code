@@ -28,7 +28,6 @@ The code is structured so that the application code is in the **FlaskApp** folde
 * Places can't be edited and they have no ownership. Should they be user-specific or shared? E.g.can add new places to "my places" manually or copy from other people's events.
 * Start new event from place page. (Organize event here)
 * User can change password.
-* Bug: wrong button gets the spinner in some views. Also smaller buttons cause a bump in size!
 * From modals, add buttons to full profiles.
 * Bug: On mobile, viewing who's going triggers the button that determines who's going.
 * Admin users can also see deleted events and other hidden information. They can also ban users or elevate regular users to admins.
