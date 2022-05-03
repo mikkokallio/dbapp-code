@@ -157,7 +157,7 @@ def save_place(fields):
 
 def get_places():
     """Fetch all places in database."""
-    sql = "SELECT id, pic_url, address, name, page_url FROM places ORDER BY name ASC;"
+    sql = "SELECT id, pic_url, address, description, name, page_url FROM places ORDER BY name ASC;"
     result = db.session.execute(sql)
     return result.fetchall()
 

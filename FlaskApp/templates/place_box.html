@@ -16,11 +16,13 @@
           {{ unit.name }}
         </h2>
       </div>
-      <!--<div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>-->
     </div>
     <div class="column">
       <div><i class="fa fa-home"></i> <a href="{{ unit.page_url }}" target="_blank">{{ unit.page_url }}</a></div>
     </div>
   </div>
   </a>
+  {% if unit.description %}
+  <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>
+  {% endif %}
 </div>
