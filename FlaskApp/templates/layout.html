@@ -15,6 +15,9 @@
   <!-- Font Awesome and Bulma references. -->
   <script src="https://kit.fontawesome.com/bddfa0468b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <script>
     function showSpinner(id) {
       document.getElementById(id).setAttribute("class", "button is-primary is-loading");
