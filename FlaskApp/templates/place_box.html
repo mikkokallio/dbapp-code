@@ -18,7 +18,13 @@
       </div>
     </div>
     <div class="column">
-      <div><i class="fa fa-home"></i> <a href="{{ unit.page_url }}" target="_blank">{{ unit.page_url }}</a></div>
+      <div><i class="fa fa-home"></i> <a href="{{ unit.page_url }}" target="_blank">
+        {% if unit.page_url|length < 37 %}
+        {{ unit.page_url }}
+        {% else %}
+        {{ unit.short_url }}...
+        {% endif %}
+      </a></div>
     </div>
   </div>
   </a>

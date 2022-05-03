@@ -23,8 +23,8 @@ def validate_password(password):
 def validate_username(username):
     """Check that username meets all requirements."""
     errors = []
-    if len(username) < 3:
-        errors.append("Username should be at least 3 characters")
+    if len(username) < 3 or len(username) > 20:
+        errors.append("Username should be 3-20 characters long")
     if any(character.isspace() for character in username):
         errors.append("Username should not contain spaces")
     return errors
@@ -33,8 +33,8 @@ def validate_username(username):
 def validate_event(fields):
     """Check that event's all information meets requirements."""
     errors = []
-    if len(fields["title"]) < 5:
-        errors.append("Title must be at least 5 characters")
+    if len(fields["title"]) < 5 or len(fields["title"]) > 25:
+        errors.append("Title must be at 5-25 characters long")
     if not fields["time"]:
         errors.append("Event must have a starting time")
     if fields["date"] == "":
@@ -50,7 +50,7 @@ def validate_place(fields):
     """Check that place's all information meets requirements."""
     errors = []
     if len(fields["name"]) < 5 or len(fields["name"]) > 20:
-        errors.append("Name must 5-20 characters long")
+        errors.append("Name must be 5-20 characters long")
     try:
         if not fields["pic_url"].startswith("https://"):
             errors.append("Each URL should begin with https://")
@@ -66,7 +66,7 @@ def validate_place(fields):
     except:
         errors.append("Invalid web page URL")
     if not any([fields["pic_url"].endswith(filetype) for filetype in ["jpg", "png", "gif"]]):
-        errors.append("Picture URL should point to an image file")
+        errors.append("Picture URL should point to a jpg, png, or gif image file")
     if len(fields["description"].split(" ")) < 5:
         errors.append("Description must be at least 5 words")
     return errors
@@ -157,7 +157,8 @@ def save_place(fields):
 
 def get_places():
     """Fetch all places in database."""
-    sql = "SELECT id, pic_url, address, description, name, page_url FROM places ORDER BY name ASC;"
+    sql = """SELECT id, pic_url, address, description, name, page_url,
+             LEFT(page_url, 35) AS short_url FROM places ORDER BY name ASC;"""
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -256,9 +257,10 @@ def get_past_events():
 
 def get_event_by_id(id):
     """Fetch one event based on id."""
-    sql = """SELECT events.id AS id, title, date, time, max_people, pic_url, address, page_url,
-             name, location, events.description AS description, gender, users.description
-             AS about_me, users.created_at AS member_since, users.username as username FROM events
+    sql = """SELECT events.id AS id, events.description AS description, title, date, time, pic_url,
+             max_people, address, page_url, LEFT(page_url, 35) AS short_url, name, gender,
+             location, users.description AS about_me, users.created_at AS member_since,
+             users.username as username FROM events
              LEFT JOIN users ON events.host_id = users.id
              LEFT JOIN places ON events.place_id = places.id
              WHERE events.id=:id;"""
