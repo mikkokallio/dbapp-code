@@ -1,12 +1,12 @@
-from .app import app
-from . import actions
-from flask import redirect, render_template, request, session
-from werkzeug.security import check_password_hash, generate_password_hash
-from os import getenv
-import requests
 import json
 import secrets
 from os import abort
+from os import getenv
+import requests
+from flask import redirect, render_template, request, session
+from werkzeug.security import check_password_hash, generate_password_hash
+from .app import app
+from . import actions
 
 
 @app.route("/")
@@ -92,16 +92,16 @@ def login():
     if not user:
         return render_template("index.html",
                                messages=["Username does not exist"])
-    else:
-        hash_value = user.password
-        if check_password_hash(hash_value, password):
-            session["username"] = username
-            session["role"] = user.role
-            session["id"] = user.id
-            session["csrf_token"] = secrets.token_hex(16)
-        else:
-            return render_template("index.html", messages=["Wrong password"])
-    return redirect("/events")
+
+    hash_value = user.password
+    if check_password_hash(hash_value, password):
+        session["username"] = username
+        session["role"] = user.role
+        session["id"] = user.id
+        session["csrf_token"] = secrets.token_hex(16)
+        return redirect("/events")
+
+    return render_template("index.html", messages=["Wrong password"])
 
 
 @app.route("/logout")
