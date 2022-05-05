@@ -92,30 +92,35 @@
       </div>
     </div>
   </div>
+  {% if session.username == unit.username %}
+  <div class="columns">
+    <div class="column">
+      <form action="/edit_event" method="POST">
+        <div class="field">
+          <button id="button2" type="submit" class="button is-success" onclick="showSpinner('button2')">
+            Edit event
+          </button>
+        </div>
+        <input type="hidden" name="event_id" value="{{ id }}">
+      </form>    
+    </div>
+    <div class="column">
+      <form action="/delete_event" method="POST">
+        <div class="field">
+          <button id="button3" type="submit" class="button is-success" onclick="showSpinner('button3')">
+            Delete event
+          </button>
+        </div>
+        <input type="hidden" name="event_id" value="{{ id }}">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      </form>          
+    </div>
+  </div>
+  {% endif %}
 
 </div>
 
 {% include "user_modal.html" %}
-
-{% if session.username == unit.username %}
-<form action="/edit_event" method="POST">
-  <div class="field">
-    <button id="button2" type="submit" class="button is-success" onclick="showSpinner('button2')">
-      Edit event
-    </button>
-  </div>
-  <input type="hidden" name="event_id" value="{{ id }}">
-</form>
-<form action="/delete_event" method="POST">
-  <div class="field">
-    <button id="button3" type="submit" class="button is-success" onclick="showSpinner('button3')">
-      Delete event
-    </button>
-  </div>
-  <input type="hidden" name="event_id" value="{{ id }}">
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-{% endif %}
 
 <div class="block">
   <h2 class="subtitle">

@@ -8,7 +8,7 @@
   Search events locations
 </h2>
 
-<form class="box" action="/search_places" method="POST">
+<form class="box has-background-primary-light" action="/search_places" method="POST">
   <div class="field">
     <label class="label">Street address</label>
     <div class="control">
@@ -27,12 +27,12 @@
 <div>No results. Did you include the right street number?</div>
 {% endif %}
 {% for place in places %}
-<form class="box" action="/add_place" method="POST">
+<form class="box has-background-light" action="/add_place" method="POST">
   <div class="field has-addons">
     <button id="{{ place.address.freeformAddress }}" type="submit" class="button is-small is-primary" 
       onclick="showSmallSpinner('{{ place.address.freeformAddress }}')">
       <i class="fas fa-plus"></i></button>
-    <label class="label">{{ place.address.freeformAddress }}</label>
+    <label class="label">&nbsp; {{ place.address.freeformAddress }}</label>
   </div>
   <input type="hidden" name="address" value="{{ place.address.freeformAddress }}">
   <input type="hidden" name="latitude" value="{{ place.position.lat }}">
