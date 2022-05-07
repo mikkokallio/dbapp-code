@@ -31,6 +31,16 @@
   {% if unit.description %}
   <div class="block"><i class="fas fa-quote-left fa-2x fa-pull-left"></i> {{ unit.description }}</div>
   {% endif %}
+  <form action="/create_here" method="POST">
+    <div class="field">
+      <button id="create{{ unit.id }}" type="submit" class="button is-success" onclick="showSpinner('create{{ unit.id }}')">
+        Create event here
+      </button>
+    </div>
+    <input type="hidden" name="place_id" value="{{ unit.id }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  </form> 
+
   {% if session.role == "admin" %}
   <form action="/delete_place" method="POST">
     <div class="field">

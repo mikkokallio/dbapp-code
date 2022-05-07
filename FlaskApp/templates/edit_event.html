@@ -19,10 +19,10 @@
   <div class="field">
     <label class="label">Place</label>
     <div class="control select">
-      <select name="place" value="{{ fields['place'] }}">
+      <select name="place">
         <option value="None" selected disabled hidden>Select a place</option>
         {% for place in places %}
-        <option value="{{ place.id }}">{{ place.name }}</option>
+        <option value="{{ place.id }}" {% if place.id == fields['place_id'] %}selected{% endif %}>{{ place.name }}</option>
         {% endfor %}
       </select>
     </div>

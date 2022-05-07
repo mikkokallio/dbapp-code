@@ -213,6 +213,16 @@ def update_user():
     return redirect("/profile")
 
 
+@app.route("/create_here", methods=["POST"])
+def create_here():
+    """Open form to create new event with pre-selected place."""
+    if "username" not in session:
+        return redirect("/")
+    place_id = int(request.form["place_id"])
+    places = actions.get_places()
+    return render_template("edit_event.html", fields={"place_id": place_id}, places=places, id="")
+
+
 @app.route("/new_event")
 def new_event():
     """Open form to create new event from scratch."""

@@ -276,8 +276,8 @@ def get_past_events():
 def get_event_by_id(id):
     """Fetch one event based on id."""
     sql = """SELECT events.id AS id, events.description AS description, title, date, time, pic_url,
-             max_people, address, page_url, LEFT(page_url, 35) AS short_url, name, gender,
-             location, users.description AS about_me, users.created_at AS member_since,
+             max_people, address, page_url, LEFT(page_url, 35) AS short_url, place_id, name,
+             gender, location, users.description AS about_me, users.created_at AS member_since,
              users.username as username FROM events
              LEFT JOIN users ON events.host_id = users.id
              LEFT JOIN places ON events.place_id = places.id
