@@ -78,6 +78,21 @@ def list_places():
     return render_template("places.html", places=places, mode="2")
 
 
+@app.route("/delete_place", methods=["POST"])
+def del_place():
+    """Delete place based on id."""
+    if "username" not in session:
+        return redirect("/")
+    if session["role"] != "admin":
+        return redirect("/places")
+    if not request.form["place_id"]:
+        return redirect("/places")
+    id = request.form["place_id"]
+    messages = actions.delete_place_by_id(id)
+    places = actions.get_places()
+    return render_template("places.html", places=places, mode="2", messages=messages)
+
+
 @app.route("/login", methods=["POST"])
 def login():
     """Log user in using password and username from form."""

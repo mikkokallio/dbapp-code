@@ -163,6 +163,24 @@ def get_places():
     return result.fetchall()
 
 
+def get_events_by_place(id):
+    """Fetch events organized at a particular place."""
+    sql = "SELECT COUNT(*) AS count FROM events WHERE place_id = :id;"
+    result = db.session.execute(sql, {"id": id})
+    return result.fetchone()
+
+
+def delete_place_by_id(id):
+    """Remove one place based on id provided that no event uses that place."""
+    event_count = get_events_by_place(id).count
+    if event_count > 0:
+        return [f"This place has {event_count} event(s). You must delete them first."]
+    sql = "DELETE FROM places WHERE id = :id;"
+    db.session.execute(sql, {"id": id})
+    db.session.commit()
+    return ["Place deleted."]
+
+
 def upsert_event(user_id, fields):
     """Add new or update existing event's information."""
     if fields["event_id"] != "":

@@ -92,7 +92,7 @@
       </div>
     </div>
   </div>
-  {% if session.username == unit.username %}
+  {% if session.username == unit.username or session.role == "admin" %}
   <div class="columns">
     <div class="column">
       <form action="/edit_event" method="POST">
