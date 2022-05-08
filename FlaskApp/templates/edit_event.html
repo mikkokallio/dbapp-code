@@ -2,7 +2,7 @@
 {% block content %}
 
 <h1 class="title">
-  Minglerz.net
+  {% if id %}Edit event{% else %}Create new event{% endif %}
 </h1>
 <h2 class="subtitle">
   Enter events details
