@@ -271,15 +271,16 @@ def update_event():
         abort(403)
 
     fields = request.form
-    places = actions.get_places()
 
     messages = actions.validate_event(fields)
     if len(messages) > 0:
+        places = actions.get_places()
         return render_template("edit_event.html", messages=messages, fields=fields,
                                places=places, id=fields["event_id"])
 
     messages = actions.upsert_event(session["id"], fields)
     if len(messages) > 0:
+        places = actions.get_places()
         return render_template("edit_event.html", messages=messages, fields=fields,
                                places=places, id=fields["event_id"])
     

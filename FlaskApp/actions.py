@@ -32,11 +32,14 @@ def validate_username(username):
 
 def validate_event(fields):
     """Check that event's all information meets requirements."""
+    print(fields)
     errors = []
     if len(fields["title"]) < 5 or len(fields["title"]) > 25:
         errors.append("Title must be at 5-25 characters long")
     if not fields["time"]:
         errors.append("Event must have a starting time")
+    if "place" not in fields:
+        errors.append("Event must have a place")
     if fields["date"] == "":
         errors.append("Event must have a date")
     elif date.today() > datetime.strptime(fields["date"], "%Y-%m-%d").date():
